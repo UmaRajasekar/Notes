@@ -1,0 +1,142 @@
+Web services will be learned
+1. SOAP
+2. Restful web services
+Introduction to Web Services
+Service delivered over the web.
+W3C Definition
+Software system designed to support interoperable machine to machine interaction over a network
+Designed for machine to machine
+Should be interoperable - Not platform dependent
+Should allow communication over a network
+Application <--> Web Service
+The input to the web service is called request
+The output from the web service is called response
+Request and Response should be done using the file supported by all the platform. So the file can be in XML or JSON format.
+Every web service will have a defintion. This definition will have details like Request/Response format, request structure, Response structure and End point.
+Key Terminologies of Web services:-
+-> Request and Response
+-> Message Exchange Format 
+--> XML and JSON
+-> Service Provider(Server) 
+-> Service Consumer(Client)
+-> Service Definition
+-> Transport (HTTP and MQ)
+Different types of web services
+1. SOAP- Simple object Access Protocol
+2. REST
+
+What is web service?
+It is a API (Application Program Interface) that helps in communicating over web
+Enables communications between application over the web
+Provides standard protocol/format for communication
+platform independent communication
+using web services b/w two application can talk to each other and exchange information.
+
+Web services- Architecture
+Server <-> Client
+Response <-> Request
+Medium of Communication- HTTP
+Format- JSON/XML
+
+Web services are implemented in two types:-
+SOAP- Simple Object Acess Protocol. Medium-HTTP(post), Format- XML
+REST -Represntational State Transfer. More Flexible.
+
+What is WSDL and UDDI?
+Service Provider publishes an interface for his web services that describes all attributes of web service
+XML based interface- WSDL => Web Service Description Language
+Machine Readable
+WSDL-> Endpoint, All Operation, Request Structure and Response Structure
+
+Web service provider publishes his web service on an online directory where consumer can query and search the web services.
+The online registry is called UDDI-> Universal Description, Discovery and Integration
+SOAP Specification are of two types
+Basic and Extended
+
+Applications are loosely coupled by creating interface to avoid dependency in applications.
+Basic-> SOAP, WSDL and UDDI
+XML should have definitive standard and consist of Envelope, Head and Body
+
+REST Web services
+Principle of REST architecture
+-> Uniform Interface: Resource, URI and HTTP
+-> Stateless
+-> Cacheable
+-> Layered System
+-> Code on Demand
+
+REST web service is developed to make best use of HTTP. Hyper Text Transfer Protocol.
+Key Abstraction- Resource
+A resoure has an URI (Uniform Resource Identifier)
+
+Spring Framework
+This framework will help us to create loosly coupled application
+By loosely coupled, we can have getter and setter injection
+For mandatory Auto wired constructor injection should be used.
+For optional autowiring components, setter injection can be used.
+Spring framwork layers:-
+Test
+Core Containers-> Core, Bean, Context and SpEL
+AOP| Aspects| Instrumentation| Messaging
+Data Access/Integration -> JDBC, ORM(Object Relational Mapping framework (Hibernate)), OXM (object to XML), JMS and Transactions
+Web -> WebSocket, Servlet, Web and Portlet
+Spring projects:-
+Provides facility to problems faced by enterprise applications
+Spring batch- Batch Applications
+Spring security- Protect your applications
+Spring HATEOAS
+Spring Boot - developing microservices. quickly build application
+Spring Cloud - develope cloud native applications
+Spring Data
+Spring Integration
+Others- Spring Session, Spring Web Services, Spring mobile and Spring anroid etc.
+Advantages to Spring Framework:-
+1. Enables Testable Code.
+2. No Plumbing Code
+3. Flexible Architecture
+4. Staying current
+Spring Boot:-
+Most popular framework to create microservices
+Goals
+-> Enable production ready application very quickly.
+Provide common non-functional features
+-embedded servers
+-metrics
+-healthchecks
+-externalized configurations
+Spring Boot is not an
+a. Zero code generation
+b. Neither an application server nor a web server
+Features:-
+Quick starter projects with Auto Configuration
+-Web
+-JPA
+Embedded Servers- Tomcat, Jetty or Undertow
+Production-ready features
+-metric and health checks
+-externalized configuration
+Spring Boot vs Spring MVC vs Spring
+Most important feature of spring framework is dependency injection or IOC inversion of control. Helps to build loosely coupled application
+Spring MVC will provide simple way of creating web applications. With simple concepts like Dispatcher Servlet, ModelAndview and viewResolver, it makes easy to develop web applications.
+Spring Boot will be good for Auto Configurations
+JPA will instruct on how ORM framework should work
+
+RESTful Webservice
+Sample example of Restful web servives
+@RestController
+public class HelloWorldController {
+	
+	@RequestMapping(method=RequestMethod.GET,path="/hello")
+	public String helloWorld() {
+		return "Hello World";
+	}
+	
+	@GetMapping(path="/helloBean")
+	public HelloBean helloBean() {
+		return new HelloBean("Hello World, I am a bean");
+	}
+
+}
+What is dispatcher servlet?
+Dispatcher Servlet, White Label error page are auto configured with the help of spring boot autoconfiguration.
+HttpConvertor and Jackson Mapper helps in converting http response message of bean into json format.

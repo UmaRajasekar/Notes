@@ -1,0 +1,468 @@
+Introduction of Big Data
+In every platform there are principles that articulates web development more so in Big Data related platforms which brings success in app development.
+A quality Big Data system devlopment demands as much attention to the selection, organization.
+Basic Principles Technology for Creating Big Data Systems
+Hadoop is used to transform and analyze huge amount of data.
+
+Hortonworks is a big data system which can read data and write as HIVE data.
+Hortonworks can be installed in Virtual machine.
+https://hortonworks.com/downloads/#sandbox
+https://grouplens.org/datasets/movielens/
+Hadoop- an open source software platform for distributed storage and distributed processing of very large datasets on computer clusters built from commodity clusters built from commodity hardware.
+Advantages of distributed storage:-
+a. You can keep adding clusters so that it can be part of data center
+b. Hadoop helps you to list data set from different clusters as single file system.
+c. Hadoop also keeps backup copies so it is easily recoverable.
+History
+Google published GFS and MapReduce in 2003-2004
+Why Hadoop?
+Data is too darn big-terabyte of data per day
+a.Disk seek times
+b.Hardware failures
+c.Processing times
+Horizontal scaling is linear.
+It is not just for batch processing anymore.
+Overview of Hadoop Ecosystems
+-> World of Hadoop
+a. Query Engines
+b. Core Hadoop Ecosystems
+c. External Data Storage.
+->The base of hadoop ecosystem is HDFS (Hadoop Distributed File Systems)
+->On top of HDFS, we have YARN (Yet Another Resource Negotiator)
+->On top of MapReduce, we have MapReduce.
+MapReduce is a programming model that helps to process data. It consist of Mapper and Reducer. Mapper will help to transform the data into different clusters. Reducer is used to aggregate the data.
+->On top of MapReduce, we have Pig. Pig will avoid us writing complex map reduce programme usually in Python,Java. This deals with normal SQL statements and normal scripting.
+Pig helps in converting normal script into MapReduce program.
+-> HIVE is similar to Pig, which looks like a SQL database
+->On top of everything, we have Apache Ambari which helps to monitor everything. this also will have views which helps to run HIVE queries and PIG scripting.
+-> MESOS is similar to YARN
+-> Spark is most powerful tool in Hadoop ecosystem. This technology is same as mapreduce. Spark queries can be writtrn using Java, Python or Scala programming language. Spark will be good choice if you want to effectively process data in Hadoop ecosystems. 
+It can SQL queries, perform machine reading to get information on all the available clusters.
+->TEZ is similar to Spark. It used directed acyclic graph.
+->HBASE. It is the way of exposing data onto clusters into transactional platform. Its a NOSQL database. This is the columnar data store. This is really fast database and used for large transactions.
+->Apache Storm:- It is way of process streaming data. Spark stream also does the stream.
+->Oozie is the way of scheduling jobs in clusters.
+->Zookeeper:- This helps to coordinate everything happening in the clusters. This is the technology of keeping which nodes are up and which nodes are down. This is the reliable way of keeping track of shared state across the clusters. Many applications in Hadoop ecosystems rely on Zookeeper. Zookeeper will help to maintain reliablity of clusters even when the cluster goes down. Tracks who is up and down and who is master
+-> Data Ingestion: Helps in getting data into clusters of HDFS from external source systems.Sqoop ties your Hadoop database into relational database. This is basically a connector between HDFS and RDS
+Flume: Flumes read weblogs in a realtime and feeds into clusters
+Kafka and Flume are similar and collects logs from cluster of web server and feed into HDFS.
+->Sqoop can also write data into external data storage from HDFS. Cassandra and MongoDB are columnar database.
+->There are certain query engine that sits on top of the Hadoop ecosystems
+a. Apache Drill
+b. HUE
+c. Apache Pheonix
+d. Apache Zepplin
+
+https://sundog-education.com/hadoop-materials/
+
+HDFS- Hadoop Distributed File System
+It is used for handling large files. Breaks files into number of blocks.
+Blocks are Stored across several commadity computer. More than one copy of blocks are  stored in HDFS. So failure of one computer, HDFS can retrive the data from it.
+
+HDFS architecture:-
+This will have single name node which connects to multiple data node.
+Name node will store the data as such like where the large data is distributed across the filesystem.
+Reading a File:-
+Client node gets information from name node and looks into data node based on the information provided by name node.
+Writing a File
+Client node talks to name node. Name node creates a entry for the file. Client node talks to one data node and write data and that data node distributes data across other data node. Data node writes data and sends acknowlegement to client node which get updated to name node.
+Dealing Failover of name node:-
+a. Backup Metadata
+Name node writes to NFS mount or writes to local disk.
+b. Secondary Namenode
+Maintains merged copy of edit logs you can restore from.
+c. HDFS Federation
+Each name node manages a specific namespace volume.
+d. HDFS High Availability
+Hot standby namenode using shared edit logs.
+Zookeeper tracks active name node
+Uses one namenode is used at a time.
+
+Using HDFS
+UI (Ambari)
+Command line Interface
+HTTP/HDFS proxies
+Java Interface
+NFS Gateway 
+
+Ambari will be available in port 8080
+The username and password will be maria_dev for ambari
+opening an ssh session maria_dev@127.0.0.1 -p 2222
+-p is port runs on 2222 port
+Command of hadoop file system
+hadoop fs -ls -> to list all the files in file system
+wget http://media.sundog-soft.com/hadoop/ml-100k/u.data
+Hadoop command to copy from local.
+hadoop fs -copyFromLocal u.data
+Remove commands -rm, -rmdir
+
+MapReduce Concepts
+Distributes processing of data on your cluster.
+Divides your data into partitions that are MAPPED(transformed) and REDUCED(aggregated) by mapper and reducer functions you define.
+Resilient to failure. An application master that monitors your mappers and reducers on each partition.
+Mapper converts data into key value pair
+Map Reduce Sorts and Groups the Mapped Data("Shuffle and Sort")
+Reducer Process Each Key's Value
+
+/*
+The username and password is hue and 1111 respectively.
+ssh root@127.0.0.1 -p 2222;
+The password is hadoop
+ambari
+user:admin
+password:admin
+*/
+
+Whats happening on Map Reduce Task
+Client Node-> YARN-> Master Node-> Slave node
+MapReduce is natively JAVA
+Streaming allows interfacing with other languages (ie Python)
+Application master monitors worker tasks for error or handling.
+->Restarts as needed
+->Preferrably on different node
+What if application master goes down?
+->YARN can try to restart it.
+What if an entire Node goes down?
+->This could be an application master
+->The resource manager will try to restart it.
+What if the resource manager goes down?
+->Can set up "high availability"(HA) using Zookeper to have a hot standby 
+
+python code to read a line
+from mrjob.job import MRJob
+from mrjob.step import MRStep
+class RatingBreakdown(MRJob):
+	def steps(self)
+		return[
+			MRStep(mapper=self.mapper_get_ratings,
+				reducer=self.reducer_count_ratings)
+		]
+	def mapping_get_ratings(self,_,line):
+		(userID,movieID,rating,timestamp) = line.split('\t')
+		yield rating 1
+	def reducer_count_ratings(self,key,values):
+		yield key, sum(values)
+if __name__=='__main__':
+	RatingsBreakdown.run()
+
+To run python, we need to install PIP
+yum install python-pip
+pip install mrjob==0.5.11
+Datafiles and script
+yum install nano
+wget http://media.sundog-soft.com/hadoop/ml-100k/u.data
+wget http://media.sundog-soft.com/hadoop/RatingsBreakdown.py
+For lower version, additional packages are required
+cd /etc/yum.repos.d
+cp sandbox.repo /tmp
+rm sandbox.repo
+cd ~
+yum install python-pip
+pip install google-api-python-client==1.6.4
+pip install mrjob==0.5.11
+
+There are two ways to run MR jobs
+1. Run locally
+python RatingsBreakdown.py u.data
+2. Run with Hadoop
+python RatingsBreakdown.py -r hadoop --hadoop-streaming-jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar u.data
+
+Excercise:-
+How often movie is rated (based on popularities)?
+How will you sort that movie based on popularity?
+
+Multi-stage jobs
+def steps(self):
+	return[
+		MRStep(mapper=self.def mapping_get_ratings,reducer=self.reducer_count_ratings),
+		MRStep(reducer=self.reducer_sorted_output)
+	]
+Ensure proper sorting
+-> By Default, streaming treats all input and output as strings. So things get sorted as string and not as numerical.
+-> There are different formats you can specify. But for now lets zero-pad our numbers so they will sort properly.
+-> The second reducer will look like:
+def reducer_sorted_output(self,key,values):
+	yield str(sum(values)).zfill(5),key
+def reducer_sorted_output(self, count, movies):
+	for movie in movies:
+		yield movie, count
+
+wget http://media.sundog-soft.com/hadoop/TopMovies.py
+
+Listing hadoop file system
+hadoop fs -ls
+hadoop fs -copyFromLocal u.data ml-100k/u.data
+
+Using ambari, you can also set alerts
+ambari-admin-password-reset -> to reset admin access to ambari when we run this command in certain host
+
+Why Pig?
+Writing mappers and reducers by hand taks lot of time
+Pig introduces Pig Latin, a scripting language that lets you to use SQL-like syntax to define your map and reduce steps
+Highly extensible with user defined functions(UDF's)[user defined functions]
+
+Running Pig
+1. Grunt
+2. Script
+3. Ambari/Hue
+
+Sample Pig Script to fetch oldest five star movies
+--------------------------------------------------
+/*
+ratings = LOAD '/user/root/ml-100k/u.data' AS (userID:int,movieID:int,rating:int,ratingTime:int);
+
+metadata= LOAD '/user/root/ml-100k/u.item' USING PigStorage('|') 
+	AS (movieID:int, movieTitle:chararray, releaseDate:charArray, videoRelease:chararray,imdbLink:chararray);
+    
+nameLookup= FOREACH metadata GENERATE movieID,movieTitle,
+	ToUnixTime(ToDate(releaseDate,'dd-MMM-yyyy')) AS releaseDate;
+    
+ratingsByMovie= GROUP ratings BY movieID;
+
+avgRatings= FOREACH ratingsByMovie GENERATE group as movieID, AVG(ratings.rating) AS avgRating;
+
+fiveStarMovies= FILTER avgRatings BY avgRating > 4;
+
+fiveStarMoviesWithData = JOIN fiveStarMovies BY movieID, nameLookup by movieID;
+
+oldestFiveStarMovies= ORDER fiveStarMoviesWithData BY nameLookup::releaseDate;
+
+DUMP oldestFiveStarMovies;
+*/
+
+Diving into Deeper Things of Pig
+-> LOAD STORE DUMP
+	- store ratings INTO 'outRatings' USING PigStorage(':')
+-> FILTER DISTINCT FOREACH/GENERATE MAPREDUCE STREAM SAMPLE
+-> JOIN COGROUP GROUP CROSS CUBE
+-> ORDER RANK LIMIT
+-> UNION SPLIT
+
+Diagnostic
+->DESCRIBE
+->EXPLAIN
+->ILLUSTRATE
+
+UDF's (User Defined functions)
+-> Register. logic in java code is uploaded as jar file and called in Pig.
+-> Define. Assign name to the java funtion
+-> Import. Import macros
+
+Someother functions and loaders
+-> AVG CONCAT COUNT MAX MIN SIZE SUM
+
+->PigStorage
+->TextLoader
+->JsonLoader
+->AvroLoader. Serialization and deserialization of data storage
+->ParquetLoader
+->OrcStorage
+->HBaseStorage
+
+Programming Pig, 2nd edition book
+
+What is spark?
+A fast and general engine for large scale data processing.
+Its scalabe
+Driver Program->Cluster Manager(Yarn)->Execute Cache tasks(multiple node where program runs on individual cluster)
+Runs program 100X faster than Hadoop Map Reduce
+DAG(Directed acyclic graph) engine optimizes workflows
+Spark program can be written in Python,Java or scala
+Built around one main concept: Resilient Distributed Dataset(RDD)
+Spark Components
+1. Spark Streaming
+2. Spark SQL
+3.Spark MLLib
+4. GraphX
+
+RDD
+Spark Context
+-> is created by your driver program
+->Is responsible for making RDD's resilient and distributed
+-> Creats RDDs
+-> The spark shell creates sc object for you
+Creating RDD's 
+-> From script nums=parallelize([1,2,3,4])
+-> sc.textFile("file:////C:/Temp/temp.txt")
+	-or s3n:// , hdfs://
+->hiveCtx=HiveContext(sc) rows=hiveCtx.sql("SEELCT name,age FROM users")
+-> Can also create from
+-JDBC
+-Cassandra
+-HBase
+-Elastic Search
+-JSON,CSV, sequence files, object files, various compressed formats
+
+Transforming RDD
+1. map 1:1 relationship
+2. flatmap 1:m relationship
+3. filter
+4. distinct
+5. sample
+6. union, intersection, substract, cartesian
+
+map function to square given values
+rdd=sc.parallelize([1,2,3,4])
+squareRDD=rdd.map(lambda x:x*x)
+
+RDD actions
+count
+collect
+countByValue
+take
+top
+reduce
+..and more..
+
+Nothing actually happens in the driver program until an action is called!
+
+from pyspark import SparkConf SparkContext
+
+def loadMovieNames():
+	movieNames = {}
+	with open("ml-100k/u.item") as f:
+		for line in f:
+			fields=line.split('|')
+			movieNames[int(fields[0])]=fields[1]
+	return movieNames
+
+def parseLine(lines):
+	fields= line.split()
+	return (int(fields[1]),(int(fields[2]),1.0))
+
+if __name__ ='__main__':
+	#The main script creates spark context
+	#Config will have details of clusters that spark job to run on
+	conf = SparkConf().setAppName("Worst Movies")
+	sc= SparkContext(conf=conf)
+
+	
+	#Load Movie Names
+	moviesName=loadMovieNames()
+
+	#Load a file from hdfs [Load data into rdd]
+	lines=sc.textFile("hdfs:///user/root/ml-100k/u.data")
+	
+	#Create new RDD movie Ratings
+	movieRatings=lines.map(parseInput)
+
+	#Reduce to key
+	ratingTotalsAndCount = movieRatings.ReduceByKey(lambda movie1,movie2: (movie[0]+movie2[0]), (movie1[1]+movie2[1]))
+
+	#Map to (movieID,averageRatings)
+	averageRatings=ratingTotalsAndCount.mapValues(lambda totalAndCount: totalAndCount[0]/totalAndCount[1]) 
+
+	#Sort Values
+	sortedMovies=averageRatings.sort(lambda x:x[1])
+
+	#Take top 10 results
+	results=sortedMovies.take(10)
+
+	#Print them out
+	for result in results
+		print(movieNames[result[0]],result[1])
+
+To download Spark scripts
+
+wget http://media.sundog-soft.com/hadoop/Spark.zip
+
+To execute spark job:-
+spark-submit LowestRatedMovieSpark.py
+Spark submit job can also take arguments
+
+Working with structured data
+Extend RDD into dataframe objects
+DataFrames:
+-Contains Rowobject
+-Can run SQL query
+-Has a schema
+-Read and write to JSON, HIVE and Parquet 
+-Communicates with JDBC/ODBC and Tableau
+
+Using SparkSQL in Python 
+-> from pyspark.sql import SQLContext, Row
+-> hiveContext=HiveContext(sc)
+->input Data=spark.read.json(dataFile)
+-> inputData.createOrReplaceTempView("myStructuredStuff")
+-> myResultDataFrame = hiveContext.sql("""SELECT statement""")
+
+Other stuff you can do with dataframes
+-> myResultDataFrame.show()
+-> myResultDataFrame.select("someFieldName")
+-> myResultDataFrame.filter(myResultFrame("someField")>200)
+-> myResultDataFrame.groupBy(myResultFrame("someField")).mean()
+-> myResultDataFrame.rdd().map(mapperFunction)
+
+In spark 2.0, DataFrame is really a Dataset of Row objects
+Datasets can wrap known, typed data too. But this is mostly transparent to Python, since Python is dynamically typed
+So dont sweat this too much with Python. But this Spark 2.0 way is to use DataSets instead of DataFrames where you can.
+
+Shell access
+Spark SQL exposes a JDBC/ODBC server(if you built Spark with Hive support)
+Start it with sbin/start-thriftserver.sh
+Listens on port 10000 by default
+Connect using bin/beeline -u jdbc:hive2://localhost:10000
+Viola, you have a SQL shell to Spark SQL
+You can create new tables, or query existing ones that are cached using hiveCtx.cacheTable("tableName")
+
+User defined functions example
+from pyspark.sql.types import IntergerType
+hiveCtx.registerFunction("square",lambda x: x*x, IntegerType())
+df=hiveCtx.sql("SELECT square('someField') FROM someTable")
+
+Sample Program
+/*
+from pyspark.sql import SparkSession
+from pyspark.sql import Row
+from pyspark.sql import functions
+
+def loadMovieNames():
+	movieNames = {}
+	with open("ml-100k/u.item") as f:
+		for line in f:
+			fields=line.split('|')
+			movieNames[int(fields[0])]=fields[1]
+	return movieNames
+
+def parseLine(lines):
+	fields= line.split()
+	return Row(movieID=int(fields[1]),rating=(int(fields[2])))
+
+if __name__="__main__":
+	spark=SparkSession.builder.appName("PopularMovies").getOrCreate()
+	
+	movieNames=loadMovieNames()
+	
+	lines=spark.SparkContext.textFiles("hdfs:///user/root/ml-100k/u.data")
+
+	#Create new RDD movie Ratings into RDD of rowObject
+	movieRatings=lines.map(parseInput)
+
+	#Create dataFrame of movieRatings
+	movieDataSet=spark.createDataFrames(movieRatings)
+
+	#Compute average Ratings
+	averageRatings=movieDataSet.groupBy("movieID").avg("ratings")
+
+	#Compute count of each movies
+	counts=movieDataSet.groupBy("movieID").count()
+
+	#Join count and average Movie Ratings
+	averagesAndCount=counts.join(averageRatings,"movieID")
+
+	#Pull top 10 records
+	topTen=averagesAndCount.orderBy("avg("ratings")").take(10)
+
+	#Print top 10 movies
+	for movie in topTen
+		print(movieNames[movie[0]],movie[1],movie[2])
+
+	#Stop the session
+	spark.stop()
+*/
+
+Explicity mention that we need to use spark version 2.0
+export SPARK_MAJOR_VERSION=2
+spark-submit <<scriptName>>
+
+Using MLLib in Spark

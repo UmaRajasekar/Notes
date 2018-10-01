@@ -1,0 +1,36 @@
+What is web service?
+It is a API (Application Program Interface) that helps in communicating over web
+Enables communications between application over the web
+Provides standard protocol/format for communication
+platform independent communication
+using web services b/w two application can talk to each other and exchange information.
+
+Web services- Architecture
+Server <-> Client
+Response <-> Request
+Medium of Communication- HTTP
+Format- JSON/XML
+
+Web services are implemented in two types:-
+SOAP- Simple Object Acess Protocol. Medium-HTTP(post), Format- XML
+REST -Represntational State Transfer. More Flexible.
+
+What is WSDL and UDDI?
+Service Provider publishes an interface for his web services that describes all attributes of web service
+XML based interface- WSDL => Web Service Description Language
+Machine Readable
+
+Web service provider publishes his web service on an online directory where consumer can query and search the web services.
+The online registry is called UDDI-> Universal Description, Discovery and Integration
+SOAP Specification are of two types
+Basic and Extended
+Basic-> SOAP, WSDL and UDDI
+XML should have definitive standard and consist of Envelope, Head and Body
+
+REST Web services
+Principle of REST architecture
+-> Uniform Interface: Resource, URI and HTTP
+-> Stateless
+-> Cacheable
+-> Layered System
+-> Code on Demand
