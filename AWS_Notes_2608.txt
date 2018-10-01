@@ -1,0 +1,121 @@
+There are two types of back-up for AWS: 1. Automated back-ups and Database Snapshots
+Automated backup allow you to recover your database to any point in time within a "retention period". The retention period  can be between one and 35 days. Automated backups will take a full daily snapshot and will also store transaction logs throughout the day. When you do a recovery, AWS first choose the most recent daily backup, and then apply transaction logs relavent to that day. This allows you to do a point in time recovery down to second, within the retention period.
+Automated Backups
+Automated backups are enabled by default. The backup data is stored in S3 and you get  free storage space equal to the size of your database. So if you have an RDS instance of 10Gb, you will get 10GB worth of storage.
+Backups are taken within a defined window. During the backup window, storage I/O may be suspended while your data is being backed up and you may experience elavated latency.
+Snapshots
+DB Snapshots are done manually. They are stored even after you delete the original RDS instance, unlike automated backups.
+Restoration Backups
+Whenever you restore either an automatic backup or a manual snapshot, the restoration version of the database will be a new RDS instance with a new DNS end-point.
+Encryption at rest is supported for MySQL, Oracle, SQL server, PostgreSQL, MariaDB and Aurora. Encryption is done using the AWS Key management service(KMS) service. Once your RDS instance is encrypted, the data stored at rest in the underlying storage is en-ncrypted, as are its automated backups, read replicas and snapshots.
+At the present time, encrypting an existing DB instance is not supported. To use Amazon RDS encryption for an existing database, you must create a snapshot, make a copy of that snapshot and encrypt the copy.
+
+Multi AZ.
+This is used for disaster recovery. When multi ec2instance connected to db and performs action on db1, a same copy of db1 in other location is changed and all the action of db1 is replicated to db2. When db1 fails, it automatically failover to db2.
+Allows you to have exact copy of prod database in another availablity zone.
+AWS handles replication, so when prod database written, this write will auto sync to stand by database.
+In the even of planned database maintence, db instance failure and an availability zone failure, amazon RDS will automatically failover to the standby so the database operations can resume quickly without administrative intervention.
+Read Replica:-
+This is used for performance improvement.
+Scaling out database by taking load out of database and spread it across
+Allows you to have read-only copy of prod database.
+This is achived by asynchronous replication from the primary RDS instance to the read replica. 
+you can use read replicas primarily for very read-heavy database workloads.
+
+DynamoDB
+Fast and fexible NoSQL database service for all the applications that need consistent , single digit millisecond latency at any scale. It is fully managed database and supports both document and key-value data models.
+Its flexible data model and reliable performance make it a great fit for mobile, web,gaming, ad-hoc and IOT and many other applications.
+Stored on SSD storage
+Spread across 3 geographically distinct data centers
+Eventually Consistent Read
+-> Consistency across all copies of data is usually reached within a second. Repeating a read after a short time should return the updated data.
+Strong Consistent Read
+-> A strong consistent read returns a result that refelects all writes that recieved a successful response prior to the read.
+DynamoDB pricing
+Provisioned ThroughPut Capacity
+-> Write Throughput $0.0065 per hour for every 10 units
+-> Read Throughput $0.0065 per hour for every 50 units
+Storage cost of $0.25gb per month.
+Advantage:-
+We can add fields whenever required
+Read and capacity of DB can be changed on the fly without having any downtime. Push button scaling.
+Amazon Redshift
+Fast,powerful, fully managed, perabyte-scale data warehouse service in the cloud.
+Cost effective
+Data warehousing databases use different type of architecture both from the database perspective and infrastructure layer.
+Redshift configuration
+Single Node
+Multi Node
+-> Leader Node(manages client connections and perform queries and computation).
+-> Compute Node(stores data and perform queries and computation). Upto 128 compute nodes.
+Columnar Data Storage.
+Instead of storing datas as series of rows, Amazon Redshift organizes the data by column. 
+unlike row based systems, which are ideal for transactional processing,column-based systems are ideal for data warehousing and analytics, where queries often involve aggregates performed over large data sets. Since only the columns involved in the queries are processed and columnar data is stored sequentially on the storage media,column-based systems require far fewer I/Os, greatly improving query performance.
+Advanced Compression:
+Columnar data stores can be compressed much more than row-based data stores because similar data is stored sequencially on disk. Amazon Redshift employs multiple compression techniques and can often achieve significant compression relative to traditional relational data stores. In addition, Amazon redshift does not require indexes or materialize views and so uses less space than traditional relative database systems. When loading data into an empty table, Amazon Redshift automatically samples your data and selects the most appropriate compression scheme.
+Massive Parallel Processing:
+Amazon Redshift automatically distributes data and query loads across all nodes. Amazon Redshift makes it easy to add nodes to your datawarehouse and enables to maintain faster query performance as your data warehouse grows.
+Redshift Pricing:-
+Compute Node Hours{Only compute nodes are charged and leader node are not charged}
+BackUp
+Data Transfer within VPC and not outside it
+Redshift Security
+Encrypted in transit using SSL
+Encryption at rest using AES-256 encryption
+Redshift takes care of key management. We can also manage your keys using hardware security module and AWS KMS.
+Only available in 1 AZ
+Can restore snapshots to new AZ's in the event of outage.
+
+Elaticache
+It is a web service that makes it easy to deploy, operate and scale an in memory cache in the cloud. 
+This service improves performance of web application from fast, managed, in memory caches, instead of relying entirely on slower disk-based databases.
+It can be used to significantly improve latency and throughput for many read-heavy application workloads(such as social networking, gaming, media sharing and Q&A portals) or compute-intensive workloads(such as recommendation engine)
+
+Cache improves application performance by storing critical pieces of data in memory for low-latency access. Cached information may include the results of I/O-intensive database queries or the results of computationally-intensive calculations.
+Memcached
+-> A widely adopted memory object caching system. Elasticache is protocol compliant with Memcached, so popular tool that you use today with existing Memcached environments will work seamlessly with the service.
+Redis
+A popular open-source in-memory key-value store that supports data structure such as sets and lists. Elasticache supports master/slave replication and multi-AZ which can be used to achieve cross AZ redundancy.
+Aurora
+Aurora is the database engine that is available in RDS
+It is a mysql compatible, relational database engine that combines speed and availability of high end commercial databases with the simplicity and cost-effectiveness of open source databases. Amazon aurora provides upto five times better performance at a price point one tenth that of a commercial database while delivering similar performance and availability
+Autoscaling of 10gb to 64tb
+Compute resorce scale upto 244gb and upto 32vCPU
+No downtime while scaling
+Copies two copies of db in each availability zone in atleast 3AZ.
+Can handle loss of 2 copy without impacting write operation
+Can handle loss of 3 copy without impacting read operation
+Storage is self-healing
+Two types of Replicas available
+-> Aurora replicas upto 15
+-> mySQL read replicas upto 5	
+DynamoDB has push button scaling, meaning that you can scale your database on the fly,without any downtime.
+
+VPC-Virtual Private Cloud.
+Virtual Data Center in the cloud.
+Amazon VPC lets you provision a logically isolated section of the Amazon Web services cloud where you can launch AWS resource in a virtual network you define. 
+You have control of your virtual networking environment including selection of your own IP address range, creation of subnets and configuration of route tables and network gateways.
+You can easily customize the network configuration for your Amazon Virtual Private Cloud. For example, we can create a public-facing subnet for your webservers that has access to the Internet, and place your backend systems such as databases or application servers in a private facing subnet with no internet access. You can leverage multiple layer of security, including security groups and network access control lists to help control access to Amazon ec2 instances in the subnet.
+You can also create hardware virtual private network connection between your corporate datacenter and your VPC and leverage the AWS cloud as the extension of corporate datacenter.
+Region-> VPC-> Internet gateway/VPC gateway -> Route table -> Network ACL-> (subnets)Security Group -> Instance
+Launch instances of subnet of your choosing
+Assign custom IP address in each subnets
+Configure route tables between subnets
+Create internet gateway and attach it to VPC
+Much better security control over AWS resources. ACL can be used to block specific IP addresses.
+Instance security group. Security groups can span across different availability zone.
+Default VPC vs Custom VPC
+Default VPC is user friendly, allowing you to immediately deploy instances.
+All subnets in the default VPC is internet accessible.
+Each ec2-instance has both public and private IP address whereas in custom VPC, we will have only private IP address.
+VPC Peering:-
+Allows you to connect one VPC to another via direct network route using private IP address.
+Instances behave as they are in the same private network.
+We can peer VPC with other AWS accounts as well as with other VPCs in the same account.
+VPC peering is always a star model
+1 subnet=1 availability zone
+Security Group are statful and ACL are stateless
+No transitive peering
+1VPC = 1 Internet Gateway
+Security Grouo is only for that particular VPC
+Router links subnet with gateway
