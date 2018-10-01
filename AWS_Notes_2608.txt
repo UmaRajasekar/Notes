@@ -91,6 +91,9 @@ Two types of Replicas available
 -> mySQL read replicas upto 5	
 DynamoDB has push button scaling, meaning that you can scale your database on the fly,without any downtime.
 
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS
+
+
 VPC-Virtual Private Cloud.
 Virtual Data Center in the cloud.
 Amazon VPC lets you provision a logically isolated section of the Amazon Web services cloud where you can launch AWS resource in a virtual network you define. 
@@ -117,5 +120,5 @@ VPC peering is always a star model
 Security Group are statful and ACL are stateless
 No transitive peering
 1VPC = 1 Internet Gateway
-Security Grouo is only for that particular VPC
+Security Group is only for that particular VPC
 Router links subnet with gateway
