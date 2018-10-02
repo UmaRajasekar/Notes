@@ -1,0 +1,13 @@
+Lambda evolution
+a. Data Center
+b. Infrastructure as Service
+c. Platform as Service
+d. Containers 
+e. Serverless
+
+AWS Lambda is a compute service, where you can upload your code and create a Lambda function. AWS Lambda takes care of provisioning and managing the servers that you can use to run the code. You dont have to worry about operating systems, patching, scaling etc.
+You can use Lambda in following ways
+a. An event driven compute such as changes data to S3 or an Amazon Dynamo DB table
+b. Response to your HTTP request.
+
+Lambda can trigger another Lambda and it can interact with other AWS server. Lambda mainly supports Scale-out which is the main advantage.
