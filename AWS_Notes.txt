@@ -253,8 +253,6 @@ Understand what cross region replication at high level
 2. Replication Rule with prefixed with bucket option can be used to replicate only buckets having some folder name
 
 User name: s3FullAccess
-Access key ID: AKIAJRFTOWTYZ5DY5EFQ
-Secret access key: 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
 Console login link: https://p727716.signin.aws.amazon.com/console
 
 aws configure -> to configure user
