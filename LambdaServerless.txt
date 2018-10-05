@@ -11,3 +11,5 @@ a. An event driven compute such as changes data to S3 or an Amazon Dynamo DB tab
 b. Response to your HTTP request.
 
 Lambda can trigger another Lambda and it can interact with other AWS server. Lambda mainly supports Scale-out which is the main advantage.
+
+For API Gateway to interact with different resource, we need to enable CORS(Cross Origin Region)
