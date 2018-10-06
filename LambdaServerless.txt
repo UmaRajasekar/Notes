@@ -13,3 +13,83 @@ b. Response to your HTTP request.
 Lambda can trigger another Lambda and it can interact with other AWS server. Lambda mainly supports Scale-out which is the main advantage.
 
 For API Gateway to interact with different resource, we need to enable CORS(Cross Origin Region)
+
+Exam Tips for EC2 instance:-
+-> Know the pricing difference
+  -> On demand
+  -> Spot
+  -> Reserved
+  -> Dedicated Hosts
+Remember with the Spot instances:-
+  -> If you terminate the instance, you pay for the hour
+  -> If AWS terminate the spot instance, you get the hour it was terminated in for free.
+We have many EC2 types:-
+  Few of them are mentioned below:-
+  ->General Purpose
+  ->Field Programmable Gate Array
+  ->High Speed Storage
+  ->Graphic Intensive
+  ->High Disk Throughput
+  ->Dense Storageral
+  ->Memory Optimized
+  FIGHTDRMCPX
+EBS consist of
+  -> SSD, General Purpose - GP2 - Upto 10000 IOPS
+  -> SSD, Provisioned IOPS - 101 - (More than 10000 IOPS)
+  -> HDD, Throughput Optimized - ST1 - frequently assed workloads- not applicable for Root volume
+  -> HDD, Cold -SC1 - less frequently assessed data.- not applicable for Root volume.
+  -> HDD, Magnetic - Standard- cheap, infrequently accessed storage
+  
+  You cannot mount one EBS volume to multiple EC2 instance. To do so, we need to use EFS instead.
+  Termination Protection is off by default. We need to turn it on.
+  On the EBS backed volume, when root EBS volume is terminated, it will not terminate associate EBS volume.
+  EBS backed root volume can now be encrypted. Also additional volumes can be encrypted.
+  
+Volumes exists in EBS, they are basically virtual hard disk
+Snapshots exists on S3.
+We can also take snapshot of the volume and snapshot's volume gets stored in S3.
+Snapshots are point in time copies of volume.
+Snapshots are incremental.
+
+Snapshots of encrypted volumes are encrypted automatically.
+Volumes restored from snapshots are encrypted automatically.
+You can share snapshots, only if they are unencrypted.
+  These snapshots can be shared with other AWS account or made public.
+  To take snapshot of root device of EBS storage, you must stop the instance.
+  
+Instance Store Volumes are sometime called as Ephemeral Storage.
+Instance store volumes cannot be stopped. If the underlying host fails, you will lose your data.
+EBS backed volumes can be stopeed and data lose is limited.
+While terminating EBS volume, we can tell AWS service to keep the root volume.
+
+Problem:- How you will back up RAID array, when taking snapshots. Snapshots will always delete memory held in cache by applications and OS
+Solution:- Take an application consistent snapshot.
+  -> Stop all the application writing to disk.
+  -> Flush all caches to the disk.
+  
+    How can we do this?
+      -> Freeze the file sysyem.
+      -> Unmount the RIAD aray
+      -> Shutting down the associated EC2 instance.
+      
+ AMI - Amazon Machine Imahes
+  -> AMI's are regional.
+  -> You can also copy AMI to other regions using console, command line or the Amazon EC2 API.
+
+Monitoring
+  ->Standard Monitoring= 5 minutes
+  ->Detailed Monitoring= 1 minute
+  
+  CloudWatch is used for performance monitoring.
+  CloudTrial is used for auditing
+  
+CloudWatch
+  -> You can create Dashboard.
+  -> You can also set Alarms to notify when treshold are hit.
+  -> Events: Cloud Watch Events helps you to respond to the state changes in your AWS resources.
+  -> Logs- Helps you to log performace details
+  
+Roles
+  -> Very much secure and better than using aws secret key and access key.
+  -> Easier to manage.
+  -> Roles can be assigned to EC2 instance even after its been provisioned.
