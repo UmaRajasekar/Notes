@@ -93,3 +93,28 @@ Roles
   -> Very much secure and better than using aws secret key and access key.
   -> Easier to manage.
   -> Roles can be assigned to EC2 instance even after its been provisioned.
+  -> Roles are universal. You can use them in any region.
+  
+Instance Metadata
+  -> Use to get information about an instance
+  -> curl http://169.254.169.254/latest/meta-data
+  -> curl http://169.254.169.254/latest/user-data
+  
+EFS Features
+  -> Supports Network File System version 4(NFSv4) protocol
+  -> You can pay only for storage
+  -> No pre-provisioning required.
+  -> Can scale upto petabytes.
+  -> Can support thousands of concurrent NFS connections.
+  -> Data is stored across multiple AZs within a region
+  -> Read after Write consistency
+  
+Lambda
+  -> This compute service where you can upload code and create Lambda function. AWS Lambda take care of provisioning and managing the servers that you use to run the code. Lambda can be used in following ways:-
+    -> As an event driven compute service
+    -> As an compute request to run your code in response to HTTP request.
+    
+Placement Groups:-
+  -> There are two types of placement groups
+    -> Cluster Placement Groups (one AZ)
+    -> Spread Placement Groups. Garantees that your EC2 instance is available in seperate pieces of hardware.
