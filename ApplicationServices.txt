@@ -1,0 +1,35 @@
+SQS -> Simple Queue Service
+This is the first ever AWS service publically available.
+Amazon SQS is a web service that gives you access to message queue that can be used to store messages while waiting for a computer to process them.
+Amazon SQS is a distributed queue system that enables web service application to quickly and reliably queue messages that one component in the application generates to be consumed by another component. A queue is a temporary repository for messages that are awaiting processing.
+In simple words, SQS is a way of assigning jobs.
+We can also have auto scaling group configured with SQS, so that ec2 instance is increased/decreased based on the messages in the queue.
+This is pull based systems.
+Using SQS, you can decouple the components of an application so that they can run independently, easing message management between components.
+Any components of a distribuited application can store messages. Messages can be upto 256KB of text in any format. Any component can later retrieve the messages programmatically using the Amazon SQS API
+The queue act as a buffer between the components producing and saving data, and the components recieving the data for processing.
+This means the queue resolves issues that arises if the producers is producing the work faster that the consumer can process it, or if the producer or consumer are intermittenly connected to the network.
+There are two types of queues:-
+-> Standard Queue
+-> First In First Out(FIFO queue)
+
+Amazon SQS offers standard as the default queue types.
+A standard queue lets you have a nearly unlimited number of transaction per second.
+Standard queues gurantee that message is delivered atleast once.
+However occasionally(because of the highly-distributed architecture that allows high throughput), more than one copy of a message might be delivered out of order. Standard queues provide best effort ordering which ensures that messages are generally delivered in the same order as they are sent.
+
+The FIFO queue complements the standard queue. The most important features of this queue type are FIFO(first in first out) delivery and exactly once processing: The order in which messages are sent and recieved is strictly preserved and the message is delivered once and remains available until a consumer process and deletes it; duplicates are not introduces in the queue. FIFO queues also support message groups that allow multiple ordered message groups within a single queue. FIFO queues are limited to 300 transaction per second, but have all the capabilities of the standard queue.
+Messages can be kept in the queue from 1 minute to 14 days
+Default retention period is 4 days.
+SQS guarantees that your messages will be processed at least once.
+
+SQS Visiblity Timeout.
+The visibility timeout is the amount of time that the message is invisible in the SQS queue after a reader picks up the message. Provided the job is processed before the visibility time out expires, the messages will then be deleted from the queue. If the job is not processed  within that time, the message will become visible again and another reader will process it. This could result in the same message being delivered twice.
+Default visibility timeout is 30 seconds.
+Increase it if your tasks takes > 30 seconds.
+Maximum is 12 hours.
+
+SQS Long Polling
+Amazon SQS long polling is the way to retrive messages from your Amazon SQS queues.
+While the regular short polling returns immediately (even if the message queue is being polled is empty), long polling doesn't return a response until a message arrives in the message queue, or the long poll time out.
+As such, long polling can save your money.
