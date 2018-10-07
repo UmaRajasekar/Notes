@@ -33,3 +33,30 @@ SQS Long Polling
 Amazon SQS long polling is the way to retrive messages from your Amazon SQS queues.
 While the regular short polling returns immediately (even if the message queue is being polled is empty), long polling doesn't return a response until a message arrives in the message queue, or the long poll time out.
 As such, long polling can save your money.
+
+SWF-> Simple WorkFlow Service
+
+Amazon Simple Workflow Service is a web service that makes it easy to coordinate work across distributed application components. Amazon SWF enables application for a range of use cases, including media processing, web application back-ends, business process workflows, and analytics pipelines, to be designed as a coordination of tasks.
+Tasks represent invokations of various processing steps in an application which can be performed by executable code, web service calls, human actions and scripts.
+
+SWF Workers
+-> Workers are programs that interact with Amazon SWF to get tasks, process recieved tasks, and return the results.
+SWF Decider
+-> Decider is a program that controls the coordination of tasks, ie. their ordering, concurrency, and scheduling according to the application logic.
+
+SWF Workers and Deciders
+The workers and deciders can run on cloud infrastructure, such as Amazon EC2, or on machines behind firewalls. Amazon SWF brokers the interaction between workers and the decider. 
+It allows the decider to get consistent views into the progress of tasks and to initiate new tasks in an ongoing manner.
+At the same time, Amazon SWF stores tasks, assigns them to workers when they are ready, and monitors their progress. 
+It ensures that tasks is never duplicated.(main difference with SQS)
+Since Amazon SWF maintain the application's state durably, workers and deciders dont have to keep track of execution state.
+They can run independently and scale quickly.
+
+SWF Domain
+Your workflow and activity types and the workflow execution itself are all scoped to a domain. 
+Domains isolate a set of types, executions, and task lists from others within the same account.
+You can register a domain by using the AWS Management Console or by using the RegisterDomain action in the Amazon SWF API.
+Maximum length of workflow can be upto 1 year.
+SWF is task oriented API whereas SNS is message oriented API.
+SWF task is never duplicated whereas SNS might duplicate messages.
+Amazon SWF keeps track of all the tasks and events in an application. With Amazon SQS, you need to implement your application level tracking, especially if your application uses multiple queues.
