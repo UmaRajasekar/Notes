@@ -129,3 +129,17 @@ The main difference of using Kinesis Firehose and the Kinesis stream is that you
 
 Kinesis Analytics
 -> This is combination of Analystics with the firehose where it allows you to write SQL queries on the data available in the firehose and then allows storage directly into Redshift, whereas using Kinesis firehose to store data in the Amazon Redshift, first you need to store data in the S3 bucket.
+
+SWF Actors
+-> Workflow Starters
+-> Deciders
+-> Activity Workers
+
+SNS Subscribers
+-> HTTP
+-> HTTPS
+-> Email
+-> Email-JSON
+-> SQS
+-> Application
+-> Lambda
