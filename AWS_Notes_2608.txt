@@ -122,3 +122,5 @@ No transitive peering
 1VPC = 1 Internet Gateway
 Security Group is only for that particular VPC
 Router links subnet with gateway
+
+Security Group spans within the VPC.
