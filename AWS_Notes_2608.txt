@@ -124,3 +124,22 @@ Security Group is only for that particular VPC
 Router links subnet with gateway
 
 Security Group spans within the VPC.
+
+Network Address Translator
+-> This can be used as bridge to connect ec2 instance in private subnet and other ec2 instance in public subnet.
+-> When creating a NAT instance, you need to disble source/destination check on the instance.
+-> NAT instance must be in a public subnet
+-> There must be a route table out of the private subnet to the NAT instance, in order for this to work.
+-> The amount of traffic that NAT instances can support depends on the instance size. If you are bottlenecking, increase the instance size.
+-> NAT instance behind security group.
+
+NAT Gateways
+-> Preferred by the enterprise
+-> Scale automatically upto 10Gbps
+-> No need to patch
+-> Not associated with security groups
+-> Automatically assigned a public ip address.
+-> This should be created for each availability zone
+-> Remember to update Route Table.
+-> No need to diable source/destination check
+-> More secure than a NAT instance.
