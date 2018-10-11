@@ -511,3 +511,186 @@ aws s3 ls-> to list s3
 aws s3 help
 aws ec2 describe-instances
 to terminate instance-> aws ec2 terminate-instances --instance-ids <<instance-id>>
+
+
+Two types of placement groups
+-----------------------------
+Clustered Placement Group
+Spread Placement Group
+
+Clustered Placement Group
+This is grouping of instances within a single Availability zone. Placement groups are recommended for applications that need low network latency, high network throughput, or both.
+Only certain instances can be launched into a Clustered Placement Group.
+Usually Big data application requires this feature
+Usually high RAM space and high CPU utilization only be supported in Clustered Placement Group
+
+Spread Placement Group
+A spread placement group is a group of instances that are each placed on the distinct underlying hardware.
+Spread placement groups are recommended for applications that have a small number of critical instances that should be kept seperated from each other.
+
+A placement group must be unique within your AWS account
+It recommend homogenous instance within a placement group. Size and family should be same.
+You cant merge placement groups.
+You also cant move existing instance into placement groups. Tips: you can create AMI from a existing instance and then launch a new instance from an AMI into placement group
+
+EFS
+----
+Amazon elastic file storage system is a file storage service for Amazon Elastic cloud computing instances. Amazon EFS is easy to use and provides a simple interface that allows you to create and configure file systems quickly and easily. With Amazon EFS, storage capacity is elastic, growing and shrinking automatically as you add and remove files, so your application will have storage you need when they needed it.
+Supports NFSV4 Network File System protocol V4.
+Only pay for storage you use. (No need of pre-provisioning)
+Can scale up to peta-byte
+Can support thousands of concurrent NFS connections
+Data can be stored across multiple availability zone within a region
+This is block based storage as opposed to object based storage
+Read after write consistency
+All the instance used for EFS file system should have same security group
+It helps to mount a directory across ec2 instance
+It can mount ec2 instance which are using DNS names that has all the availability zone.
+
+Lamda
+-----
+This is invention of serverless
+Along with API gateway with Lamda, we can build serverless website.
+History of Cloud:-
+*Data Center
+*EC2 Lauches(2006) IAAS:- Infrastructure as service
+*PAAS:- Platform as service (Elastic Bean Stalk)
+*Containers
+*Serverless
+Lamda is encapsulation of Datacenters, Hardware, Assembly Code/Protocol, High Level Language and Operating System, Application Layer/AWS API
+AWS Lamda is a compute service where you can upload your  code and create Lamda function. AWS Lamda takes care of provisioning and managing the servers that you use to run the code.You dont have to worry about operating system, patching, scaling, etc.. You can use Lamda in following ways
+*As a event-driven compute service where AWS Lambda runs your code in response to events. These events could changes to your data in an Amazon S3 bucket or an Amazon DynamoDB table.
+*As a compute service to run your code in response to HTTP requests using Amazon API Gateway or API calls made using AWS SDKs. 
+Lamda event can trigger another lamda function and can communicate
+Scale-up concept->increasing the RAM size of an instance
+Scale-out concept-> When there is increase of load, load balancer use to diversify the load across instances.
+Lamda does automatic scale-out
+Languages supported in Lambda
+Java
+Python
+C#
+Node.js
+Lamda is priced based on number of requests and duration of the request been processed.
+Maximum duration of Lamda request is going to be 5 minutes. If its going to take more that, we have to break the Lamda function
+Why is Lamda cool?
+No Servers!
+Continous Scaling
+Cheap
+Lamda scales out(not scale up)
+Lamda functions are independent (1 event=1 function)
+Lambda is serverless
+Services like API Gateway, S3, Dynamo Db are serverless
+Lamda can trigger another Lambda function. 1 event=x function
+Architecture can be extremly complicated. We can have AWS X-ray to debug the same.
+Lambda can do things globally, you can use it to back up S3 buckets to other S3 buckets, etc.
+Know your triggers
+Lambda can have multiple triggers. Let us discuss on website trigger APIGateway. 
+Steps to create API Gateway.
+*Configure API
+*Create API
+*Deploy API
+These triggers will help us to execute lamda function based on the triggers configured.
+
+
+Domain Name System(DNS)
+This used to convert human friendly domain names into an Internet Protocol address. 
+IP address are used by computers to identify each other on the internet.
+IP address commonly come in 2 different forms IPV4 or IPV6.
+IPV4 space is a 32 bit field and has over 4 billion different database addresses.
+IPV6 was created to solve this depletion issue and has an address space of 128bits.
+Domain name
+Top level domain name-> .com,.gov,.edu
+Second level domain name -> .com.au,.gov.au,edu.au
+http://www.iana.org/domains/root/db
+Domain Registrars
+A registrars is an authority that can assign domain names directly under one or more top-level domains.
+These domains are resgistered with InterNIC, a service of ICANN which enforces uniqueness of domain names across the internet.
+Each domain name gets registered to WhoIs database
+Start of Authority(SOA)
+The name of the server that supplied the data for the zone.
+The administrator of the zone.
+Current version of the data file.
+The number of seconds a secondary name server should wait before checking for updates.
+The number of seconds a secondary name server should wait before retrying a failed zone transfer.
+The maximum number of seconds that a secondary name server can use data before it must either be refreshed or expire.
+The default number of seconds for the time-to-live file on resource records.
+NS Records
+NS stands for Name Server records and are used by Top Level Domain servers to direct traffic to the Content DNS server which contains the authoritative DNS records.
+A records
+An "A" record is the fundamental type of DNS record and the "A" in A record stands for "Address". The A record is used by a computer to translate name of the domain to the IP address.
+Popular domain register servers are GoDaddy.com, 123-reg.co.uk etc.
+To remember, elastic load balancers dont have IPV4 or IPV6 address but have only DNS name. so we dont have A record and we should be using alias record.
+TTL->Time to live
+The length that a DNS record is cached on either the Resolving server or the users own local PC is equal to the value of the "Time to live" in seconds . 
+The lower the Time to live, the faster changes to DNS records take to propogate throughout the internet.
+C name
+A conanical name can be used to resolve one domain name to another.
+It just moves from one domain name to another.
+Alias Record.
+This is just with AWS and which will be used in Route53.
+Alias records are used to map resource record sets in your hosted zone to Elastic Load Balancers, CloudFront distributions, or S3 buckets that are configured as websites.
+Alias records work like a CNAME record in that you can map one DNS name to another 'target' DNS name.
+Key difference- A CNAME cant be used for naked domain names(zone apex record). You cant have a CNAME for http://acloud.guru, it must be either an A record or an alias.
+Alias record can save you time because Amazon Route 53 automatically recognizes changes in the record sets that the alias resource record set refers to.
+Different Route Policy
+*Simple
+*Weighted
+*Latency
+*Failover
+*GeoLocation
+Simple:-
+This is simple default routing policy when you create a new record set. This is most commonly used when you have a single resource that performs a given function for domain, for example one web server that provides content for the http://acloud.guru website.
+user->dns->route53->ec2 instance
+There is no smart build. This is the default route.
+Weighted Routing Policy:-
+Building a logic so that route 53 serves traffice 20% of request to one load balancer and 20% of load balancer to other load balancer. A load balancer can be linked to multiple ec2-instance.
+Latency Routing Policy:-
+Latency based routing allows you to route your traffic based on the lowest network latency for your end user(ie which region will give them the faster response time).
+To use latency-based routing you create a latency resource record set for the Amazon EC2(or elb resource) in each region that host your website. When Amazon Route53 recieves query for your site, it selects the latency resource record set for the region that gives the user the lowest latency. Route 53 then responds with the value associated with that resource record set.
+FailOver Routing Policy:-
+Diverts a traffic only when there is failure in health check of elastic load balancer fails.
+Geo-Location Routing Policy:-
+Geo-Location routing lets you choose where your traffic will be sent based on the geographic of your users. For. example, if the website request originated from Europe are re-directed to one elastic load balancer or IP address.
+Exam Tips:-
+Elastic load balancer does not have IPV4 address and we can resolve only by DNS names.
+Understand different routing policy
+Understand difference between CNAME and Alias
+Different types of database
+----------------------------
+1. SQL Server
+2. Oracle
+3. My SQL server -free
+4. PostgreSQL
+5. Aurora
+6. Maria DB
+
+Non-Relational Database
+1. Database
+ a. Collection =Table
+ b. Document = Row
+ c. Key-Value Pair = Fields
+Amazon NoSQL database is Dynamo DB
+JSON/noSQL
+{
+"id": "1234"
+"firstname" : "Rajasekar"
+"surname" : "Puniyamoorthy"
+"Age" : "23"
+"address" : [
+{
+"street": "Bank Place"
+"suburb" : "Melbourne"
+}
+]
+}
+OLAP- Amazon Redshift
+Data warehousing:-
+Useful for business intellgence. Tools like Cognos, Jaspersoft, SQL server Reporting services, Oracle Hyperion, SAP NetWeaver
+Used to pull in very large and complex data sets. Usually used by management to do queries on data.
+OLTP- Online Transaction Processing. Queries on particular item
+OLAP- Online Analytic Processing. Queries on whole item which will be used by data ware house and analytical team.
+Elastic Cache:-
+Elastic Cache is a web service that makes it easy to deploy, operate and scale an in-memory cache in the cloud. The service improves performance of web applications by allowing to retrive information from fast, managed, in memory caches, instead of relying entirely on slower disk based databases.
+Elastic Cache supports two open source in memory caching engines:-
+Memcached
+Redis
