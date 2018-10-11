@@ -187,3 +187,14 @@ VPC Endpoints
 -> An interface endpoint is an elastic network interface(ENI) that serves as an entry point for traffic to the service.
 -> A gateway endpoint serves as a target for a route in your route table for traffic destined to that service.
 -> Allows certain public AWS service to securely connect to the private VPC
+
+Network ACLs are stateless
+
+Steps to create a basic interactive websites
+Resources Involved:-
+1. EC2
+2. S3
+3. Database
+4. ELB and CloudFront
+
+Step1: Create VPC and Secutity Groups as required.
