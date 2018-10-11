@@ -143,3 +143,19 @@ NAT Gateways
 -> Remember to update Route Table.
 -> No need to diable source/destination check
 -> More secure than a NAT instance.
+
+Network Access Control List
+-> Your VPC automatically comes with a default network ACL, and by default it allows all outbound and inbound traffic.
+-> You can create custom network ACLs. By default, each custom network ACL denies all inbound and outbound traffic until you add rules.
+-> Each subnet in your VPC must be associated with a network ACL, the subnet is automatically associated with default network ACL.
+-> You can associate a network ACL with multiple subnets; however, a subnet can be associated with only one network ACL at a time.When you associate a network ACL with a subnet, the previous association is removed.
+-> Network ACL can contain numbered list of rules that is evaluated in order, starting with the lowest numbered rule
+-> Network ACLs can have seperate inbound and outbound rules, each rule can either allow or deny traffic.
+-> Network ACLs are stateless; thus responses to allowed inbound traffic are subject to the rules of outbound traffic (vice versa)
+-> Ephermeral port (client to server communication port) is meant only for outbound rules.
+-> To block any IP address, we can use only Network ACLs and not the Security Groups
+
+When we create load balancer for an ec2 instance of an private VPC, following things should be considered 
+-> Your subnet should have associated with internet gateway
+-> You should choose atleast two subnets from different availability zone.
+-> You can have only one subnet from one availability zone
