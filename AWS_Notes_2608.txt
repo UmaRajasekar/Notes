@@ -422,3 +422,28 @@ Database
 -> RDS, DynamoDB, Redshift
 Space-Time Trade-Off
 -> CloudFront, Direct Connect, Read Replicas, Elastic Cache?
+
+Pillar Four - Cost Optimization
+This helps in reducing your costs to a minimum and use those savings for other parts of the systems.
+-> Transparently Attribute expenditure.
+-> Use managed service to reduce cost of ownership
+-> Trade capital expense for operating expense
+-> Benefit from ecnomies of scale
+-> Stop spending money on data center operations.
+
+Definition
+-> Match supply and demands
+Autoscaling
+-> Cost-effective resources
+EC2
+-> Expenditure awareness 
+CloudWatch Alarams, SNS
+-> Optimizing over time
+AWS blog, AWS Trust
+
+Match and Supply
+-> Doesnt need to buy datacenter in upfront. In cloud, we can scale-up and scale-down based on the needs.
+-> With cloud you no longer have to go out and get quotes on physical servers,choose a supplier, have those resource delivered.
+Question to be asked?
+How do you manage and/or consider the adoption of new services?
+
