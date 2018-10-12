@@ -368,3 +368,57 @@ Change Management
 Failure Management
 -> CloudFormation
 
+Pillar3- Performance Efficiency
+The performance efficiency pillar focuses on how to use computing resources efficiently to meet your requirements and how to maintain that efficiency as demand changes and technology evolves.
+
+Design Principles
+-> Democratize advance technologies
+-> Go Global in minutes
+-> Use server-less architecture
+-> Experiment more often
+
+Performance Efficiency in cloud consist of 4 areas;
+-> Compute
+-> Storage
+-> Database
+-> Space-time trade-off
+
+When architecturing your system, it is important to choose right kind of server.
+Some applications may require heavy CPU utilization, some require heavy memory utilization
+With AWS servers are virtualized and at the click of the button, you can change the type of the server in which your environment is running on. You can even switch to running with no servers at all and use AWS Lambda.
+Questions to be asked:-
+How do you select the appropriate instance type for your system?
+How do you ensure that you continue to have the most appropriate instance type as new instance type as new instance types and feature are introduced?
+How do you monitor your instances post launch to ensure they are performing as expected?
+How do you ensure that the quatity of your instance matches your demand?
+
+Storage:-
+The optimal storage solution depends on number of factors
+1. Access Method - Block, File or Object
+2. Pattern of Access- Random or Sequencial
+3. Throughput Required
+4. Frequency of Access
+5. Frequency of Update
+6. Availability Contraints
+7. Durability Constraints
+
+Factors required for Database solutions
+1. Database consistency
+2. High availability
+3. Do we need No-SQL
+
+Space Time Off
+You can use Read Replicas in RDS to spread out your load. This helps in lower latency.
+You can use Direct Connect to provide predictable latency between HQ and AWS.
+You can also use caching services such as Elastic Cache and CloudFront to reduce latency.
+Questions to be asked?
+How you select the appropriate proximity and caching solutions for your systems?
+Key AWS service
+Compute
+->Lambda, Autoscaling
+Storage
+-> EBS, S3, Glacier
+Database
+-> RDS, DynamoDB, Redshift
+Space-Time Trade-Off
+-> CloudFront, Direct Connect, Read Replicas, Elastic Cache?
