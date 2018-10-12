@@ -327,3 +327,44 @@ Infrastructure Protection
 -> VPC
 Detective Controls
 -> AWS Cloud Trail, AWS Config, AWS Cloud Watch
+
+Pillar Two- Reliability
+The reliability pillar covers the ability of a system to recover from service or infrastructure outages/disruptions as well as the ability to dynamically acquire computing resources to meet demand.
+
+Design Principles
+-> Test recovery procedure
+-> Automatically recover from failure
+-> Scale horizontally to increase aggregate system availability
+-> Stop guessing capacity
+
+Reliability in cloud consist of three areas:-
+1. Foundations
+2. Change Management
+3. Failure Management
+
+Foundations
+AWS handles most of the foundation for you unlike traditional data centers.
+Cloud designed to be limited.
+However there are certain service limits set by AWS which we need to be aware of.
+Be aware of all the service limit AWS have and plan for additional service ahead.
+
+Change Management
+Most of the change management process are handled automatically in cloud with the help of CloudWatch and autoscaling.
+Questions to be asked?
+How does your system adapt to changes in demand?
+How are you monitoring AWS resources?
+
+Failure Managament
+Questions to be asked?
+How are you backing up the data?
+How does your system withstand component failures?
+How are you planning for recovery?
+
+Key AWS resources
+Foundations
+->IAM, VPC
+Change Management
+-> AWS CloudTrail
+Failure Management
+-> CloudFormation
+
