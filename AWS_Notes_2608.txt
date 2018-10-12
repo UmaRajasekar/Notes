@@ -198,3 +198,132 @@ Resources Involved:-
 4. ELB and CloudFront
 
 Step1: Create VPC and Secutity Groups as required.
+
+WhitePaper Details:-
+-> Almost zero upfront infrastructure investment
+-> Just-in-time Infrastructure.
+-> More efficient resource utilization
+-> Usage-based costing
+-> Reduced time to market
+
+Technical Benefits of Cloud-
+-> Automation - "Scriptable Infrastructure"
+-> Auto Scaling
+-> Pro-active scaling
+-> More efficient Development lifecycle.
+-> Improved Testability
+-> Disaster Recovery and Business Continuity
+-> "Overflow" the traffic of the cloud.
+
+Design for Failure:
+
+Rule of thumb: Be a pessimist when designing architectures in the cloud; assume things will fail. In other words, always design, inplement and deploy for automated recovery from failure.
+In particular, assume that your hardware will fail. Assume that outages will occur. Assume that some disaster will strike your application. Assume that you will be slammed with more than the expected number of requests per second some day. Assume that with time your application software will fail too. By being a pessimist, you end up thinking about recovery strategies during design time, which helps in designing an overall system better.
+
+Decouple your Components:-
+The key is to build components that do not have tight dependencies on each other, so that if component were to die(fail), sleep(not respond) or remain busy(slow to respond) for some reason, the other components in the system are built so as to continue work as if no failure is happening.
+In essence, loose coupling isolates the various layers and components of your application so that each component interacts asynchronously with the others and treats them as a "black box"
+
+For example, in the case of web application architecture, you can isolate the app server from the web server and from the database. The app server does not know about your web server and vice-versa, this gives decoupling between layers and there are no dependencies code-wise or functional prespectives.
+In case of batch processing architecture, you can create asynchronous components that are independent to each other.
+
+The cloud brings three new concept of elasticity in your applications. Elasticity can be implemented in three ways:-
+
+1. Proactive Cyclic Scaling
+2. Proactive Event Based Scaling
+3. Auto-scaling Scaling based on Demand.
+
+Secure your application for different servers as mentioned below:-
+1. Web server
+2. App server
+3. DB server
+This is achieved using Security Groups and Network ACLs
+
+Five pillars of well architecture framework:-
+1. Security
+2. Reliability
+3. Performance Efficiency
+4. Cost optimization
+5. Operational Excellence
+
+Structure of each pillars
+-> Design Principles
+-> Definition
+-> Best Practices
+-> Key AWS services
+-> Resources
+
+General Design Principles
+-> Stop guessing your capacity needs
+-> Test Systems at production scale
+-> Automate to make architectural experimentation easier
+-> Allow for evolutionary architectures
+-> Data Driven Architectures
+-> Improve through game days
+
+Security
+-> Design Level
+Apply security at all layers
+Enable traceabilities
+Automate responses to your security events
+Focus on securing your systems
+Automate security best practices
+
+Security in the cloud consist of 4 areas:-
+-> Data protection
+-> Previlage management
+-> Infrastructure protection
+-> Detective controls
+
+Data Protection
+Before you begin to architect security practices across your environment basic data classification should be in place.
+You should organize and classify your data in to segments such as publicly available, available to only members in the organization, available only to board etc.
+You should also implement a least previlage access systems so that people will be able to access only what they need.
+However, most importantly, you should encrypt everywhere possible, whether it could be at rest or it transit
+
+In AWS, the following practices help you to protect the data
+-> AWS customers maintain full control over thier data.
+-> AWS makes it easier for you to encrypt  your data and manage keys, including regular key rotation, which can be easily automated natively by AWS or maintained by a customer
+-> Detailed loggibng is available that contains important content such as file access and changes.
+-> AWS has designed storage systems for exceptional resiliency. As an example, Amazon S3 is designed for 11 nines of durability.
+-> Versioning
+-> AWS never initiates the movement of data between regions.
+
+Data Protection Questions?
+1. How are going to encrypt data in rest?
+2. How are going to encrypt data in transit?
+
+Previlage Management ensures that only authorized and authenticated users are able to access your resources, and only in the manner that is intented. It can include.
+1. Access COntrol List(ACLs)
+2. Role based access Controls.
+3. Password Managements
+
+Questions to be asked?
+How are you protecting access to and use of AWS root account credentials?
+How are defining roles and responsibilities of system users to conrol human access to the AWS Management Console and APIs?
+How are limiting automated access?
+How are you managing keys and credentials?
+
+Infrastructure Protection is meant for VPC level.
+Questions to be asked?
+How are you enforcing network and host-level boundary protection?
+How are you enforcing AWS service level protection.
+How are you protecting integrity of the operating systems in the EC2 instances?
+
+Detective Controls
+This is used to detect security breaches. This can be achieved by below:-
+1. AWS Cloud Trail
+2. AWS CloudWatch
+3. AWS config
+4. Amazon Simple Storage Service
+5. Amazon Glacier
+
+1. How are you capturing and analyzing AWS logs?
+Data Protection:
+-> You can encrypt your data both in rest and transit using ELB,S3 and RDS.
+Prvilage Managements
+-> IAM, MFA
+Infrastructure Protection
+-> VPC
+Detective Controls
+-> AWS Cloud Trail, AWS Config, AWS Cloud Watch
