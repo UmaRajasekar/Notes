@@ -447,3 +447,15 @@ Match and Supply
 Question to be asked?
 How do you manage and/or consider the adoption of new services?
 
+Operational Excellance Pillar=> Pillar 5
+-> This includes operational practices and procedures used to manage production workloads.
+-> This include on how planned changes are executed as well as responses to the unconditional operational events
+-> Change execution and responses should be automated. All processes and procedures of operartional excellence should be documented, tested and regularly reviewed.
+
+Design Principles
+-> Perform operations with code.
+-> Align operations processes to business objectives
+-> Make regular,small, incremental
+-> Test for responses to unexpected events.
+-> Learn from operational events and failures
+-> Keep operations procedure current
