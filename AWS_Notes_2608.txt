@@ -459,3 +459,56 @@ Design Principles
 -> Test for responses to unexpected events.
 -> Learn from operational events and failures
 -> Keep operations procedure current
+
+There are three best practice areas for Operational Excellence in the cloud
+->Preparation
+->Operation
+->Response
+
+Prepartion
+-> Effective prepartion is required to drive operational excellance
+-> Operational checklist always ensures that workloads are ready for production operation, and prevent unintentional production promotion without effective preparation.
+-> Workloads should have
+  a. Runbooks - operations guidance that operations teams can refer to as to perform normal daily tasks.
+  b. Playbooks- Guidance for responding to unexpected operational response.
+  
+ Cloud Formation can be used to ensure that environments contain all required resources when deployed in production, and that the configuration of the environment is based on the tested best practices, when reduces the oppurtunities for human errors.
+ Autoscaling->response to events when business related events affect operational needs.
+ AWS Config-> AWS config rule feature create mechanism to automatically track and respond to changes in your AWS workloads and environments.
+ Tagging-> helps in identifying resources when needed during operations and responses.
+ 
+ Questions to be asked?
+ What are the best practices for cloud operations are you using?
+ How are you doing configuration management for your workload?
+ 
+ Documents should contain details as mentioned below:
+ 1. Application designs
+ 2. Environment Configurations
+ 3. Resource Configurations
+ 4. Response Plans
+ 5. Mitagation Plans
+ 
+ Operations
+ -> Operations should be standaridized and manageable on a routine basis.
+ 
+ Questions to be asked?
+ How are you evolving your workload while minimizing the impact of change?
+ How do you monitor your workload to ensure it is operating as expected?
+ 
+ Deployment, Release Management, changes and Rollbacks should be avoided.
+ Release should be small and frequent and no downtime should be there.
+ Monitoring should be aligned with business needs.
+ 
+ Responses to unexpected events should be automated
+ This is not just for alerting but also for mitigation, remediation, rollback and recovery.
+ 
+Questions to be asked?
+How do you respond to unplanned operational events?
+How is escalation managed when responding to unplanned events?
+
+Preparation
+SQS, Autoscaling, AWS Config
+Operations
+CodeCommit, Code deploy and AWS Code Pipeline
+Responses
+Cloud Watch, SNS
