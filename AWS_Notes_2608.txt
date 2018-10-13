@@ -512,3 +512,9 @@ Operations
 CodeCommit, Code deploy and AWS Code Pipeline
 Responses
 Cloud Watch, SNS
+  
+Additional Exam Tips
+
+EBS Backed VS Instance Stored
+-> EBS backed volume are persistence (can be detached) whereas Instance store is not persistence
+-> Instance Store volume data is lost and its lifetime is lifetime of the instance
