@@ -518,3 +518,41 @@ Additional Exam Tips
 EBS Backed VS Instance Stored
 -> EBS backed volume are persistence (can be detached) whereas Instance store is not persistence
 -> Instance Store volume data is lost and its lifetime is lifetime of the instance
+
+-> Chef, Puppet and Ansible used for OpsWork which uses cloud formation template to have infrastructure as code
+
+AWS Organization
+-> AWS Organization is an account management service that enables you to consolidate multiple AWS accounts into an organization that you create and centrally manage.
+Available in two feature sets
+-> Consolidated Billing
+-> All Features
+In terms of AWS Organization, there is paying account which is linked to multiple linked accounts where you get an consolidated billing.
+Paying account is independent
+All linked accounts are independent
+Currently there is limit of 20 linked accounts to the paying account.
+
+Best Practices
+-> Always enable multi-factor authentication on root account.
+-> Always use strong and complex password on root account
+-> Paying account should be used for billing purpose only. Do not deploy resources in to paying accounts.
+
+You can enable billing account on paying account.
+
+CloudTrail
+-> Per AWS Account and is enabled per region
+-> Can consolidate logs using an S3 bucket
+  1. Turn on CloudTrial in the paying account
+  2. Create a bucket policy that allows cross account access
+  3. Turn on CloudTrial in the other accounts and use the bucket in the paying account.
+  
+Discounts you may get
+  1. Volume discount on all accouts.
+  2. Unused reserved instances are applied across the group.
+  
+With organization, you can create group of accounts and then apply polices to those groups.
+
+AWS Organizations allows four things:-
+1. Centrally Manage Policies Across Multiple AWS accounts
+2. Control Access to AWS services (Service Control Policies) 
+3. Automate AWS Account Creation and Management
+4. Consolidating Billing across Multiple AWS accounts
