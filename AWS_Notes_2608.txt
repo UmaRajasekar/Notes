@@ -616,3 +616,96 @@ Workspaces
 -> Workspaces is persistent
 -> All data in the D drive is backed up every 12 hours.
 -> You do not need an AWS account to login to workspaces.
+
+Elastic Container Service:-
+What is Docker?
+Typical Application Stack:-
+a. Operating System
+b. Install Dependencies
+c. Application
+
+Docker is a software platform that allows you to build, test and deploy applicatons quickly.
+Docker is highly reliable: you can quickly  deploy and scale applications to any environment and know your code will run.
+Docker is infinitely scalable: Running docker on AWS is a great way to run distributed applications at any scale.
+Docker packages software into standarized units called Containers:
+-> Container allows you to easily package an application code, configurations, and dependencies into easy to use building blocks that deliver environmnetal consistency, operational efficiency, developer productivity, and version control.
+
+Virtualization vs Containerisation
+Docker Container contains only dependencies and Application.
+
+Benefits
+a. Escape from dependency hell
+b. Consistent Progression from DEV-TEST-QA-PROD
+c. Isolation- performance or stability issue with App A in container A, wont impact App B in Container B.
+d. Much better resource management
+e. Extreme code poratability
+f. Micro Services
+
+Docker Components
+1. Docker Image
+2. Docker Container
+3. Layer/Union File Systems
+4. DockerFile (Instructions)
+5. Docker Daemon/Image
+6. Docker Client
+7. Docker Registries/Docker Hub
+
+Amazon EC2 Conatiner Service(Amazon ECS) is a highly scalable, fast, container management service that makes it easy to run, stop and manage docker containers on a cluster of EC2 instances. Amazon ECS lets you launch and stop container-based applications with simple API calls, allows you to get the state of your cluster from a centralized service, and gives you access to many familiar Amazon EC2 features.
+ECS is a regional service that you can use in one or more AZs across a new, or existing, VPC to schedule the placement of containers across your cluster based on the resource needs, isolation policies, and availability requirements.
+Amazon ECS eliminates the need for you to operate your own cluster management and configuration  maangement systems, or to worry about scaling your management infrastructure.
+ECS can also be used to create a consistent deployment and build experience, manage and scale batch and ETL workloads, and build sophisticated application architectures on a microservices model.
+Containers are a method of operating system virtualization that allow you run the application and dependencies in resource-isolated process.
+Containers have everything the software needs to run- including libraries, system tools, code and runtime.
+Containers are created from read-only template called an Image.
+Docker Image:-
+An Image is a read-only template with instructions for creating a Docker container. It contains
+-> an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime.
+An Image is created from a DockerFile, a plain text file that specifies the components that are included in the container.
+Images are stored in the registry, such as DockerHub or AWS ECR.
+
+Amazon EC2 Container Registry(Amazon ECR) is a managed AWS Docker registry service that is secure, scalable and reliable. 
+Amazon ECR supports private Docker repositories with resource-based permissions using AWS IAM so that the specific users or Amazon EC2 instances can access repositories and images.
+Developers can use the Docker CLI to push, pull and manage images.
+
+ECS Task Definition
+-> A task Definition is required to run Docker containers in Amazon ECS.
+-> Task Definition are text files in JSON format that describe one or more containers that form your application.
+-> Some of the parameters you can specify in a task definition include:
+  Which Docker Images to use with the containers in your task.
+  How much CPU and memory to use with each container.
+  Whether containers are linked together in a task.
+The docker networking mode to use for the containers in your task.
+What(if any) ports from the container are mapped to the host container instance.
+Whether the task should continue to run if the container finishes or fails.
+The command of the container should run when it started.
+What environment variables should be passed to the container when it starts
+Any data volumes that should be used within the container
+What IAM role your tasks should use for permissions.
+An Amazon ECS service allows you to run and maintain a specified number of instances of a task definition simultaneously in an EC2 cluster.
+Think of services like Auto scaling groups for ECS.
+If a task should fail or stop, the Amazon ECS service schedular launches another instance of your task definition to replace it and maintain the desired amount of tasks in the service.
+ECS Clusters
+An Amazon ECS cluster is a logical grouping of container instances that you can place tasks on. When you first use the Amazon ECS service, a default cluster is created for you, but you can create multiple clusters in an account to keep your resource seperate.
+Concepts:-
+-> Clusters can contain multiple different container instance types.
+-> Clusters are region specific.
+-> Container Instances can only be part of one cluster at a time.
+-> You can create IAM policies for your clusters to allow or restrict users access to specific clusters.
+
+ECS Scheduling
+-> Service Sceduling
+-> Custom Scheduling
+
+ECS Container Agent
+The Amazon ECS container agent allows container instances connect to your cluster. The Amazon ECS container agent is included in the Amazon ECS-optimized AMI, but you can also install it on any EC2 instance that supports the Amazon ECS specification. The Amazon ECS container agent is supported only on EC2 instances.
+Pre-installed on special ECS AMIs
+Will work only on Linux based OS and not on Windows OS
+
+ECS Security
+IAM Roles
+-> EC2 instances use an IAM role to access ECS
+-> ECS tasks use an IAM role to access services and resources.
+Security groups attach at the instance-level
+You can access and configure the OS of the EC2 instance in your ECS cluster.
+
+Region->Clusters(1000)-> Instaces(1000)-> Services(500)-> ELB(1)-> Tasks(1000)-> Containers(10)
