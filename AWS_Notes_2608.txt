@@ -583,3 +583,36 @@ Transitive peering is not supported.
 
 Direct Connect
 -> AWS direct connect makes it easy to estabilish a dedicated network connection from your on-premises to AWS. Using AWS Direct Connect, you can estabish private connectivity between AWS and your datacenter, office, or colocation environment, which in many cases can reduce your network costs, increase bandwidth throughput, and provide a more consistent network experience than Internet based connections.
+
+
+Security Token Service
+-> Grant users temporary and limited access to AWS resources. Users can come from three sources;
+Federation(typically Active directory)
+1. Uses Security Assertion Markup Language
+2. Grant temporary access based off the users Active Directory credentials. Does not need to be an user in IAM.
+3. SSO allows you to log into AWS console without assigning IAM credentials.
+Federation(with Mobile Apps)
+- Use Facebook/Amazon/google or other openID providers to login
+Cross Account Access
+- Let users from one AWS account access resources in another.
+Federation
+-Combining or joining a list of users in one domain(such as IAM) with the list of users in another domain(such as active dircetory, Facebook)
+Security Token Service gives 4 things
+1. Access Key
+2. Security Access Key
+3. Token
+4. Duration
+
+Scenario
+1. Employee enters username and password.
+2. The application calls an Identity Broker. The broker captures the username and password.
+3. The identity broker uses the organization's LDAP directory to validate the employees identity
+4. The identity broker calls the new GetFederationToken function using IAM credentials. The call must include an IAM policy and a duration, along with policy that specifies the permissions to be granted to the security credentials.
+5. The Security Token Service confirms that the policy of the IAM user making the call to GetFederationToken gives permission to create new tokens and then returns four values to an application: Access key, a secret access key, a token and a duration.
+
+Workspaces
+-> Its basically VDI. A workspace is a cloud-based replacement for traditional desktop.
+-> A workspace is available as a bundle of computer resources, storage space, and software application access that allow a user to perform day-to-day tasks just like using a traditional desktop. A user can connect to a WorkSpace from any supported device using a free Amazon Workspaces client application and credentials set up by an administrator, or thier existing Active Directory credentials if Amazon Workspaces is integrated with an existing Active Directory Domain.
+-> Workspaces is persistent
+-> All data in the D drive is backed up every 12 hours.
+-> You do not need an AWS account to login to workspaces.
