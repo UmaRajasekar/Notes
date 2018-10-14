@@ -556,3 +556,30 @@ AWS Organizations allows four things:-
 2. Control Access to AWS services (Service Control Policies) 
 3. Automate AWS Account Creation and Management
 4. Consolidating Billing across Multiple AWS accounts
+
+Cross Account Access will allow you to access one AWS Console using one role and can switch to another AWS account console without using username and password.
+IAM
+1. Groups
+2. Users
+3. Role
+4. Policy
+
+Tagging
+-> Key Value Pair attched to AWS resource
+-> Metadata
+-> Tags can be inherited from Autoscaling, CloudFormation and Elastic BeanStalk
+Resource Groups
+-> Resource Groups makes it easy to group your resources using the tags that are assigned to them. You can group resources that share one or more tags.
+Two Types
+1. Classic Resource Groups
+2. AWS System Manager 
+
+VPC Peering
+-> VPC Peering is simply a connection between two VPC's that enables you to route traffic between them using private IP addresses. Instances in either VPC can communicate with each other as if they are available in same newtwork. You can create VPC peering connection between your own VPC's or within VPC's in another AWS account within a single region.
+
+AWS uses the existing infrastructure of a VPC to create a VPC peering connection; it is neither a gateway nor a VPN connection, and does not rely on seperate piece of physical hardware. There is no single point of failure for communication or a bandwidth failure.
+VPC peering will not work when there is an overlapping cidr address in VPC.
+Transitive peering is not supported.
+
+Direct Connect
+-> AWS direct connect makes it easy to estabilish a dedicated network connection from your on-premises to AWS. Using AWS Direct Connect, you can estabish private connectivity between AWS and your datacenter, office, or colocation environment, which in many cases can reduce your network costs, increase bandwidth throughput, and provide a more consistent network experience than Internet based connections.
