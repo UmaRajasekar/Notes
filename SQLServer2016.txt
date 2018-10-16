@@ -1,2 +1,26 @@
 Course Overview
 -> Transact SQL basics
+-> SQL server 2016 certifications
+-> Understanding database
+  -> Structure and Purpose
+  -> Terminology
+  -> Data types
+-> Getting SQL Server 2016
+-> Basic SELECT statements
+-> ADVANCED statements
+-> Querying multiple tables
+-> Grouping Data
+-> Modifying Data
+-> Programming objects
+  -> Stored Functions
+  -> Input/Output parameters
+  -> CTEs
+  -> Masking
+-> User Defined functions
+  -> Scalar Functions
+  -> Table-Valued Functions
+-> Understanding subqueries
+  -> Scalar subqueries
+  -> Multi-Valued subqueries
+  -> Correlated subqueries
+  
