@@ -65,3 +65,32 @@ Database Structures and Purposes
 -> Most database begin as OLTP as a startup.
 -> When data grows, there is always a challenge to maintain number of indexes and usefulness of the indexes to keep data for both query types and maintaining balance between them.
 -> Best Pactice: A copy of new data from OLTP is taken and loaded in OLAP on periodic basis and OLAP used for only reporting purposes.
+
+Database Terminologies
+-> CRUD
+  There are four basic functions of a database.
+    CREATE
+    READ
+    UPDATE
+    DELETE
+  -> Transactions
+    A set of logically releated database modifications that are written to the database as a unit.
+    All succeed or All fail
+  -> Field
+  -> Record
+  -> ACID
+    Atomicity, consistency, isolation and durability
+    Atomicity- Transaction should be done or undone completely.
+    Consistency- Transaction may transform a system from one consistent state to another consistent state.
+    Isolation- Each transaction should be occuring independently
+    Durability- Completed transaction should remain stable/permanent, even during system failure.
+  -> Rows returned or affected by a T-SQL query
+  -> Normalization
+    The process of originizing data to minimize redundancy and remove ambiguity
+    Involves seperating a database into tables and defining relationships between the tables.
+  -> Commit
+  -> Rollback
+  -> SSMS
+    - SQL Server Management Studio
+    - Admininistartive tool used to execute queries.
+  
