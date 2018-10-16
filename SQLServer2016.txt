@@ -50,3 +50,18 @@ Database
     -> SELECT
     -> UPDATE
     -> DELETE
+
+Database Structures and Purposes
+-> Database structures fall into two categories
+  -> OLTP
+  -> OLAP
+-> OLTP- Online Transaction Processing
+  -> Database structure makes inserts, updates and deletes more efficiently.
+  -> Reading data from database becomes less effficient over time due to increase in data size over time and data tables structures in database.
+-> Online Analytical Processing
+  -> Data Warehouse
+  -> Loaded with data from OLTP to make reading much efficient.
+  -> Data Inserts are not efficient.
+-> Most database begin as OLTP as a startup.
+-> When data grows, there is always a challenge to maintain number of indexes and usefulness of the indexes to keep data for both query types and maintaining balance between them.
+-> Best Pactice: A copy of new data from OLTP is taken and loaded in OLAP on periodic basis and OLAP used for only reporting purposes.
