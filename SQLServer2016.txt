@@ -24,3 +24,29 @@ Course Overview
   -> Multi-Valued subqueries
   -> Correlated subqueries
   
+Transact SQL is a database programming language based on the Structured Query Language.
+  -> A proprietary extension of the SQL standard
+  -> Created by Microsoft and Sysbase.
+  -> Also referred as 'T-SQL'
+Transact SQL is central to working with Microft's hugely popular SQL Server database platform
+  -> It is used to create, manage and manipulate SQL server databases.
+  -> All applications that communicate with SQL server use T-SQL
+Transact SQL is one of the many 'flavors' or proprierty extensions of the SQL language.
+  -> MySQL
+  -> PL/SQL
+  -> Many more..
+There is minor differences between T-SQL and PL/SQL
+  -> Minor syntax differences
+  -> Minor functionality differences
+All SQL flavours are based on the SQL standard.
+
+Useful for MCSA: SQL 2016 Database Development
+
+Database
+  -> The term 'database' refers to a collection of related data that are easily accessed, managed, and updated.
+  -> The advantage of using database from normal dataset is that it can be easily organized, protected from loss, and efficiently managed.
+  -> The major actions can be performed using T-SQL are mentioned below:-
+    -> INSERT
+    -> SELECT
+    -> UPDATE
+    -> DELETE
