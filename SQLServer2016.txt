@@ -100,3 +100,17 @@ DataTypes in Database
   -> Some datatypes needs to be explicitly converted
   -> Data types provide first level of data integrity
   -> Data types can be formatted for the result of query result formatting.
+  
+  Statement Types
+  -> DDL - Data Definition Language
+    Statements that are used to create and modify database, tables and other objects. Example:- CREATE, ALTER, DROP and TRUNCATE
+  -> DML - Data Manipulation Language
+    Statements that work with the data in the database tables. Example:- INSERT, UPDATE and DELETE
+    
+ SQL Server is available in a number of editions
+  -> Enterprise
+  -> Standard
+  -> Express
+  -> Web
+  -> Developer
+  -> Evaluation
