@@ -94,3 +94,9 @@ Database Terminologies
     - SQL Server Management Studio
     - Admininistartive tool used to execute queries.
   
+DataTypes in Database
+  -> could be column, local variable, expression and parameter has a related datatype
+  -> Some datatypes are automatically converted
+  -> Some datatypes needs to be explicitly converted
+  -> Data types provide first level of data integrity
+  -> Data types can be formatted for the result of query result formatting.
