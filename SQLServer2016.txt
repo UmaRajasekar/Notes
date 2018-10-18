@@ -38,6 +38,18 @@ Transact SQL is one of the many 'flavors' or proprierty extensions of the SQL la
 There is minor differences between T-SQL and PL/SQL
   -> Minor syntax differences
   -> Minor functionality differences
+  
+Basic SELECT statements
+  -> Provides ability to retrieve data from databases
+  -> SELECT statement consists of SIX main parts
+    SELECT
+    FROM
+    WHERE
+    GROUP BY
+    HAVING
+    ORDER BY
+  -> These main parts are also called clauses
+
 All SQL flavours are based on the SQL standard.
 
 Useful for MCSA: SQL 2016 Database Development
