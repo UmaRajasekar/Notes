@@ -179,4 +179,27 @@ There are two types of CASE statements
   Case statements can be used in SELECT, UPDATE, INSERT and SET.
   Clauses in WHERE, ORDER BY, HAVING and IN
   
+Working effectively with T-SQL requires understanding of below:-
+  -> The physical structure of the database
+  -> Data contained in the database table
+  -> How the tables are related?
   
+Database provide one very important benifit
+  -> All data is stored, managed and retrived from a single location.
+  -> Simplest database structure will be storing all the data in single table with many columns.
+  -> The main disadvantage in above structure is that when multiple users trying update same row, locking time increases and leads to slow response
+  -> Then the solution came up in the process of Normalization.
+  
+Table Relationship
+  -> Normalization is the process of seperating data into multiple, related tables.
+  -> Makes concurrent connections efficient.
+  -> This is process of seperating data into multiple tables and having related with primary key and foriegn keys
+  
+Using JOIN statement
+  -> Most real world T-SQL queries will involve multiple tables.
+  -> The JOIN statement is based on logical relationships between the tables.
+  
+Different JOIN types
+-> INNER JOIN -> Returns data from each table when common column values appears in both tables.
+-> OUTER JOIN -> Returns data from each table when common column values appears in both tables + unmatch column value from table of specified join.
+-> CROSS JOIN-> Returns each row from left table combined with all the rows in the right table.
