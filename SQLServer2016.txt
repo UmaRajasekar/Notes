@@ -126,3 +126,30 @@ DataTypes in Database
   -> Web
   -> Developer
   -> Evaluation
+
+Where clause
+  -> Where clause limit number of records fetched.
+  -> Expressed as conditional statement.
+
+Alias helps in having descriptive name for columns.
+
+DISTINCT-> Only unique rows are returned
+
+ORDER BY to retrieve data
+
+Multi-Part Naming:-
+-> When a query, you must uniquely identify an object.
+-> SQL server data is organized in hierarchical containers.
+  -> Server
+  -> Database
+  -> Objects(tables, stored procs, etc..)
+We can point to a specific object in T-SQL using dotted notation.
+SELECT * FROM <server>.<datanbase>.<schema>.<object>
+
+Advanced SELECT Stament
+-> LIKE and IN
+  -> Wildcard characters can be used
+  % Any string of zero or more characters
+  _ Any single character
+  [] Any single character within the specified range
+  [^] Any single character not within the specified range.
