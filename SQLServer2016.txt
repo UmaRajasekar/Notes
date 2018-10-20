@@ -153,3 +153,22 @@ Advanced SELECT Stament
   _ Any single character
   [] Any single character within the specified range
   [^] Any single character not within the specified range.
+
+INTERSECT AND EXCEPT
+Useful in determining below records:-
+  -> Determine which values appear in both tables.
+  -> Determine which values do not appear in both tables.
+  -> Retrives only DISTINCT values
+  -> Use concept of left and right input queries
+  
+Paging Results
+  -> The size of a query's result can be hundreds, or even thousands of rows.
+    -> Navigating through this data can become a challenge
+    -> The ability to move through the result set a few rows at a time is helpful.
+  -> There are two functionality provided by T-SQL
+    -> OFFSET - Set the number of rows to be skipped before returning the number of rows using FETCH command.
+    -> FETCH - Limits the number of rows that are returned from a result set
+    -> Above function only in order by clause
+    
+COALESC-> Evaluates all the arguments in the expression and returns first not null value.
+NULLIF-> Evaluates both the expression and returns NULL if both are same else it returns the first value.
