@@ -172,3 +172,11 @@ Paging Results
     
 COALESC-> Evaluates all the arguments in the expression and returns first not null value.
 NULLIF-> Evaluates both the expression and returns NULL if both are same else it returns the first value.
+
+There are two types of CASE statements
+  -> Simple CASE
+  -> Searched CASE-> validates boolean expression instead of WHEN expression
+  Case statements can be used in SELECT, UPDATE, INSERT and SET.
+  Clauses in WHERE, ORDER BY, HAVING and IN
+  
+  
