@@ -228,3 +228,14 @@ SQL Server 2008 introduced an enhancement to the GROUP BY grouping functionality
   -> GROUING SETS can be modified to group by every group by results
   
 SQL Server 2008 comes with query designer tool which can be used to create/design and build queries.
+
+SELECT INTO can also be used to insert data  into the table without using INSERT statement.
+UPDATE statement performs delete and insert statement in T-SQL.
+All the columns are affected when you update a row in table.
+
+BEGIN TRAN TRANSACTION_NAME
+<<SQL statement>>
+
+ROLLBACK TRAN TRANSACTION_NAME
+
+COMMIT TRAN TRANSACTION_NAME
