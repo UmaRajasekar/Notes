@@ -239,3 +239,27 @@ BEGIN TRAN TRANSACTION_NAME
 ROLLBACK TRAN TRANSACTION_NAME
 
 COMMIT TRAN TRANSACTION_NAME
+
+Stored Procedure in MS-SQL
+-> Efficient programming in T-SQL
+-> Encapsulate functionality and logic
+-> Effiecient execution
+-> Database object
+-> Collection of code that is executed when called.
+-> Procedure can be executed by user, only if he has permission to do so.
+-> Compiled first time it is executed
+-> An execution plan is stored that can be re-used on subsequent executions.
+-> The query processor does not have to create a new plan for every execution.
+
+Table Variable
+-> The entire dataset can be stored as an result set in a variable which is called variable.  
+-> Table variable are not a 'silver-bullet' solution
+-> Thier benefits are limited by how they can be used and how much data they can contain.
+-> Very fast
+-> Automatically cleaned up
+-> Impact performance if you store more that 100 records.
+
+Common Table Expression
+-> A temporary result set is created and available for use within the execution scope of certain T-SQL commands.
+-> Improved readablity and ease in maintenence of complex queries
+
