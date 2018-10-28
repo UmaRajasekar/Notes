@@ -263,3 +263,27 @@ Common Table Expression
 -> A temporary result set is created and available for use within the execution scope of certain T-SQL commands.
 -> Improved readablity and ease in maintenence of complex queries
 
+Data Security is implemented at two level
+-> Data at rest
+-> Data in transit
+The only problem in encryption is that CPU takes some processing time.
+
+SQL Server 2016 introduces data security functionality
+-> Dynamic Data masking
+  -> Protects data during presentation as part of a T-SQL result set.
+  -> Does not require resoureces to perform encryption/decryption.
+  
+Dynamic Data Masking is applied at column level.
+-> When the table is created
+-> Using the ALTER table commands
+-> Users with SELECT permissions on a table will see masked data.
+-> Granting UNMASK permission to a user allows them to see the data unmasked.
+
+Data Masking can be defined using four rule types
+-> Default
+-> Email
+-> Random
+-> Custom
+
+CREATE USERT-> To create user
+ALTER TABLE <<table name>> column <<COLUMN NAME>> ADD MASKED WITH (FUNCTION = 'email()') 
