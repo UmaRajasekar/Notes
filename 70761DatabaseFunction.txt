@@ -12,3 +12,24 @@ MIN
 SUM
 CHECKSUM_AGG - Returns checksum of the group. It ignores NULL values. It can be applied for ALL values and DISTINCT values. This helps in   tracking changes to the field.
 COUNT
+COUNT_BIG - operates like a COUNT function, only difference is that it returns BigINT instead of INT
+GROUPING - specifies whether the specified column expression in a GROUP BY list is aggregated or not. It is mainly used to distinguish        from NULL values returned by ROLLUP,CUBE or GROUPING SETS
+GROUPINGID- It computes the level of grouping. It can be used in SELECT, ORDER BY, HAVING clause. The columns in the GROUPING ID should      match exactly the columns in the GROUP BY clause. GROUPING_ID interprets that string as a base-2 number and returns the equivalent        integer.
+STDEV - Returns standard derivation of all the values. Ignores NULL values
+STDDEVP - Returns standard derivation for population of all values in the specified expression. It ignores NULL values.
+VAR - Retruns variance of all the values. Ignores NULL values.
+VARP - Returns variance for the population of all the values. Ignores NULL values.
+
+2. Analytic Functions
+Analytic Function calculated an aggregate value based on a group of rows. Unlike aggregate function, analytic function returns multiple rows for each group.Use analytic function to compute moving averages, running totals, percentage or top-N results within a group.
+
+Different Analytic Function
+1. CUME_DIST- This function calculated cummualtive distribution of values within a group of values. This calculates the relavtive position    of a specified value in a group of values. The value will be greater that 0 and less than or equal to 1.
+2. FIRST_VALUE - Returns first value in an ordered set of values.
+3. LAST_VALUE - Returns last value in an ordered set of values.
+4. LAG - Returns record from previous row of the result set
+5. LEAD - Returns record from next row of the result set
+6. PERCENTILE_COUNT- Calculates percentile based on a continous distribution of the column value in SQL server
+7. PERCENTILE_DISC - Calcilates percentile for sorted value in a distint rowset or within distinct partition in SQL Server
+Notes:- The difference between PERCENTILE_COUNT and PERCENTILE_DISC is that PERCENTILE_COUNT result is not necessary to be equal to specific value in the column. PERCENTILE_COUNT(0.5) will return MEDIAN value of the table.
+8. PERCENTILE_RANK - Calculates the relative rank of the row within a group of rows. This is similar to CUME_DIST, only difference is that CUME_DIST calculates distribution and PERCENTILE RANK calculates rank of that distribution.
