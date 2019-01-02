@@ -1,0 +1,14 @@
+There are different database functions available as listed below:-
+1. Aggregate function:-
+These functions perform calculations on set of values and return a single value. They are allowed in HAVING clause with the combination of GROUP BY clause of a select statement
+You can also use aggregate function in OVER clause, to aggregate on only certain categories of ROW
+The select list of SELECT statments
+
+Different Aggregate function
+APPROX_COUNT_DISTINCT- evaluates an expression for each row in a group and returns approximate value of unique not null values in a group
+AVG
+MAX
+MIN
+SUM
+CHECKSUM_AGG - Returns checksum of the group. It ignores NULL values. It can be applied for ALL values and DISTINCT values. This helps in   tracking changes to the field.
+COUNT
