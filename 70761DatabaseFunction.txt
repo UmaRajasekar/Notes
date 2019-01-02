@@ -24,12 +24,43 @@ VARP - Returns variance for the population of all the values. Ignores NULL value
 Analytic Function calculated an aggregate value based on a group of rows. Unlike aggregate function, analytic function returns multiple rows for each group.Use analytic function to compute moving averages, running totals, percentage or top-N results within a group.
 
 Different Analytic Function
-1. CUME_DIST- This function calculated cummualtive distribution of values within a group of values. This calculates the relavtive position    of a specified value in a group of values. The value will be greater that 0 and less than or equal to 1.
-2. FIRST_VALUE - Returns first value in an ordered set of values.
-3. LAST_VALUE - Returns last value in an ordered set of values.
-4. LAG - Returns record from previous row of the result set
-5. LEAD - Returns record from next row of the result set
-6. PERCENTILE_COUNT- Calculates percentile based on a continous distribution of the column value in SQL server
-7. PERCENTILE_DISC - Calcilates percentile for sorted value in a distint rowset or within distinct partition in SQL Server
+CUME_DIST- This function calculated cummualtive distribution of values within a group of values. This calculates the relavtive position    of a specified value in a group of values. The value will be greater that 0 and less than or equal to 1.
+FIRST_VALUE - Returns first value in an ordered set of values.
+LAST_VALUE - Returns last value in an ordered set of values.
+LAG - Returns record from previous row of the result set
+LEAD - Returns record from next row of the result set
+PERCENTILE_COUNT- Calculates percentile based on a continous distribution of the column value in SQL server
+PERCENTILE_DISC - Calcilates percentile for sorted value in a distint rowset or within distinct partition in SQL Server
 Notes:- The difference between PERCENTILE_COUNT and PERCENTILE_DISC is that PERCENTILE_COUNT result is not necessary to be equal to specific value in the column. PERCENTILE_COUNT(0.5) will return MEDIAN value of the table.
-8. PERCENTILE_RANK - Calculates the relative rank of the row within a group of rows. This is similar to CUME_DIST, only difference is that CUME_DIST calculates distribution and PERCENTILE RANK calculates rank of that distribution.
+PERCENTILE_RANK - Calculates the relative rank of the row within a group of rows. This is similar to CUME_DIST, only difference is that CUME_DIST calculates distribution and PERCENTILE RANK calculates rank of that distribution.
+
+3. Collation Function
+
+Different Collation Funtion
+Collation Property
+COLLATIONPROPERTY( collation_name , property )  -> This function returns property of the specified collation. 'property' can be CodePage, LCID, ComparisionStyle, Version
+
+TERTIARY_WEIGHTS
+TERTIARY_WEIGHTS( non_Unicode_character_string_expression ) -> Returns binary string of weights for each character in a non-unicode string expression.
+
+Configuration
+These are scalar functions return information about current configuration option settings
+
+Different configuration function
+@@DBTS -> Returns currunt timestamp.
+@@LANGID -> Returns local language ID of the language that is currently being used. This can also be using variable 'SET LANGUAGE 'Language''
+@@LANGUAGE-> Returns language curruntly being used. You can also set language.
+@@LOCK_TIMEOUT -> Returns current lock timout settings in milliseconds for the current session. You can also set your own lockout time. This allows an application to set the maximum time that a statement waits on a blocked resource. returns in milliseconds.
+@@MAX_CONNECTIONS -> Returns maximum number of user connections allowed  on an SQL server instance.
+@@MAX_PRECISION -> Returns precision level used by decimal and number data types 
+@@NESTLEVEL -> Returns nesting level of current stored procedure execution(initially 0) on the local server.
+@@OPTIONS -> Returns information of current SET operation.
+https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/configure-the-user-options-server-configuration-option?view=sql-server-2017
+@@OPTIONS returns number in the form of addition of 2 power number as mentioned in the above web page. This helps us to figure on which option is activated.
+@@REMSERVER - This enables stored procedure to check the name of the database server from which procedure is running.
+@@SERVERNAME - Returns name of local server that is running SQL server
+@@SERVICENAME - Returns service name of registry key under which SQL server is running. For default server, it returns 'MSSQLSERVER'.
+@@SPID - Returns session ID of the current user.
+@@TEXTSIZE - Returns current value of text size. You can also set text size
+@@VERSION - Returns system and build information  for the current installation of SQL Server
+
