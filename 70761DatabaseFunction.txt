@@ -64,3 +64,17 @@ https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/configure
 @@TEXTSIZE - Returns current value of text size. You can also set text size
 @@VERSION - Returns system and build information  for the current installation of SQL Server
 
+Conversion
+This function helps in datatype casting and conversion
+
+Different conversion functions are listed below:-
+a. CAST and CONVERT
+This helps in converting one datatype to another. Casting Decimal number as int. Convert, converts datatype into desired datatype
+-- CAST Syntax:  
+CAST ( expression AS data_type [ ( length ) ] )  
+-- CONVERT Syntax:  
+CONVERT ( data_type [ ( length ) ] , expression [ , style ] )
+The differnce between int and numeric is that int datatype truncates the number and numeric datatype rounds off the number
+In convert datatype, char converts binary datatype to character datatype
+In convert datatype, binary converts char datatype to binary datatype.
+You can cast datetime as date, time and datetime
