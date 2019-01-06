@@ -135,3 +135,29 @@ Ranking function returns a ranking value for each row in the partition. Dependin
 2. NTILE- Distirbutes the rows in an ordered partition into a specified number of groups. If group of 50 statements needs to grouped in 8 grpups, then first 2 groups will have 7 rows and remaining groups will have 6 rows
 3. RANK - Returns rank of each row within partition of result set. for example 1, 2, 2, 4, 5
 4. ROW_NUMBER- Returns sequencial number and does not have duplicate rank
+
+String Functions
+1. ASCII - returns ASCII value of the left most character
+2. CHAR - Returns character of the correspinding ASCII value. For any value other than 0-255, it returns NULL.
+3. CHARINDEX - Returns starting position of the first argument expression available in second argument expression.
+4. CONCAT - Concatenation of strings
+5. CONCAT_WS - Concatenates the string with the help of seperator. Both CONCAT and CONCAT_WS ignores NULL
+6. SOUNDEX - Returns four character code to evaluate the similarity of two things.
+7. DIFFERENCE - Returns integer value measuring the difference between two SOUNDEX function of the string. DIFFERENCE function returns 4    if there are less difference in SOUNDEX function of two string. If there are larger difference, then returns 0.
+8. FORMAT - Mostly used to return date/time in desired format. You can also format number as numeric, general and currency format.
+9. LEFT - Returns left part of a character string with specified number of characters
+10. LEN - Returns length of the string
+11. LOWER - Retruns lower case of the string
+12. LTRIM - Trims the whitespace of the string
+13. UNICODE - Same as ASCII, but returns value in UNICODE standard
+14. NCHAR - Same as CHAR (which returns character of ASCII value), instead it returns character UNICODE value
+15. PATINDEX - Pattern Index. Returns starting position of first occurence of the pattern in a given string.
+16. QUOTENAME - Returns the string in quoted character.
+17. Replace - Replaces all the occurence of the string characters
+18. Replicate - Replicates the specified string character.
+19. STR - Converts character data coverted from numeric
+20. STRING_AGG - Concatentes the value of string expression and places seperator values between them.
+21. STRING_ESCAPE - Escapes special character in text and returns text with escaped character
+22. STRING_SPLIT - Opposite to String aggregate. This splits string into various rows based on the seperator.
+23. STUFF - This function inserts a string into another string. It deletes the specified length of the characters in the first string at the start position and then inserts the second string into the first string at the start position.
+24. Returns part of the string.
