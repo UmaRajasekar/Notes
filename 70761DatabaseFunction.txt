@@ -128,3 +128,10 @@ CUSROR_STATUS - For given parameters, CURSOR_STATUS shows whether or not a curso
 Logical Functions:-
 1. CHOOSE(array_index,value1,value2,value3)
 2. IIF(boolean,true, false)
+
+Ranking Function:-
+Ranking function returns a ranking value for each row in the partition. Depending on the function that is used, some rows might recieve the same value as other rows.
+1. DENSE_RANK- Returns rank with no gaps in the ranking.
+2. NTILE- Distirbutes the rows in an ordered partition into a specified number of groups. If group of 50 statements needs to grouped in 8 grpups, then first 2 groups will have 7 rows and remaining groups will have 6 rows
+3. RANK - Returns rank of each row within partition of result set. for example 1, 2, 2, 4, 5
+4. ROW_NUMBER- Returns sequencial number and does not have duplicate rank
