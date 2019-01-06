@@ -108,3 +108,23 @@ Above function encrypts a plain text and decrypts the same with the help of cert
 h. ENCRYPTBYKEY and DECRYPTBYKEY
 Above function encrypts a plain text and decrypts the same with the help of symmetric key.
 
+CURSOR
+@@CURSOR_ROWS- This returns the number of qualifying rows currently in the last cursor opened on the connection.
+  Returns negative value if the cursor set is opened asynchronously
+  Returns -1 if the cursor is dynamic.
+  0 No cursor is opened
+  n Returns total number rows in the cursor
+@@FETCH_STATUS - Issues status of the last FETCH command issued.
+  0 - The fetch statement was successful.
+  -1 - The fetch statement was failed or row was beyond the result set.
+  -2 - The row fetched is missing
+  -9 - The cursor is not performing a fetch operation
+CUSROR_STATUS - For given parameters, CURSOR_STATUS shows whether or not a cursor declaration has returned a cursor and result set.
+  1 - Cursor returns atleast one row
+  0 - The cursor result set is empty
+  -1 - The cursor is closed
+  -2 - Not applicable
+  
+Logical Functions:-
+1. CHOOSE(array_index,value1,value2,value3)
+2. IIF(boolean,true, false)
