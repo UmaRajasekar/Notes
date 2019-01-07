@@ -171,3 +171,28 @@ Datatype function
 4. IDENT_SEED - sreturns seed value of the increment column which is set during creation
 5. IDENTITY - This function can be only used while creating a new table using SELECT statements
 6. SQL_VARIANT_PROPERTY - SQL variant is the datatype which helps to store all kinds of data type supported by SQL server. It returns property of the column such as BaseType, Precision, Scale, Collation, TotalBytes and maxklength
+
+Date and Time function
+@@DATEFIRST - Returns first day which is set in database(by default, it is SUNDAY for us_english. You can also set your own day)
+CURRENT_TIMESTAMP - Retruns current database timestamp. Same as GETDATE()
+SYSDATETIME - Returns system date and time.
+SYSDATETIMEOFFSET - Returns system date and time and also indicates offset from universal timezone
+SYSUTCTIME() - Returns universal time zone. Same as GETUTUCDATE()
+DATEADD - Helps to add datepart. This can be YEAR, MINUTE, HOUR, DAYOFYEAR, DAY,week minutes, seconds, milliseconds and nanoseconds
+DATEDIFF - Helps in getting datedifference of any of the parts YEAR, MINUTE, HOUR, DAYOFYEAR, DAY,week minutes, seconds, milliseconds and nanoseconds
+DATEDIFF_BIG - Same as DATEDIFF, only difference is that it returns as Big int.
+DATEFROMPARTS - Returns date from year, month and day part.
+DATENAME - Returns date part specified in argument as character
+DATEPART - Returns date part specified in argument as integer.
+DATETIME2FROMPARTS - Has argument of day, month, year, hours, minutes, seconds, fraction and precision and returns datetime2.
+DATETIMEFROMPARTS - Has argument of day, month, year, hours, minutes, seconds and milliseconds and returns datetime
+DATETIMEOFFSETFROMPARTS - Has argument of day, month, year, hours, minutes, seconds, fraction, hour_offset, minute_offset, precision)
+DAY - Same as datepart(day,date)
+YEAR - Same as datepart(year, date)
+MONTH - Same as datepart(month, date)
+EOMONTH - Returns last day of the month.
+ISDATE - Returns 1 if its valid date.
+SMALLDATETIMEFROMPARTS - Has argument of day, month, year, hours and minutes
+SWITCHOFFSET - This is used to switch current time(in the format of datetimeoffset) to different timezone.
+TIMEFROMPARTS - Has argument of hours, minutes, seconds, fraction and precision and returns time
+TODATETIMEOFFSET - Helps in changing time to different timezone
