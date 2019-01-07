@@ -161,3 +161,13 @@ String Functions
 22. STRING_SPLIT - Opposite to String aggregate. This splits string into various rows based on the seperator.
 23. STUFF - This function inserts a string into another string. It deletes the specified length of the characters in the first string at the start position and then inserts the second string into the first string at the start position.
 24. Returns part of the string.
+
+Datatype function
+1. DATALENGTH - Returns data length of the data avaialble in column. Similar to LEN
+2. IDENT_CURRENT - Returns last identity generated for the table. 
+    @@IDENTITY- returns last identity generated for any  table
+    SCOPE_IDENTITY - returns last identity generated for any table through insert statements
+3. IDENT_INCR - returns increment value of the increment column which is set during creation
+4. IDENT_SEED - sreturns seed value of the increment column which is set during creation
+5. IDENTITY - This function can be only used while creating a new table using SELECT statements
+6. SQL_VARIANT_PROPERTY - SQL variant is the datatype which helps to store all kinds of data type supported by SQL server. It returns property of the column such as BaseType, Precision, Scale, Collation, TotalBytes and maxklength
