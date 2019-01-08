@@ -213,3 +213,14 @@ There are three types of hash joins
   1. In-memory hash join.
   2. Grace hash join.
   3. Recursive hash join.
+
+Common Table Expression:-
+Specified as temporary named result
+It can be used in SELECT, INSERT, UPDATE and DELETE statement and can also be used in CREATE VIEW statements.
+Guidelines for using non-recursive CTE:-
+A CTE must be followed by SELECT, INSERT, UPDATE and DELETE statement and can also be followed in CREATE VIEW statements.
+Multiple CTE query definitions can be defined in a non-recursive CTE. The definition must be combined by one of these set operators: UNION, UNION ALL, EXCEPT and INTERCEPT
+CTE can reference itself and previously defined CTEs in the same WITH clause. Forward referencing is not allowed.
+Specifying more than one WITH clause is not allowed. Ex:- Subquery cannot have another WITH clause defined with a CTE.
+There are few clauses cannot be used in the CTE query definition. ORDER BY, INTO, OPTION, FOR BROWSE
+When a CTE 
