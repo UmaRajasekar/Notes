@@ -196,3 +196,20 @@ SMALLDATETIMEFROMPARTS - Has argument of day, month, year, hours and minutes
 SWITCHOFFSET - This is used to switch current time(in the format of datetimeoffset) to different timezone.
 TIMEFROMPARTS - Has argument of hours, minutes, seconds, fraction and precision and returns time
 TODATETIMEOFFSET - Helps in changing time to different timezone
+
+Joins:-
+Nested Loop Join:-
+  A nested loops join is particularly effective if the outer input is small and the inner input is preindexed and large.
+Merge Joins:-
+  If both join inputs are large and the two inputs are of similar sizes, a merge join with prior sorting and a hash join offer similar performance. Join on indexed column on equal number of rows of table.
+Hash Joins:-
+  Hash joins can efficiently process large, unsorted, nonindexed inputs. They are useful for intemediate results in complex queries.
+There are two phases.
+  a. Build Phase:-
+    It reads rows of smaller table into the memory. It hashes the keys of the rows which will be used for join.
+  b. Probe Phase:-
+    It reads rows of other table and hashes the keys of the rows which will be used for join. While doing this it checks for the matching rows on hashed keys in the table build in Build phase. Smaller table in memory and larger table in disk is basic rule. If smaller table does not fit in memory it spits to hard drive. DBSPACETEMP configuration parameter is used to stored hashed table in probe phase.
+There are three types of hash joins
+  1. In-memory hash join.
+  2. Grace hash join.
+  3. Recursive hash join.
