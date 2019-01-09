@@ -224,3 +224,11 @@ CTE can reference itself and previously defined CTEs in the same WITH clause. Fo
 Specifying more than one WITH clause is not allowed. Ex:- Subquery cannot have another WITH clause defined with a CTE.
 There are few clauses cannot be used in the CTE query definition. ORDER BY, INTO, OPTION, FOR BROWSE
 When a CTE 
+Guidelines for recursive CTE's:-
+A recursive CTE's consist of two query definition. One is anchor member query definition and another is recursive member. You can have multiple anchor member and multiple recursive member. You must define all the anchor member before recursive member.
+All the query member of anchor unless they refer themselves.
+Anchor members must be combined by one of these set operators: UNION ALL, UNION, INTERSECTION and EXCEPT
+The number of columns in the anchor and recursive must be same.
+The datatype of the columns in the anchor and recursive member should also be same.
+The FROM clause of recursive member should refer only one time to CTE expression name.
+The items such as SELECT DISTINCT, GROUP BY, HAVING, Scalar aggragation, TOP, LEFT OUTER JOIN, RIGHT OUTER JOIN, PIVOT and sub-queries are not allowed in recursive member.
