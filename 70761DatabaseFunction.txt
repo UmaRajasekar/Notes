@@ -232,3 +232,12 @@ The number of columns in the anchor and recursive must be same.
 The datatype of the columns in the anchor and recursive member should also be same.
 The FROM clause of recursive member should refer only one time to CTE expression name.
 The items such as SELECT DISTINCT, GROUP BY, HAVING, Scalar aggragation, TOP, LEFT OUTER JOIN, RIGHT OUTER JOIN, PIVOT and sub-queries are not allowed in recursive member.
+
+Sub-query Rules:-
+1. The select list of a subquery introduced with a comparision operator can include only one expression or column name(except that EXISTS and IN operate on "SELECT *" or a list respectively)
+2. If the WHERE clause of an outer query includes a column name, it must be a join-compatible with the column in the subquery select list)
+3. The ntext, text, image datatypes cannot be used in the select list of queries.
+4. Because they must return a single value, subqueries introduced by an unmodified comparision operator(one not followed by the keyword ANY or ALL) cannot include GROUP BY and HAVING clause.
+5. The distinct cannot be used in subquery that include GROUP BY.
+6. ORDER BY can be specified only when TOP is specified.
+7. The COMPUTE and INTO clause cannot be specified.
