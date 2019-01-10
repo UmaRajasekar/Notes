@@ -163,7 +163,7 @@ String Functions
 24. Returns part of the string.
 
 Datatype function
-1. DATALENGTH - Returns data length of the data avaialble in column. Similar to LEN
+1. DATALENGTH - Returns number of bytes used to represent any expression.
 2. IDENT_CURRENT - Returns last identity generated for the table. 
     @@IDENTITY- returns last identity generated for any  table
     SCOPE_IDENTITY - returns last identity generated for any table through insert statements
