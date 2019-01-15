@@ -241,3 +241,33 @@ Sub-query Rules:-
 5. The distinct cannot be used in subquery that include GROUP BY.
 6. ORDER BY can be specified only when TOP is specified.
 7. The COMPUTE and INTO clause cannot be specified.
+
+Control-Of-Flow
+1. BEGIN .. END -> encloses a series of T-SQL statements so that a group of T-SQL statements can be executed. 
+2. BREAK - exits current while loop. If current while loop is nested with another, then it exits only one WHILE LOOP.
+3. CONTINUE - Restarts WHILE loop. Any statements after the CONTINUE keyword are ignored. 
+4. IF.. ELSE - Imposes condition on the execution of T-SQL expression. This can include sql_statement or statement_block.
+5. GOTO- Alters the flow of execution
+6. RETURN - Exits unconditionally from a query or procedure. RETURN is immediate and complete and can be used at any point to exit from a procedure, batch, or statement block. Statement that follow RETURN are not executed.
+7. THROW - Raises exception and transfers execution to a catch block of a TRY-CATCH construct.
+If a try-catch construct is not available, the statement batch is terminated. The line number and procedure where the exception is raised are set. The severity is set to 16.
+If the throw statement is specified without parameters, it must appear inside the CATCH block. This causes caught exception to be raised. Any error that occurs in a THROW statement causes the batch to be terminated
+% is the reserved character.
+Difference between RAISEERROR and THROW
+1. msg_id passed to RAISE error should be available in sys.messages
+2. msg_str can contain printf formatting styles
+3. The severity parameter specifies the serverity of the exception.
+TRY-CATCH - Every try block should immediately follow with Catch block. A try-catch cannot span multiple branches. You can retrive error infomation using ERROR_NUMBER(), ERROR_SEVERITY(), ERROR_STATE(), ERROR_PROCEDURE(), ERROR_LINE(), ERROR_MESSAGE()
+Try catch do not trap following conditions:- 
+1.Warning and informal messages with severity less than 10.
+2.Severity greater than 20
+3.Client-interrupt request
+4.Session ended by sys admin
+Following types of error not handeled in the CATCH statements
+1. Compilation errors.
+2. Errors that occur during statement-level recompilation
+3. Object name resolution errors.
+XACT_STATE return -1 if the transaction is uncommittable.
+SET XACT_ABORT ON; set the transaction as uncommittable when foriegn key violation happens
+WAIT FOR - Blocks the execution of a batch, stored procedure, or transaction until a specified time(TIME) or time interval(DELAY) is reached, or a specified statement modifies or returns at least one row
+WHILE - Sets a condition for a repeated execution of an SQL statement or statement block. The statements are executed repeatedly as long as the specified condition is true. The execution of statements in the WHILE loop can be controlled from inside the loop with the BREAK and CONTINUE keywords.
