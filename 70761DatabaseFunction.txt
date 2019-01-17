@@ -286,3 +286,13 @@ Different Transaction Statements:-
   The session involved in T-SQL distributed transactions do not get a transaction object they can pass to another session for it to explicitly enlist in the distributed transaction.
   The only way for a remote server to enlist in the transaction is to be the target of a distributed query or a remote stored procedure call.
   The SET option REMOTE_PROC_TRANSACTIONS ON will help to elavate BEGIN transaction into BEGIN DISTRIBUTED transaction when there is a distributed query or remote server call available inside BEGIN TRANSACTION
+BEGIN TRANSACTION
+1. Providing Transaction name is mandatory when WITH MARK option is available. WITH MARK allows for restoring a transaction log to a named mark.
+2. When SET IMPLICIT_TRANSACTIONS is set to ON, a BEGIN TRANSACTION statement creates two nested transactions.
+3. Additionally, transaction log marks are necessary if you need to recover a set of related databases to a logically consistent state. Marks can be placed in the transaction logs of the related databases by a distributed transaction
+COMMIT TRANSACTION
+1. Marks the end of a successful implicit or explicit transaction.
+2. If @@TRANCOUNT is 1, COMMIT TRANSACTION makes all data modifications performed since the start of the transaction a permanent part of the database, frees the resources held by the transaction, and decrements @@TRANCOUNT to 0. If @@TRANCOUNT is greater than 1, COMMIT TRANSACTION decrements @@TRANCOUNT only by 1 and the transaction stays active.
+3. When used in nested transactions, commits of the inner transactions do not free resources or make thier modifications permanenet. The data modifications are made permanent and resources freed only when the outer transaction is committed.
+4. Only one WITH MARK option is applicable in the nested transactions and if multiple MARK statements are available then warning is thrown (not error)
+5. In nested transaction, the commit or rollback details of nested transaction will not be committed, but will be committed or rolled back (mentioned in the inner block) post the commit or rollback of outer transaction.
