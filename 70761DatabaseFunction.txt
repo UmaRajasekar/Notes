@@ -296,3 +296,10 @@ COMMIT TRANSACTION
 3. When used in nested transactions, commits of the inner transactions do not free resources or make thier modifications permanenet. The data modifications are made permanent and resources freed only when the outer transaction is committed.
 4. Only one WITH MARK option is applicable in the nested transactions and if multiple MARK statements are available then warning is thrown (not error)
 5. In nested transaction, the commit or rollback details of nested transaction will not be committed, but will be committed or rolled back (mentioned in the inner block) post the commit or rollback of outer transaction.
+SAVEPOINT
+A user can set a savepoint or marker within a transaction
+The savepoint defines the location to which a transaction can return if part of the transaction is conditionally cancelled.
+If a transaction is rolled back to a savepoint, it must proceed to completion with more Transact-SQL statements if needed and a COMMIT TRANSACTION statement, or it must be canceled altogether by rolling the transaction back to its beginning.
+To cancel an entire transaction, use the form ROLLBACK TRANSACTION transaction_name. 
+Duplicate savepoint names are allowed in a transaction, but a ROLLBACK TRANSACTION statement that specifies the savepoint name will only roll the transaction back to the most recent SAVE TRANSACTION using the name.
+SAVE Transaction is not supported in the distributed transactions
