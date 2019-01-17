@@ -280,3 +280,9 @@ SQL Server operates in the following transaction nodes:
 2. Explicit transactions - Each transaction is explicitly started with the BEGIN TRANSACTION statement and explicitly ended with a COMMIT or ROLLBACK transactions  
 3. Implicit transactions - A new transaction is implicitly started when the prior transaction completes, but each transaction is explicitly completed with a COMMIT or ROLLBACK statements.
 4. Batch-Scoped transactions - Applicable only to multiple active result sets (MARS), a Transact-SQL explicit pr implicit transaction that starts under a MARS session becomes a batch- scoped transaction. A batch-scoped transaction that is not committed or rolled back when a batch completes is automatically rolled back by SQL server.
+Different Transaction Statements:-
+1. BEGIN DISTRIBUTED TRANSACTION 
+  For example, if BEGIN DISTRIBUTED TRANSACTION is issued on ServerA, the session calls a stored procedure on ServerB and another stored procedure on ServerC. The stored procedure on ServerC executes a distributed query against ServerD, and then all four computers are involved in the distributed transaction. The instance of the Database Engine on ServerA is the originating controlling instance for the transaction.
+  The session involved in T-SQL distributed transactions do not get a transaction object they can pass to another session for it to explicitly enlist in the distributed transaction.
+  The only way for a remote server to enlist in the transaction is to be the target of a distributed query or a remote stored procedure call.
+  The SET option REMOTE_PROC_TRANSACTIONS ON will help to elavate BEGIN transaction into BEGIN DISTRIBUTED transaction when there is a distributed query or remote server call available inside BEGIN TRANSACTION
