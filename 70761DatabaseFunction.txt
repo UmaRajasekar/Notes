@@ -271,3 +271,12 @@ XACT_STATE return -1 if the transaction is uncommittable.
 SET XACT_ABORT ON; set the transaction as uncommittable when foriegn key violation happens
 WAIT FOR - Blocks the execution of a batch, stored procedure, or transaction until a specified time(TIME) or time interval(DELAY) is reached, or a specified statement modifies or returns at least one row
 WHILE - Sets a condition for a repeated execution of an SQL statement or statement block. The statements are executed repeatedly as long as the specified condition is true. The execution of statements in the WHILE loop can be controlled from inside the loop with the BREAK and CONTINUE keywords.
+
+Transaction Statements
+1. A Transaction is a single unit of work. If a transaction is sucessful, all of the data modifications made during the transactions are committed and become permanenet part of a database. 
+2. If a transaction encounters errors and must be cancelled or rolled back, then all of the data modifications are erased.
+SQL Server operates in the following transaction nodes:
+1. Autocommit transactions - Each individual statement is a transactions
+2. Explicit transactions - Each transaction is explicitly started with the BEGIN TRANSACTION statement and explicitly ended with a COMMIT or ROLLBACK transactions  
+3. Implicit transactions - A new transaction is implicitly started when the prior transaction completes, but each transaction is explicitly completed with a COMMIT or ROLLBACK statements.
+4. Batch-Scoped transactions - Applicable only to multiple active result sets (MARS), a Transact-SQL explicit pr implicit transaction that starts under a MARS session becomes a batch- scoped transaction. A batch-scoped transaction that is not committed or rolled back when a batch completes is automatically rolled back by SQL server.
