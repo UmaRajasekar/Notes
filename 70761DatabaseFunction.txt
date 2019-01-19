@@ -303,3 +303,18 @@ If a transaction is rolled back to a savepoint, it must proceed to completion wi
 To cancel an entire transaction, use the form ROLLBACK TRANSACTION transaction_name. 
 Duplicate savepoint names are allowed in a transaction, but a ROLLBACK TRANSACTION statement that specifies the savepoint name will only roll the transaction back to the most recent SAVE TRANSACTION using the name.
 SAVE Transaction is not supported in the distributed transactions
+
+Create and Query database objects:-
+Transact-SQL statements can be written and submitted to the database engine in the following ways:-
+1. By using SQL Server Management Studio
+2. By using sqlcmd utility
+3. By connecting from the application you create
+a. create database sql statements
+create database database_name;
+To create a new login
+pre-requisite:- create a windows login
+1. Create a database login. [create login computer_name\Mary from WINDOWS]
+2. To create a user in database [create user Mary for LOGIN [computer_name\Mary]]
+Grant and Revoke permission
+GRANT EXECUTE ON pr_Names FROM Mary;
+REVOKE EXECUTE ON pr_Names FROM Mary;
