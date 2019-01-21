@@ -323,3 +323,21 @@ REVOKE EXECUTE ON pr_Names FROM Mary;
 Syntax : column.write(expression, @offset, @length)
 @offset - Null -> appends text at the end
 @length - Null -> Removes all the existing text
+
+OUTPUT option:-
+Displays all the data impacted after DML statements such as INSERT, DELETE and UPDATE
+<OUTPUT> <DML SELECT STATEMENT ([INSERTED|DELETED].[*|columnname])> <INTO> <tablename|tablevariable 
+Remarks
+1. The output of the computed column in the OUTPUT clause is not computed.
+2. No gurantee in the order of the changes applied
+3. OUTPUT Clause will not work on following scenarios
+  a. DML statements that reference local partitioned views, distributed partitioned views, or remote tables.
+  b. INSERT statements that contain an EXECUTE statement.
+  c. Full-text predicates are not allowed in the OUTPUT clause when the database compatibility level is set to 100.
+  d. The OUTPUT INTO clause cannot be used to insert into a view, or rowset function.
+  e. A user-defined function cannot be created if it contains an OUTPUT INTO clause that has a table as its target.
+To prevent nondeterministic behavior, the OUTPUT clause cannot contain the following references:
+  a. A column from a view or inline table-valued function when that column is defined by one of the following methods:
+    a. A sub-query
+    b. A user-defined function that performs user or system data access, or is assumed to perform such access.
+    c. A computed column that contains a user-defined function that performs user or system data access in its definition.
