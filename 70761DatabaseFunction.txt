@@ -341,3 +341,26 @@ To prevent nondeterministic behavior, the OUTPUT clause cannot contain the follo
     a. A sub-query
     b. A user-defined function that performs user or system data access, or is assumed to perform such access.
     c. A computed column that contains a user-defined function that performs user or system data access in its definition.
+
+Triggers
+1. DDL triggers fire in response to a variety of DDL events. These events primarily corresponds to T-SQL statements that start with keywords CREATE, ALTER, DROP, GRANT, DENY, REVOKE or UPDATE Statistics.
+Use DDL statements to perform following 
+  a. Prevent certain changes to your database schema.
+  b. Having something occur in the database in response to a change in your database schema.
+  c. Record changes or events in the database schema.
+Types of DDL triggers
+  a. T-SQL DDL Trigger
+  Trigger in response to server-scoped or database-scoped event. statement executed ALTER SERVER CONFIGURATION or DROP TABLE statements executed.
+  b. CLR DDL Trigger
+  DDL triggers fire only after the DDL statements that trigger them are run. 
+  You cannot use INSTEAD OF statements
+  DDL trigger do not fire in response to events that affect local or temporary tables and stored procedures
+  The information about an event that fires a DDL trigger, and the subsequent changes caused by the trigger, is captured by the EVENTDATA function.
+  DDL triggers are not scoped to schemas. Therefore, functions such as OBJECT_ID, OBJECT_NAME,OBJECTPROPERTY and OBJECTPROPERTYEX cannot be used to querying metadata about DDL triggers. Use catalog views instead.
+  create DDL and DML trigger comes with the option such as ENCRYPTION and EXECUTE AS CLAUSE
+  Create DML trigger on memory optimized table comes with the option such as SCHEMABINDING and NATIVE_COMPILATION
+  DDL Trigger has option as FOR and AFTER (CREATE,ALTER, DROP, GRANT, DENY ) wheraes DML statement has option for FOR, INSTEAD OF and AFTER 
+EVENTDATA function
+Returns an xml value contains time of the event, System process ID, type of event that fired the event
+You can also use inserted or deleted tables in trigger to perform some validation, Test for errors and take action based on the error.
+Find the difference between the state of the table before and after a data modification and take actions based on that difference.
