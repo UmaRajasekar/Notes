@@ -318,3 +318,8 @@ pre-requisite:- create a windows login
 Grant and Revoke permission
 GRANT EXECUTE ON pr_Names FROM Mary;
 REVOKE EXECUTE ON pr_Names FROM Mary;
+
+.WRITE Option in the update statement
+Syntax : column.write(expression, @offset, @length)
+@offset - Null -> appends text at the end
+@length - Null -> Removes all the existing text
