@@ -364,3 +364,19 @@ EVENTDATA function
 Returns an xml value contains time of the event, System process ID, type of event that fired the event
 You can also use inserted or deleted tables in trigger to perform some validation, Test for errors and take action based on the error.
 Find the difference between the state of the table before and after a data modification and take actions based on that difference.
+
+Mathematical Functions
+ABS - returns positive value. Doesnt have any imapact on float values.
+ACOS - Function returns angle in radians. Only value from -1 and 1 is valid. For other it returns NULL where ASIN returns DOMAIN error.
+Other trignometric expression - ASIN, ATAN, SIN, COS, TAN , COT
+ATN2 - Returns the angle in radians between the positive X-axis and the ray of origin to a point 
+CIELING- Returns smallest integer greater than or equal to, the specified numerical expression.
+DEGREES - Returns degree for the radians passed. Radians will be provided as input to trignometric fuctions.
+LOG - returns natural algorithm. The default base is 2.718281828.
+POWER - returns the value of specified expression to the specified power.
+RADIANS- returns radians for degree entered.
+FLOOR - Returns largest integer less than or equal to specfied numberic expression
+ROUND - For rounding off.
+RAND - assigns random number. Repetitive calls of RAND() with the same seed value return the same results. Returns random float value from 0 to 1.
+SIGN - Returns positive(+1), negative(-1) or zero of the specified signed integer
+SQRT, SQUARE - Returns square root and square of the number respectively.
