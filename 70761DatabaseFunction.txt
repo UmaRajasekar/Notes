@@ -406,6 +406,7 @@ ROWSET function:
   2. OPENQUERY(linked server, query)
   3. OPENROWSET -used in a FROM clause
   4. OPENJSON and OPENXML - Returns JSON and XML data in the tabular format
+Retrieving data in JSON is available in 2 modes. LAX and STRICT mode. In strict mode, if syntax is incorrect, it returns error but in lax mode, it returns NULL
 
 Replication function:
   PUBLISHINGSERVERNAME- Returns the name of the originating Publisher for a published database participating in a database mirroring session
