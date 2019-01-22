@@ -439,3 +439,5 @@ System:
   NEWID
   NEWSQUENTIALID
   XACT_STATE - Returns user transaction state
+
+CROSS OR OUTER APPLY is similar to the CROSS JOIN or OUTER JOIN that helps to retrieve matching data from table valued function
