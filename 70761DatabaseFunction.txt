@@ -380,3 +380,16 @@ ROUND - For rounding off.
 RAND - assigns random number. Repetitive calls of RAND() with the same seed value return the same results. Returns random float value from 0 to 1.
 SIGN - Returns positive(+1), negative(-1) or zero of the specified signed integer
 SQRT, SQUARE - Returns square root and square of the number respectively.
+
+Trigger Functions:-
+Column Updated-
+  1. This function returns a varbinary bit pattern indicating the inserted or updated columns of a table or view
+  2. COLUMNS_UPDATED tests for UPDATE or INSERT actions performed on multiple columns. To test for UPDATE or INSERT attempts on one column, use UPDATE().
+  3. COLUMNS_UPDATED returns one or more bytes that are ordered from left to right. The rightmost bit of each byte is the least significant bit. The rightmost bit of the leftmost byte represents the first table column in the table, the next bit to the left represents the second column, and so on. 
+  4. COLUMN_UPDATED returns multiple byte. One byte is equal to 8 bit. 2^0 (right most of the left most bit is column-1)
+  5. You need to use substring function to validate if your column number in the table is more than 8.
+TRIGGER_NESTLEVEL
+  Returns number of triggers executed for the satement that fired the trigger. This is used to both DML and DDL trigger to find out number of nesting.
+UPDATE 
+  Returns a Boolean value that indicates whether an INSERT or UPDATE attempt was made on a specified column of a table or view
+  UPDATE() is used anywhere inside the body of a Transact-SQL INSERT or UPDATE trigger to test whether the trigger should execute certain actions.
