@@ -393,3 +393,16 @@ TRIGGER_NESTLEVEL
 UPDATE 
   Returns a Boolean value that indicates whether an INSERT or UPDATE attempt was made on a specified column of a table or view
   UPDATE() is used anywhere inside the body of a Transact-SQL INSERT or UPDATE trigger to test whether the trigger should execute certain actions.
+
+JSON function:
+  1. ISJSON -> used to detect whether specified string or column data is in valid JSON format
+  2. JSON_VALUE -> used to extract value by providing path of an JSON expression. JSON_VALUE(expression, path). extracts as an object or array. If unable to return object then, error is thrown stating using JSON_QUERY to retrive as Scalar function,
+  3. JSON_QUERY -> extracts as scalar function instead of object or array.
+  4. JSON_MODIFY -> used to update value of JSON file. Various opreration such as INSERT, APPEND, UPDATE and DELETE JSON value. Need to check if it works for SCALAR function
+  
+ROWSET function:
+  1. OPENDATASOURCE(provider name, init string)
+  provider name- Is the name registered as the PROGID of the OLE DB provider used to access the data source. 
+  2. OPENQUERY(linked server, query)
+  3. OPENROWSET -used in a FROM clause
+  4. OPENJSON and OPENXML - Returns JSON and XML data in the tabular format
