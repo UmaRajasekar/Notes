@@ -406,3 +406,36 @@ ROWSET function:
   2. OPENQUERY(linked server, query)
   3. OPENROWSET -used in a FROM clause
   4. OPENJSON and OPENXML - Returns JSON and XML data in the tabular format
+
+Replication function:
+  PUBLISHINGSERVERNAME- Returns the name of the originating Publisher for a published database participating in a database mirroring session
+  
+System:
+  $PARTITION - $PARTITION.<<Partition name>> (value). Returns the partition number in which a set of partitioning column values would be mapped for any specified partition funtion in SQL server 2017
+  @@ERROR - Returns an error number when previous statement encountered an error.
+  @@IDENTITY
+  @@PACK_RECEIVED - Returns the number of input packets read from the network by SQL server since it was last started.
+  @@ROWCOUNT - Returns number of rows affected by last statement
+  @@TRANCOUNT - Returns number of begin transaction statement.
+  BINARY_CHECKSUM - Returns the binary checksum computed over a row of a table or over a list of expression.BINARY_CHECKSUM and CHECKSUM are similar functions: They can be used to compute a checksum value on a list of expressions, and the order of expressions affects the resultant value. 
+  COMPRESS- Compresses the expression
+  CONNECTIONPROPERTY - Returns connection property
+  CURRENT_REQUEST_ID
+  CURRENT_TRANSACTION_ID
+  ERROR_LINE
+  ERROR_MESSAGE
+  ERROR_NUMBER
+  ERROR_PROCEDURE
+  ERROR_SEVERITY
+  ERROR_STATE
+  FORMATMESSAGE- Formats the message, before it print. Concats string in place of %s, %i - positive int, %d- negative int
+  GET_FILESTREAM_TRANSACTION_CONTEXT - Returns a token that represents the current transaction context of a session. 
+  GETANSINULL - Returns the default nullability for the database for this session.
+  HOST_ID() - Returns workstation ID
+  HOST_NAME()
+  ISNULL
+  ISNUMERIC
+  MIN_ACTIVE_ROWVERSION - returns rowversion values by using MIN_ACTIVE_ROWVERSION.
+  NEWID
+  NEWSQUENTIALID
+  XACT_STATE - Returns user transaction state
