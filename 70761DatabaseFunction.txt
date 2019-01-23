@@ -527,3 +527,7 @@ User defined funtions cannot perform following:-
   8. Cannot make use of dynamic SQL or temp tables.
   9. cannot be nested 
   10. The following Service Broker statements cannot be included in the definition of a Transact-SQL user-defined function: BEGIN DIALOG CONVERSATION, END CONVERSATION, GET CONVERSATION GROUP, MOVE CONVERSATION, RECEIVE and SEND
+
+Below are the table options available:-
+  1. Data compression = {NONE | ROW | PAGE}
+  2. SYSTEM_VERSIONING = ON 
