@@ -470,6 +470,7 @@ CREATE PROCEDURE
   Parameters cannot be declared if FOR replication is specified.
   cursor data types can only be OUTPUT parameters and must be accompanied by the VARYING keyword
   Recompile option cannot be used when there is FOR Replication option available.
+  Procedure options are execute as clause, Recompile and Encryption
   
 CREATE VIEW
   CREATE OR ALTER VIEW <view name> [(column_name)]
@@ -482,3 +483,35 @@ CREATE VIEW
   
   If the data is modlified with the views, it make sures that data remains visible through the views after the modification is committed.
   ENCRYPTION- prevents the view getting published as part of FOR Replication
+
+FUNCTIONS:-
+Functions can be used in below places.
+  1. In T-SQL statements such as SELECT
+  2. In applications calling the function
+  3. In the definiton of another user-defined function
+  4. To parameterize a view or improve the functionality of an indexed view.
+  5. To define a column in a table
+  6. To define a check constraint on a column
+  7. use an inline function as a filter predicate for a security policy
+  8. To replace a stored procedure.
+  
+  CREATE OR ALTER FUNCTION <function_name> ([
+  {@parameter_name datatype [= default] [READONLY] }])
+  RETURNS return_data_type | TABLE
+  [WITH <<function_optiom>>]
+  [AS]
+  BEGIN <function_body>
+  RETURN <scalar expression>
+  END
+  
+Function can be of three types:-
+  1. Scalar function
+  2. Inline Table Valued Function - Returns table struct output whithout any computation.
+  3. Multi-Statement Table-Valued Functions - Ypu can return your own defined table. It allows computatation
+  
+Function options can be of follows:-
+  1. ENCRYPTION - Converts the function in obfuscated format. User cannot directly access function definition
+  2. SCHEMABINDING - When SCHEMABINDING is specified, the base objects cannot be modified in a way that would affect the function definition.
+  3. RETURNS NULL ON NULL INPUT | CALLED ON NULL INPUT - CALLED ON NULL INPUT is implied by default. This means that the function body executes even if NULL is passed as an argument.
+  4. Execute_As_Clause - 
+  5. INLINE = {ON | OFF} - applicable only for scalr user defined functions. used for optimizing query performance
