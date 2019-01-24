@@ -531,3 +531,111 @@ User defined funtions cannot perform following:-
 Below are the table options available:-
   1. Data compression = {NONE | ROW | PAGE}
   2. SYSTEM_VERSIONING = ON 
+  
+Clustered and Non Clustered Index
+  1. An index is on-disk structure associated with a table or view that speeds retrieval of rows and columns from a table or view. An index contains keys built from one or more columns in a table or view.
+  2. These keys are stored in a structure(B-tree) that enables SQL server on faster retrieval of rows.
+  A table or view can contain following type of index:
+  Clustered: 
+    Clustered indexes sort and store the data rows in the table or view based on their key values. These are the columns included in the index definition. There can be only one clustered index per table, because the data rows themselves can be stored in only one order
+    The only time the data rows in a table are stored in sorted order is when the table contains a clustered index. When a table has a clustered index, the table is called a clustered table. If a table has no clustered index, its data rows are stored in an unordered structure called a heap.
+  Non- Clustered
+    Nonclustered indexes have a structure separate from the data rows. A nonclustered index contains the nonclustered index key values and each key value entry has a pointer to the data row that contains the key value
+    The pointer from an index row in a nonclustered index to a data row is called a row locator. The structure of the row locator depends on whether the data pages are stored in a heap or a clustered table. For a heap, a row locator is a pointer to the row. For a clustered table, the row locator is the clustered index key.
+    You can add non key columns to the leaf level of the non-clustered index by-pass existing index key limits and execute fully covered, indexed query with the help of INCLUDED OPTION
+Both clustered and non clustered index can be unique. This means no two rows can have same column values of index key. This can be achieved using UNIQUE index.
+Index and Constraints:- Indexes are automatically created when PRIMARY key and UNIQUE constraints are created.
+Query Optimizer:
+  Well designed index can reduce I/O operations and consume fewer system resources, therefore improving query performance. 
+  When SELECT, UPDATE, MERGE and DELETE query is fired, query optimizer evaluates each available method for retrieving the data and selects the most effiecient method. This method can be table scan, or scanning one or more indexs if exist
+  
+Clustered Index:
+  Every table is recommended to have a clusterd index. Besides query performance, it allows you to rebuilt and re-organize based on the needs. Clustered index can be created on views as well.
+  PRIMARY KEY and UNIQUE constraints: When primary key is created, a unique clustered index is created automatically and when UNIQUE constraint is created, then UNIQUE non-clustered index is created.
+  Index created as part of constraints will have a constraint same name as column name
+  Index independent of constraints: You can create a clustered index on a column other than primary key column if a non clustered primary key is specified.
+  Limitation
+    There might be need of temporary disk space as we need for transformation from old structure to new structure. Old structure is deallocated after committing full transformation of new structure.
+    If a clustered index is created on a heap with several existing nonclustered indexes, all the nonclustered indexes must be rebuilt so that they contain the clustering key value instead of the row identifier (RID). This is applicable when clustered index is dropped.
+    We need consider setting ONLINE option ON for large tables. This avoids long term table locks and enables updates and query to underlying table.
+    The index key of a clustered index cannot contain varchar columns that have existing data in the ROW_OVERFLOW_DATA allocation unit. 
+    If a clustered index is created on a varchar column and the existing data is in the IN_ROW_DATA allocation unit, subsequent insert or update actions on the column that would push the data off-row will fail.
+    
+Non Clustered Index:
+  Generally, non clustered index is used to improve performance of frequently used queries
+  The maximum number of index to be created is 999 including indexes created by default constraint field. This does not include XML indexes.
+  
+  Unique Constraint or Index:
+    The behaviour of creating UNIQUE constraint or UNIQUE index is same. Database will not be able to seperate both.
+    There is an option can be set which is IGNORE DUPLICATE KEYS. If ignore DUPLICATE key option is set to YES, then when trying to insert row having duplicated value of unique column then adding duplicate row is ignored instead of failing whole of insert operation.
+    Unique indexes ensure the data integrity of the defined columns
+    Unique indexes provide additional information helpful to the query optimizer that can produce more efficient execution plans.
+    
+    Indexed view: To create a indexed view, a unique clustered index is defined on one or more view columns. The view is executed and the result set is stored in the leaf level of the index in the same way table data is stored in a clustered index
+    Before creating Indexed view, appropriate SET operation should be set. Below are the few SET operations:
+    CONCAT_NULL_YIEDS_NULL
+    NUMERIC_ROUNDABORT
+    ANSI_NULLS - where column=NULL will not yield any records which follows ISO standards.
+    ANSI_PADDING - Pad original value (with trailing blanks for char columns and with trailing zeros for binary columns) to the length of the column.
+      - Pad original value (with trailing blanks for char columns and with trailing zeros for binary columns) to the length of the column.
+    ANSI_WARNING - When set to ON, if null values appear in aggregate functions, such as SUM, AVG, MAX, MIN, STDEV, STDEVP, VAR, VARP, or COUNT, a warning message is generated. When set to OFF, no warning is issued.
+      - When set to ON, the divide-by-zero and arithmetic overflow errors cause the statement to be rolled back and an error message is generated. 
+    ARITABORT - Terminates the query when an overflow or divide-by-zero error occurs during query execution.
+    QUOTED_INDENTIFIER - Allows T-SQL key word to used to create as column name, table name and other identifier when enclosed with double quotes
+    
+    To create indexed view, ANSI NULL, ANSI PADDING, ANSI WARNING , ANSI ABORT and QUOTED identifier, CONCAT NULL YIELDS NULL option should be ON and NUMERIC_ROUNDABORT option should be off
+    Indexed View must be deterministic. This means you cannnot use functions like GETDATE() in the column of index
+    IGNORE_DUP_KEY key must be OFF
+    Indexed view should be created with Schema binding option.
+    Even the function referenced should have been created with WITH SCHEMABINDING
+    The view must reference only base tables that are in the same database as the view. The view cannot reference other views.
+    EXTERNAL ACCESS = NO
+    DATA ACCESS = NO SQL
+    PRECISE = TRUE
+    DETERMINISTIC = TRUE
+    The select statement should not contain COUNT, ROWSET functions, JOINS, DISTINCT, SELF JOiNS, Aggregate functions, PIVOT, OUTER APPLY, CROSS APPLY, Sparse Column set, Inline TVF, multi-valued TVF, OFFSET, CHECKSUM AGG
+    If GROUP BY is present, the VIEW definition must contain COUNT_BIG(*) and must not contain HAVING. 
+    If the view definition contains a GROUP BY clause, the key of the unique clustered index can reference only the columns specified in the GROUP BY clause.
+    Indexed views can be created on a partitioned table, and can themselves be partitioned.
+    To prevent the Database Engine from using indexed views, include the OPTION (EXPAND VIEWS) hint on the query. Also, if any of the listed options are incorrectly set, this will prevent the optimizer from using the indexes on the views. For more information about the OPTION (EXPAND VIEWS)
+    Dropping the clustered index on the view removes the stored result set, and the optimizer returns to processing the view like a standard view.
+    OVER expression should not be used.
+    SUM function that references only non-nullable expression can be used.
+    
+  Filtered Indexes
+    A filter index is an optimized non-cluster index especially suited for queries that select from a well suited subset of data.
+    A well designed index can improve query performance as well as reduce index maintenence and storage costs compared to full-table indexes.
+    Important advantages are :
+      1. Improve query performance and plan quality
+      2. Reduce indexed costs
+      3. Reduce index storage costs
+    Design Consideration:
+      When a column only has a small number of relevant values for queries, you can create a filtered index on the subset of values. For example, when the values in a column are mostly NULL and the query selects only from the non-NULL values, you can create a filtered index for the non-NULL data rows. The resulting index will be smaller and cost less to maintain than a full-table nonclustered index defined on the same key columns.
+      When a table has heterogeneous data rows, you can create a filtered index for one or more categories of data. This can improve the performance of queries on these data rows by narrowing the focus of a query to a specific area of the table. Again, the resulting index will be smaller and cost less to maintain than a full-table nonclustered index.
+    Limitation:
+      You cannot create filtered index for a view.
+      However, the query optimizer can benefit from a filtered index defined on a table that is referenced in a view.
+      You cannot create a filtered index on a table when the column accessed in the filter expression is of a CLR data type
+      A column in the filtered index expression should be a key or included column in the filtered index definition if the column is in the query result set.
+      A column in the filtered index expression does not need to be a key or included column in the filtered index definition if the filtered index expression is equivalent to the query predicate and the query does not return the column in the filtered index expression with the query results.
+      A column in the filtered index expression should be a key or included column in the filtered index definition if the query predicate uses the column in a comparison that is not equivalent to the filtered index expression.
+      CAST and CONVERT should be happening in the right side of the operator.
+    To ensure, SELECT statement must include WITH INDEX options.
+    
+  Create Indexes with Included columns
+    They can be data types not allowed as index key columns.
+    They are not considered by the Database Engine when calculating the number of index key columns or index key size.
+    An index with nonkey columns can significantly improve query performance when all columns in the query are included in the index either as key or nonkey columns. 
+    Design Consideration:
+      Redesign nonclustered indexes with a large index key size so that only columns used for searching and lookups are key columns. Make all other columns that cover the query into nonkey columns. In this way, you will have all columns needed to cover the query, but the index key itself is small and efficient.
+      Include nonkey columns in a nonclustered index to avoid exceeding the current index size limitations of a maximum of 32 key columns and a maximum index key size of 1,700 bytes (16 key columns and 900 bytes prior to SQL Server 2016 (13.x)). 
+    Limitations and Restriction
+      Nonkey columns can only be defined on nonclustered indexes.
+      All data types except text, ntext, and image can be used as nonkey columns.
+      Computed columns that are deterministic and either precise or imprecise can be nonkey columns
+      Nonkey columns cannot be changed, except to do the following:
+        Change the nullability of the column from NOT NULL to NULL.
+        Increase the length of varchar, nvarchar, or varbinary columns.
+      Nonkey columns cannot be dropped from a table unless that table's index is dropped first.
+      
+      
