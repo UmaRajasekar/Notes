@@ -638,4 +638,80 @@ Non Clustered Index:
         Increase the length of varchar, nvarchar, or varbinary columns.
       Nonkey columns cannot be dropped from a table unless that table's index is dropped first.
       
-      
+Drop an Index:-
+  DROP INDEX <<Index name>> ON <<Table name>>
+Alter an Index:-
+  Adding DROP_EXISTING = ON option in WITH allows you to drop and re-create existing index
+  ALTER INDEX {<<index name>> | ALL } on <<table name>>
+  {
+    REBUILD { 
+        [PARTITION = ALL | partition name  [ with <<rebuild index option >>] ]
+        }
+    | DISABLE
+    | REORGANIZE [PARTITION = ALL | partition name ] [ with <<re-organize index option>>]
+    | SET (SET index option)
+    | RESUME [ WITH <<resume index option>>]
+    | PAUSE
+    | ABORT
+  }
+  
+  rebuild index options can be as follows:-
+    PAD_INDEX = {ON | OFF}
+    FILL FACTOR
+    SORT_IN_TEMPDB = {ON | OFF}
+    IGNORE_DUP_KEY = {ON | OFF}
+    STATISTICS_NORECOMPUTE = {ON | OFF}
+    STATISTICS_INCREMENTAL = {ON | OFF}
+    ONLINE = { ON <<low priority wait time>>| OFF }
+    RESUMABLE = {ON | OFF}
+    MAX DUARTION = <time> [MINUTES]
+    ALLOW_ROW_LOCKS = {ON|FF}
+    ALLOW_PAGE_LOCKS = {ON|OFF}
+    MAXDOP = Max_Degree_Of_Parallelism
+    COMPRESSION_DELAY = {0| delay [Minutes]}
+    DATA_COMPRESSION = { NONE | ROW | PAGE | COLUMNSTORE | COLUMNSTORE_ARCHIVE }   
+        [ ON PARTITIONS ( {<partition_number> [ TO <partition_number>] } [ , ...n ] )
+  Above rebuild options works when rebuild all the partition
+  When rebuilding single partition, only few option as mentioned below are allowed.
+    RESUMABLE = {ON | OFF}
+    MAX DUARTION = <time> [MINUTES]
+    DATA_COMPRESSION = { NONE | ROW | PAGE | COLUMNSTORE | COLUMNSTORE_ARCHIVE }   
+    SORT_IN_TEMPDB = {ON | OFF}
+    ONLINE = { ON <<low priority wait time>>| OFF }
+    
+  <reorganize_option>::=  
+    {  
+           LOB_COMPACTION = { ON | OFF }  
+        |  COMPRESS_ALL_ROW_GROUPS =  { ON | OFF}  
+    }  
+    
+  <set_index_option>::=  
+    {  
+          ALLOW_ROW_LOCKS = { ON | OFF }  
+        | ALLOW_PAGE_LOCKS = { ON | OFF }  
+        | IGNORE_DUP_KEY = { ON | OFF }  
+        | STATISTICS_NORECOMPUTE = { ON | OFF }  
+        | COMPRESSION_DELAY= {0 | delay [Minutes]}  
+    } 
+  <resumable_index_option> ::=
+   { 
+      MAXDOP = max_degree_of_parallelism
+      | MAX_DURATION =<time> [MINUTES]
+      | <low_priority_lock_wait>  
+   }
+ <low_priority_lock_wait>::=  
+    {  
+        WAIT_AT_LOW_PRIORITY ( MAX_DURATION = <time> [ MINUTES ] ,   
+                              ABORT_AFTER_WAIT = { NONE | SELF | BLOCKERS } )  
+    } 
+
+If the table has one or more Spatial Index, XML index or Column store index, following options will
+  REBUILD WITH ONLINE =ON
+  IGNORE_DUP_KEY=ON
+  ONLINE=ON
+Other than that, rebuild partition(ALL) fails, for non-partitioned index
+REORGANIZE fails when ALLOW_PAGE_LOCKS is off
+REORGANIZE partition fails for non-partitioned index
+RESUMABLE =ON is not suppported when partition=ALL is found
+
+While including option ALL for REBUILD of clustered index, it rebuilds all the non-clustered index
