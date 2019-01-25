@@ -715,3 +715,52 @@ REORGANIZE partition fails for non-partitioned index
 RESUMABLE =ON is not suppported when partition=ALL is found
 
 While including option ALL for REBUILD of clustered index, it rebuilds all the non-clustered index
+
+LOB_COMPACTION= ON
+  Specifies to compact all pages that contain data of these large object (LOB) data types: image, text, ntext, varchar(max), nvarchar(max), varbinary(max), and xml. Compacting this data can reduce the data size on disk
+  For a clustered index, this compacts all LOB columns that are contained in the table.
+  For a nonclustered index, this compacts all LOB columns that are nonkey (included) columns in the index.
+For columnstore indexes, REORGANIZE compresses each CLOSED delta rowgroup into the columnstore as a compressed rowgroup. The REORGANIZE operation is always performed online. 
+FOR PAD_INDEX ON option:-
+   The percentage of free space that is specified by FILLFACTOR is applied to the intermediate-level pages of the index. If FILLFACTOR is not specified at the same time PAD_INDEX is set to ON, the fill factor value stored in sys.indexes is used.
+FOR PAD_INDEX OFF option:-
+  The intermediate-level pages are filled to near capacity. This leaves sufficient space for at least one row of the maximum size that the index can have, based on the set of keys on the intermediate pages.
+SORT_IN_TEMPDB = ON
+  The intermediate sort results that are used to build the index are stored in tempdb. If tempdb is on a different set of disks than the user database, this may reduce the time needed to create an index. However, this increases the amount of disk space that is used during the index build.
+SORT_IN_TEMPDB = OFF
+  The intermediate sort results are stored in the same database as the index.If a sort operation is not required, or if the sort can be performed in memory, the SORT_IN_TEMPDB option is ignored.
+IGNORE_DUP_KEY cannot be set to ON for indexes created on a view, non-unique indexes, XML indexes, spatial indexes, and filtered indexes.
+  STATISTICS_NORECOMPUTE =ON
+    Out-of-date statistics are not automatically recomputed.
+  STATISTICS_INCREMENTAL = ON
+    When ON, the statistics created are per partition statistics. When OFF, the statistics tree is dropped and SQL Server re-computes the statistics. The default is OFF.
+  ONLINE = ON
+  Specifies whether underlying tables and associated indexes are available for queries and data modification during the index operation. The default is OFF
+  When Index being built with ONLINE=OFF option, when concurrent users trying to access data in the underlying table, index, if one user re-builts the index, there will be exclusive lock on underlying data which prevents other users in running update, select or insert statements.
+  Online Index Structure
+    1. Source and Pre-existing indexes
+      When clustered index for an table is being re-built, the existing clustered index along with associated non-clustered index will be available for query and modifying data.  This means they may be selected by the query optimizer and, if necessary, specified in index hints.
+    2. Target
+      Target state is new clustered index created. The target index is not searched while processing SELECT statements until the index operation is committed. Internally, the index is marked as write-only. Until the associated non-cluster index is re-built, new index will not be used for search statements in SQL Server
+    3. Temporary Mapping Index
+      When the index being re-built, a temporary mapping index is created as when concurrent transactions occurs, it stores to determine the records to be modified in new index.
+    All ONLINE operation will have three phases such as Preparation, Build and Final
+  When you perform online index operations, the following guidelines apply,
+    Clustered indexes must be created, rebuilt, or dropped offline when the underlying table contains the following large object (LOB) data types: image, ntext, and text.
+    Nonunique nonclustered indexes can be created online when the table contains LOB data types but none of these columns are used in the index definition as either key or nonkey (included) columns.
+    Indexes on local temp tables cannot be created, rebuilt, or dropped online. This restriction does not apply to indexes on global temp tables.
+    Indexes can be resumed from where it stopped after an unexpected failure, database failover, or a PAUSE command.
+  RESUMABLE = { ON | OFF}
+    Indicates whether online index is resumable.
+  ALLOW_PAGE_LOCKS = ON
+    Specifies whether page lock is allowed
+  ALLOW_ROW_LOCKS = ON
+    Specifies whether row lock is allowed.
+  MAXDOP
+    Overrides the number of processor used in parallel plan execution
+  COMPRESSIONDELAY
+    For a disk-based table, delay specifies the minimum number of minutes a delta rowgroup in the CLOSED state must remain in the delta rowgroup before SQL Server can compress it into the compressed rowgroup. Since disk-based tables don't track insert and update times on individual rows, SQL Server applies the delay to delta rowgroups in the CLOSED state.
+  DATA_COMPRESSION
+    Specifies the Data compression option for specified index, partition number, or range of operations.
+  COLUMNSTORE_ARCHIEVE
+    
