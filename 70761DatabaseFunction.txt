@@ -763,4 +763,44 @@ IGNORE_DUP_KEY cannot be set to ON for indexes created on a view, non-unique ind
   DATA_COMPRESSION
     Specifies the Data compression option for specified index, partition number, or range of operations.
   COLUMNSTORE_ARCHIEVE
+    Further compresses the specified partition to a smaller size. This can be used for archival, or for other situations that require a smaller size and can afford more time for storage and retrival.
+  
+  DATA_COMPRESSION - Specifies the partitions to which the DATA_COMPRESSION settings applies. If ON PARTITIONS is not specified, then DATA_COMPRESSION is applied for all partitions.
+  ONLINE = ON -> Specifies whether an index or index partition of an underlying table can be rebuilt online or offline. The default option is OFF.
+  WAIT_AT_LOW_PRIORITY -> This comes with two options. MAX_DUARTION = <time> [MINUTES] , ABORT_AFTER_WAIT = {NONE|SELF|BLOCKERS}
+  Omitting the WAIT AT LOW PRIORITY option is equivalent to WAIT_AT_LOW_PRIORITY (MAX_DURATION = 0 minutes, ABORT_AFTER_WAIT = NONE
+  SELF - Exits the online index rebuild DDL operation currently being executed without taking any actions.
+  Kill all user transactions that block the online index rebuild DDL operation so that the operation can continue. 
+  
+  RESUME - Resume an index that is manually or due to failure.
+  MAX_DURATION used with RESUMABLE=ON - The time (an integer value specified in minutes) the resumable online index operation is executed after being resumed. Once the time expires, the resumable operation is paused if it is still running.
+  WAIT_AT_LOW_PRIORITY used with RESUMABLE=ON and ONLINE = ON.
+    Resuming an online index rebuild after a pause has to wait for blocking operations on this table. WAIT_AT_LOW_PRIORITY indicates that the online index rebuild operation will wait for low priority locks, allowing other operations to proceed while the online index build operation is waiting. 
+  
+  PAUSE - Pause an online index operation
+  ABORT - Abort an running or paused index operation that was declared as resumable.
+  
+  Rebuilding Index:-
+    Rebuilding an index drops and re-creates the index. This removes fragmentation, reclaims disk space by compacting the pages based on the specified or existing fill factor setting, and reorders the index rows in contiguous pages. 
+    
+You can also move index from one file group to another file group using  DROP_EXISTING=ON option
+Index on Computed Column:
+  You can define indexes on computed columns as long as the following requirement are met:
+    Ownership requirements
+    Determinism requirements - Column needs to be deterministic and PERSISTED
+    Precision requirements - It is not an expression of float and real data types.
+    Data type requirements - It cannot evaluate image, ntext, text, varchar(max), nvarchar(max)
+    SET OPTION requirements - NUMBERIC_ROUNDABORT is set off. ANSI_NULLS, ANSI_PADDINGS, ANSI_WARNINGS, ARITHABORT, CONCAT_NULL_YIELDS_NULL, QUOTED_IDENTIFIER
+    
+  SORT_IN_TEMPDB
+    When this option is ON, you can use tempdb to store the immediate sort results that are used to build the index. This increases amount of tempdb space. But this decrease the amount of 
+    
+    Disbaling Index or constraint prevents users access to the index, for clustered indexs to the underlying table data. The index definition remains in metadata, and index statistics are kept on nonclustered indexes. Diabling a nonclustered or clustered index on a view, physically deletes the index data. Disabling a clustered index on a table prevents access to the data; the data still remains in the table, but unavailable for DML operation.
+    Index is not maintained when diabled.
+    When disabling a unique index, the PRIMARY or UNIQUE constraint, then all the foreign key referenced the index columns from the other table is also disabled.
+    Non clustered index are automatically disbaled when relavent clustered index is disabled.
+    Nonclustered indexes must be explicitly enabled, unless the clustered index was enabled by using the ALTER INDEX ALL REBUILD statement.
+    ALTER INDEX ALL REBUILD command rebuilds and enables all the index for the index, except for the INDEX of the table.
+    Disabling a clustered index on a table also disables all clustered and nonclustered indexes on views that reference that table. These indexes must be rebuilt just as those on the referenced table.
+    You can rebuild the non-clustered index, only when clustered index for that table is enabled.
     
