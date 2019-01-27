@@ -803,4 +803,60 @@ Index on Computed Column:
     ALTER INDEX ALL REBUILD command rebuilds and enables all the index for the index, except for the INDEX of the table.
     Disabling a clustered index on a table also disables all clustered and nonclustered indexes on views that reference that table. These indexes must be rebuilt just as those on the referenced table.
     You can rebuild the non-clustered index, only when clustered index for that table is enabled.
+    The CREATE_STATISTIC statement cannot be successfully executed on a table that has a disabled clustered index.
+    The AUTO_CREATE_STATISTICS database option creates new statistics on a column when the index is disabled and the following condition exists:
+      AUTO_CREATE_STATISTICS is set to ON
+      There are no existing statistics for the column.
+      Statistics are required during query optimizer.
+      
+    You can rebuild index using follwing options:-
+      1. REBUILD
+      2. CREATE INDEX using DROP_EXISTING=ON
+      3. DBCC DBREINDEX("SchemaName.TableName", IndexName) , DBCC DBREINDEX("SchemaName.TableName", " ") -> rebuilds all the index.
+      
+    Executing sp_rename procedure will help us to rename the index object.
+    Syntax: EXEC sp_rename <old_index_name>, <new_index_name>
     
+    Index Operation that require no additional disk space.
+      ALTER INDEX REORGANIZE. However log space is required.
+      DROP INDEX when you are dropping a nonclustered index
+      DROP INDEX when you are dropping a clustered index offline.
+      CREATE TABLE (PRIMARY KEY or UNIQUE constraint)
+    
+    Index Operations that require additional disk space
+      CREATE INDEX
+      CREATE INDEX WITH DROP_EXISTING
+      ALTER INDEX REBUILD
+      ALTER TABLE ADD CONSTRAINT (PRIMARY KEY OR CONSTRAINT)
+      ALTER TABLE DROP CONSTRAINT (PRIMARY KEY OR CONSTRAINT)
+      DROP INDEX MOVE TO
+      
+    Similarly, when creating index with ONLINE option.
+    
+  Transaction Log Disk space for Index Operations
+    Large scale index operations can generate large data loads that can cause the transaction log to fill quickly.
+    To make sure that the index operation can be rolled back, transaction log cannot be truncated until the index operation is completed.
+    Transaction log must have sufficient room to store both the index operation transactions and any concurrent users transactions for the duration of the index operations
+    This holds true for both online and offline index.
+    Offline index transaction log will have detail of only index operation
+    Online index transaction log will have details of both index operation and concurrent users transactions
+    SORT_IN_TEMPDB option will help to reduce the space of transaction log details. When SORT_IN_TEMPDB option is used, transaction details are stored in tempdb transaction log and concurrent user transaction details will be stored in user database transaction logs.
+    
+  Reorganize and Rebuild
+    SQL server automatically modifies indexes whenever insert, update or delete operations are made to underlying data. 
+    Overtime, these modifications can cause the information in the index become scattered in a database(fragmented).
+    Fragmentation exists when the index have pages in which the logical ordering, based on the key value, does not match the physical ordering inside the data file.
+    Heavily fragmented indexes can degrade query performance and cause the application to respond slowly, espacially scan operation.
+    You can remedy index fragmentation by reorganising and rebuilding the index.
+    Rebuilding an index drops and re-creates the index. This removes fragmentation, reclaims disk space by compacting the pages based on the specified or existing fill factor setting, and reorders the index rows in contiguous pages. 
+    Reorganizing an index uses minimal system resources. It defragments the leaf level of clustered and nonclustered indexes on tables and views by physically reordering the leaf-level pages to match the logical, left to right, order of the leaf nodes. Reorganizing also compacts the index pages. 
+    You can system function sys.dm_db_index_physical_stats to analyse the degree of fragmentation.
+    If avg_fragmentation_in_percent value is between 5% and 30%, then "ALTER INDEX REORGANIZE" statement can be used.
+    If avg_fragmentation_in_percent value is greater than 30%, then "ALTER INDEX REBUID WITH (ONLINE=ON)" option to be used.
+    
+  The fill-factor option is provided for fine-tuning index data storage and performance. When an index is created or rebuilt, the fill-factor value determines the percentage of space on each leaf-level page to be filled with data, reserving the remainder on each page as free space for future growth. For example, specifying a fill-factor value of 80 means that 20 percent of each leaf-level page will be left empty, providing space for index expansion as data is added to the underlying table. The empty space is reserved between the index rows rather than at the end of the index.
+  
+  On multiprocessor computers that are running SQL Server Enterprise or higher, index statements may use multiple processors to perform the scan, sort, and index operations associated with the index statement just like other queries do.
+  The number of processors used to run a single index statement is determined by the max degree of parallelism configuration option, the current workload, and the index statistics. The max degree of parallelism option determines the maximum number of processors to use in parallel plan execution.
+  If the SQL Server Database Engine detects that the system is busy, the degree of parallelism of the index operation is automatically reduced before statement execution starts.
+  The Database Engine can also reduce the degree of parallelism if the leading key column of a non-partitioned index has a limited number of distinct values or the frequency of each distinct value varies significantly.
