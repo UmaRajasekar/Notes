@@ -918,6 +918,41 @@ Recommendations:-
       
       Use MAXDOP to improve rowgroup quality:
         When converting B-tree index to columnstore index and involving bulk of data, you can increase the MAX DOP value to 4 to speed up the process.
+        If you have MAX DOP=1, row order gets preserved.
       Use DROP_EXISTING
-        helps to preserve the sort order while converting from rowindex to columnindex
+        helps to preserve the index name  while converting from rowindex to columnindex
      
+Data Loading in ColumnStore
+  Bulk loading refers to the way of loading large number of rows added to a data store. During bulk load process, data loads into rowgroup till reaches the treshold and convert them to columnstore. Only the extra rows in the end gets added to delta store.
+  Parallel Loads: You can have multiple concurrent bulk loads (bcp or bulk insert) that are each loading a separate data file. Unlike rowstore bulk loads into SQL Server, you don't need to specify TABLOCK because each bulk import thread will load data exclusively into a separate rowgroups (compressed or delta rowgroups) with exclusive lock on it. Using TABLOCK will force an exclusive lock on the table and you will not be able to import data in parallel.
+  Any data goes to bulk load 
+  Locking Optimization: When loading into compressed rowgroup, the X lock on rowgroup is acquired. However, when bulk loading into delta rowgroup, an X lock is acquired at rowgroup but SQL Server still locks the locks PAGE/EXTENT because X rowgroup lock is not part of locking hierarchy.
+Closed Rowgroup:
+  Every 5 minutes, there is tuple mover which checks for row groups in delta store crossing the treshold limit and closes the rowgroup.
+  We can also close the row group within that 5 minutes using below command:-
+    ALTER INDEX <index-name> on <table-name> REORGANIZE
+  You can also force close all the row group using below command:
+    ALTER INDEX <index-name> on <table-name> REORGANIZE with (COMPRESS_ALL_ROW_GROUPS = ON)
+    
+  Organise data to eliminate more rowgroups from a full table scan:
+    Leverage insert order:  In common case in traditional data warehouse, the data is indeed inserted in time order and analytics is done in time dimension.
+    Leverage the rowstore clustered index: 
+    Leverage table partitioning: 
+  
+  Query Optimization:
+    Columnstore indexes reduce I/O and optimize in-memory operations through high data compression, columnstore elimination, rowgroup elimination, and batch processing.
+    Columnstore indexes read compressed data from disk, which means fewer bytes of data need to be read into memory.
+    Columnstore indexes store data in compressed form in memory which reduces I/O by reducing the number of times the same data is read into memory.
+    Columnstore indexes compress data by columns instead of by rows which achieves high compression rates and reduces the size of the data stored on disk. Each column is compressed and stored independently. Data within a column always has the same data type and tends to have similar values
+    Data compression techniques are very good at achieving higher compression rates when values are similar.
+    Columnstore indexes skip reading in columns that are not required for the query result. This ability, called column elimination, further reduces I/O for query execution and therefore improves query performance.
+    For full table scans, a large percentage of the data usually does not match the query predicate criteria. By using metadata, the columnstore index is able to skip reading in the rowgroups that do not contain data required for the query result, all without actual I/O. This ability, called rowgroup elimination, reduces I/O for full table scans and therefore improves query performance.
+    Analytics query benefit from rowgroup elimination for a full-table scan
+    To determine which rows groups to eliminate, the columnstore index uses metadata to store the minimum and maximum values of each column segment for each rowgroup. 
+    Aggregate Pushdown: A normal execution path for aggregate computation to fetch the qualifying rows from the SCAN node and aggregate the values in Batch Mode.
+    
+    Real-time analytics with SQL server:
+    Real-time analytics uses an updateable columnstore index on a rowstore table. The columnstore index maintains a copy of the data, so the OLTP and analytics workloads run against separate copies of the data. This minimizes the performance impact of both workloads running at the same time. SQL Server automatically maintains index changes so OLTP changes are always up-to-date for analytics. With this design, it is possible and practical to run analytics in real-time on up-to-date data. This works for both disk-based and memory-optimized tables.
+    Performance Tip#1- Compress only the warm rows and leave out hot rows
+    Performance Tip#2: Offload analytics to Always On readable secondary-  In this configuration, you can eliminate the impact of running analytics by offloading it to a readable secondary.
+    Performance Tip#3:  Reducing Index fragmentation by keeping hot data in delta rowgroups. WITH (DATA_COMPRESSION= COLUMNSTORE, COMPRESSION_DELAY = 100)
