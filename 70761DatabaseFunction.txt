@@ -861,6 +861,36 @@ Index on Computed Column:
   If the SQL Server Database Engine detects that the system is busy, the degree of parallelism of the index operation is automatically reduced before statement execution starts.
   The Database Engine can also reduce the degree of parallelism if the leading key column of a non-partitioned index has a limited number of distinct values or the frequency of each distinct value varies significantly.
 
+Columnstore indexes 
+  -> Columnstore indexes are standard for storing and querying large datawarehousing fact tables.
+  -> These indexes uses column based data storage and gains 10 times the data compression(over uncompressed data) and 10 times the query performance(over row based data storage)
+  -> Columnstore index - A columnstore index is a technology for storing, retrieving and managing data by using columnar data format, called a columnstore.
+  -> Following terms and concepts are associated with columnstore index:-
+    Columnstore
+    Rowstore
+    Rowgroup - A rowgroup is a group of rows that are compressed into columnstore format at a sametime. A row group contains maximum number of rows which is 1,048,576 rows. SQL server splits a table into number of rowgroups and compresses each row group into columnar format.
+      The number of rows in a row group should be large enough to increase compression rates and small enough to benefit from in-memory operation.
+    Column Segment - A column segment is a column of data from within a row group. Each rowgroup contains one column segment for every column in the table. Each column segment is compressed together and store in physical media.
+    Clustered columnstore index - A clustered columnstore index is a physical storage for the entire table.
+      To reduce fragmentation of the column and improve performance, the columnstore index might store some data temporarily into a clustered index called a deltastore. and a btree list of IDs for deleted rows. The clustered columnstore index returns results from combination of columnstore and deltastore.
+    Delta rowgroup- This is clustered index used only within the columnstore index. It improves columnstore compression and performance by storing rows until the number of rows reaches a treshold and then moves into the columnstore. When a delta rowgroup reaches the treshold, it becomes closed. A tuple-mover, process checks for closed row groups. If the process finds the closed rowgroup, it compresses the rowgroup and store it into the columnstire
+    Delta store - A column store can have more than one delta rowgroup. All of the delta rowgroups are collectively called the deltastore. During a large bulk load, most of the rows go directly to the columnstore without passing through the deltastore. Some rows at the end of the bulk load might be too few in number to meet the minimum size of a rowgroup, which is 102,400 rows. As a result, the final rows go to the deltastore instead of the columnstore. For small bulk loads with less than 102,400 rows, all of the rows go directly to the deltastore.
+    Non-clustered Columnstore index - A non clustered index and clustered columnstore index functions the same. The difference is that a nonclustered index is a secondary index thats created on a row store table, but the clustered column store index is a primary storage of entire table.
+      The nonclustered index contains a copy of part or all of the rows and columns in the underlying table. The index is defined with one or more columns and has an optimal condition that filters the row. The non-clustered index can be used for OLTP whereas clustered columnstore index can be used for OLAP.
+    Batch-mode execution - This is query processing method that process multiple rows together. This is also known as vector based or vectorized execution. Queries on columnstore index with batch mode execution typically increases query performance for four or five times.
+    Reason why columnstore index is used.
+      -> Columnns store values from the same domain and commonly have similar values which increases high compression rates. I/O bootlenecks are minimized or removed from the system and memory footprints are reduced significantly.
+      -> High compression rates improve query performance by using a smaller in-memory footprint.
+      -> Batch execution improves query performance, typically by two to four times, by processing multiple rows together
+      -> QUeries often select few columns from a table, which reduces I/O from the physical media
+    You can also combine rowstore and columnstore on a same table by creating an updatable nonclustered columnstore index on a rowstore table. The columnstore index stores a copy of the selected columns, so you need extra space for this data, but the selected data is compressed on average 10 times. 
+    You can run analytics on the columnstore index and transactions on the rowstore index at the same time. The columnstore is updated when data changes in the rowstore table, so both indexes work against the same data.
+    Ways to create a columnstore index:-
+      CREATE TABLE WITH CLUSTERED COLUMSTORE INDEX
+      ALTER TABLE ADD INDEX
+      CREATE COLUMNSTORE INDEX
+      
+
 Operation performed by columnstore on rowgroups and column segments
   1. Compress rowgroups into the columnstore. Compression is performed on each column segment into a rowgroup.
   2. Merge rowgroups during an ALTER INDEX.. REORGANISE operation
