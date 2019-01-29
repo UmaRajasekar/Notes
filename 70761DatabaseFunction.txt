@@ -986,3 +986,47 @@ Closed Rowgroup:
     Performance Tip#1- Compress only the warm rows and leave out hot rows
     Performance Tip#2: Offload analytics to Always On readable secondary-  In this configuration, you can eliminate the impact of running analytics by offloading it to a readable secondary.
     Performance Tip#3:  Reducing Index fragmentation by keeping hot data in delta rowgroups. WITH (DATA_COMPRESSION= COLUMNSTORE, COMPRESSION_DELAY = 100)
+
+User-Defined Functions
+Like programming language, SQL server user defined functions are routines that accept parameters, perform an action, such as complex calculation, and return the result of that action as a value. The return value can be a single scalar value or a result set.
+Advantages:-
+  They allow modular programming.
+  They allow faster execution.
+  They can reduce network traffic.
+Types of user defined functions:-
+  Scalar functions:- 
+    User defined functions return a single value in RETURN clause. The return type can be any data type except text, ntext, image, cursor, and timestamp.
+    For inline scalar function, there is no function body whereas multistatement scalar function, defined in BEGIN..END block.
+  Table-Valued Function
+    User defined table valued function returns table data type. For inline table valued function, there will be no function body; the table is the result set of a single SELECT statement. 
+  System Functions
+    These are some system built-in functions
+    
+  Modifications to database tables, operations on cursors that are not local to the function, sending e-mail, attempting a catalog modification, and generating a result set that is returned to the user are examples of actions that cannot be performed in a function.
+  
+  Valid function statements
+    DELARE - define data variables and cursor
+    SET - Assignment 
+    FETCH.. INTO - Cursor operation that reference  local cursors that are declared, opened, closed, and deallocated in the function. Only FETCH statements that assign values to local variables using the INTO clause are allowed.
+    Control Flow statments except TRY..CATCH
+    UPDATE, INSERT, and DELETE statements modifying table variables that are local to the function.
+    EXECUTE statements calling an extended stored procedure
+    SELECT statements containing select lists with expressions that assign values to variables that are local to the function.
+    
+ Some non-deterministic functions are not allowed such as NEWID, NEWSEQUENTIALID, RAND, TEXTPTR
+ 
+ Schema Bound Functions - having SCHEMABINDING clause
+ You can also specify parameters 
+ DETERMINISTIC Function - Always returns the same result at any time they are called with a specific set of input values and given the same state of a database.  For example, the function AVG always returns the same result given the qualifications stated above, but the GETDATE function, which returns the current datetime value, always returns a different result
+ All the string built-in functions are deterministic.
+ Following user defined functions are not always deterministic, but can be used in indexed views or indexes on computed columns when they are specified in deterministic manner.
+ all aggregate functions - unless used with OVER and ORDER BY clause
+ CAST - Deterministic unless used with datetime, smalldatetime, or sql_variant.
+ CONVERT - Unless sql_variant as source type and datetime, smalldatetime are mentioned as target type.
+ CHECKSUM - unless CHECKSUM(*)
+ ISDATE - Deterministic only if it used with the CONVERT function.
+ RAND - Deterministic only if SEED parameter is specified.
+ 
+ Calling Extended Stored Procedures from Functions:
+ Functions that call extended stored procedures are nondeterministic, because the extended stored procedures can cause side effects on the database. 
+ When called from inside a function, the extended stored procedure cannot return result sets to the client.
