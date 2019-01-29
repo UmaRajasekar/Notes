@@ -860,3 +860,64 @@ Index on Computed Column:
   The number of processors used to run a single index statement is determined by the max degree of parallelism configuration option, the current workload, and the index statistics. The max degree of parallelism option determines the maximum number of processors to use in parallel plan execution.
   If the SQL Server Database Engine detects that the system is busy, the degree of parallelism of the index operation is automatically reduced before statement execution starts.
   The Database Engine can also reduce the degree of parallelism if the leading key column of a non-partitioned index has a limited number of distinct values or the frequency of each distinct value varies significantly.
+
+Operation performed by columnstore on rowgroups and column segments
+  1. Compress rowgroups into the columnstore. Compression is performed on each column segment into a rowgroup.
+  2. Merge rowgroups during an ALTER INDEX.. REORGANISE operation
+  3. Creates row groups during an ALTER INDEX.. REBUILD operation
+  4. Reports rowgroup health and fragmentation in the dynamic management views (DMVs)
+  
+Each column has some of its values in each rowgroup. These values are called column segments. Each row contains one column segements for every column in the table. Each column has one column segment in each rowgroup.
+
+  Rows go to the deltastore when they are:
+
+    Inserted with the INSERT INTO ... VALUES statement.
+    At the end of a bulk load and they number less than 102,400.
+    Updated. Each update is implemented as a delete and an insert.
+  The deltastore also stores a list of IDs for deleted rows that have been marked as deleted but not yet physically deleted from the columnstore.
+  You can force delta rowgroups into the columnstore by using ALTER INDEX to rebuild or reorganize the index.
+  You can create an updatable nonclustered columnstore index on a rowstore table. The columnstore index stores a copy of the data so you do need extra storage. However, the data in the columnstore index will compress to a smaller size than the rowstore table requires. By doing this, you can run analytics on the columnstore index and transactions on the rowstore index at the same time. The column store is updated when data changes in the rowstore table, so both indexes are working against the same data.
+  
+  Column Store Design
+    ->Best for dataware housing analytics
+    ->Best if updates and deletes are less
+    ->Not suited for OLTP
+    
+ Choose the best columnstore index for your needs:-
+  A columnstore index is either clustered or nonclustered. A clustered columnstore index can have one or more nonclustered B-tree indexes.
+  If you create a table as a columnstore index, you can easily convert the table back to a rowstore table by dropping the columnstore index.
+  
+Recommendations:-
+  Clustered Columnstore Index:
+    Use for:
+      1) Traditional data warehouse workload with a star or snowflake schema
+      2) Internet of Things (IOT) workloads that insert large volumes of data with minimal updates and deletes.
+   Non-clustered B-tree Index and Columnstore index in an in-memory table
+    Use to:
+      1. Enforce primary key and foreign key constraints on a clustered columnstore index.
+      2. Speed up queries that search for specific values or small ranges of values.
+      3. Speed up updates and deletes of specific rows.
+   Nonclustered columnstore index on a disk-based heap or B-tree index
+      Use for: 
+        1) An OLTP workload that has some analytics queries. You can drop B-tree indexes created for analytics and replace them with one nonclustered columnstore index.
+        2) Many traditional OLTP workloads that perform Extract Transform and Load (ETL) operations to move data to a separate data warehouse. You can eliminate ETL and a separate data warehouse by creating a nonclustered columnstore index on some of the OLTP tables.
+   
+   Columnstore index is used in IOT where you have large amount of inserts and minimal deletes and updates.
+   
+   Dont use clustered columnstore index for below scenarios:-
+    The table requires  varchar(max), nvarchar(max), or varbinary(max) data types
+    The table data is not permanent. Consider using a heap or temporary table when you need to store and delete the data quickly.
+    The table has less than one million rows per partition.
+    More than 10% of the operations on the table are updates and deletes. Large numbers of updates and deletes cause fragmentation. The fragmentation affects compression rates and query performance until you run an operation called reorganize that forces all data into the columnstore and removes fragmentation.
+    
+    Both rowstore and columnstore tables use partition to:
+      Control the size of incremental backups. You can back-up partition to seperate filegroups and mark them as read-only.
+      Save storage costs by moving an older partition to less expensive storage.
+      Perform operations efficiently by limiting the operations to a partition.
+      Save an additional 30% in storage costs. You can compress older partitions with the COLUMNSTORE_ARCHIVE compression options. The data will be slower for query performance, which is acceptable if the partition is queries infrequently.
+      
+      Use MAXDOP to improve rowgroup quality:
+        When converting B-tree index to columnstore index and involving bulk of data, you can increase the MAX DOP value to 4 to speed up the process.
+      Use DROP_EXISTING
+        helps to preserve the sort order while converting from rowindex to columnindex
+     
