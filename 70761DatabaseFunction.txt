@@ -1030,3 +1030,24 @@ Types of user defined functions:-
  Calling Extended Stored Procedures from Functions:
  Functions that call extended stored procedures are nondeterministic, because the extended stored procedures can cause side effects on the database. 
  When called from inside a function, the extended stored procedure cannot return result sets to the client.
+
+Limitation and Restriction of creating user defined functions
+  User defined functions cannot be used to perform actions that modify state of the database.
+  User defined function cannot have OUTPUT INTO clause that has table as its target.
+  User defined function cannot return multiple result sets. To return multiple result set, use stored procedure to return multiple result sets
+  Error handling is restricted in user-defined function. A UDF does not support TRY.. CATCH, @ERROR or RAISEERROR
+  User-defined functions cannot call a stored procedure, but can call an extended stored procedure.
+  SET statements are not allowed in a user-defined function.
+  The FOR XML clause is not allowed.
+  User-defined functions can be nested; that is, one user-defined function can call another. The nesting level can have a limit of 32.
+  The following Service Broker statements cannot be included in the definition of a Transact-SQL user-defined function:
+    BEGIN DIALOG CONVERSATION
+    END CONVERSATION
+    GET CONVERSATION GROUP
+    MOVE CONVERSATION
+    RECEIVE
+    SEND
+    
+  Creating inline scalar function
+    CREATE FUNCTION <function_name>(parameters datatype) RETURNS datatype AS BEGIN .. END;
+    SELECT OBJECT_DEFINITION (OBJECT_ID('function name'))
