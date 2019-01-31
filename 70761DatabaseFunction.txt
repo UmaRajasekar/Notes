@@ -1068,3 +1068,125 @@ Memory-Optimized Table
   Unlike disk based, memory optimized tables are fully atomic, consistent, isolated, and durable(ACID)
   Memory-optimized tables and natively compiled stored procedures support only a subset of Transact-SQL features.
   
+Metadata Functions:-
+  These are scalar functions that return information about the database and database objects
+  @@PROCID - Returns objectID of current Transact SQL module. Current transact SQL can be functions, peocedures or triggers
+  APP_NAME - This function returns the application name for the current session, if the application sets that name value. Use APP_NAME to distinguish between different application. You can set APP name from the start.
+  APPLOCK_MODE - Returns status of lock like NoLOCK, Update, IntentShared, IntentExclusive, Shared, Exclusive, SharedIntentExclusive, UpdateIntentExclusive
+  APPLOCK_MODE(@DBPrinciple, @ResourceName, @LockOwner)
+  sp_getapplock  - helps to get acquire locks
+  sp_releaseapplock = helps to release lock
+  APPLOCK_TEST - Helps to return status of the lock.
+  ASSEMBLYPROPERTY - Returns property of the assembly
+    ASSEMBLYPROPERTY('assembly_name', 'property_name')
+    Properties can be  CulltureInfo, Publickey, MvID, VersionMajor, VersionMinor, VersionBuild, VersionRevision, VersionBuild, Architecture, CLRName
+  COL_LENGTH - Returns defined length of a column, in bytes
+    COL_LENGTH ( 'table' , 'column' )
+  Returns NULL on error, or if a caller does not have the correct permission to view the object.
+  For varchar columns declared with the max specifier (varchar(max)), COL_LENGTH returns the value -1.
+  COL_NAME - Returns column name, based on the table identification number and column identification number values of that table column.
+    COL_NAME ( table_id , column_id )
+    Returns NULL if user dont have permission.
+  COLUMNPROPERTY - This function returns column or parameter information.
+    COLUMNPROPERTY ( object_id , column , property )
+    Property can be of following:-
+      AllowsNull
+      ColumnId
+      FullTextTypeColumn
+      GeneratedAlwaysType
+      IsColumnSet
+      IsComputed
+      IsCursorType
+      IsDeterministic
+      IsFulltextIndexed
+      IsHidden
+      IsIdentity
+      IsIdNotForRepl
+      IsIndexable
+      IsOutParam
+      IsPrecise
+      IsRowGuidCol
+      IsSparse
+      IsSystemVerified
+      IsXmlIndexable
+      Precision
+      Scale
+      StatisticalSemantics
+      SystemDataAccess
+      UserDataAccess
+      UsesAnsiTrim
+    DATABASE_PRINCIPAL_ID - This function returns the ID number of a principal in the current database
+      DATABASE_PRINCIPAL_ID();
+      DATABASE_PRINCIPAL_ID('db_owner') -Returns principal ID of current database owner.
+    DATABASEPROPERTYEX  -  this function returns the current setting of the specified database option or property.
+      DATABASEPROPERTYEX ( database , property ) 
+      The property of the database can be of below:-
+        Collation
+        ComparisonStyle
+        Edition
+        IsAnsiNullDefault
+        IsAnsiNullsEnabled
+        IsAnsiPaddingEnabled
+        IsAnsiWarningsEnabled
+        IsArithmeticAbortEnabled
+        IsAutoClose
+        IsAutoCreateStatistics
+        IsAutoCreateStatisticsIncremental
+        IsAutoShrink
+        IsAutoUpdateStatistics
+        IsClone
+        IsCloseCursorsOnCommitEnabled
+        IsFulltextEnabled
+        IsInStandBy
+        IsLocalCursorsDefault	
+        IsMemoryOptimizedElevateToSnapshotEnabled
+        IsMergePublished
+        IsNullConcat
+        IsNumericRoundAbortEnabled
+        IsParameterizationForced
+        IsQuotedIdentifiersEnabled
+        IsPublished
+        IsRecursiveTriggersEnabled
+        IsSubscribed
+        IsSyncWithBackup
+        IsTornPageDetectionEnabled
+        IsVerifiedClone
+        IsXTPSupported
+        LastGoodCheckDbTime
+        LCID
+        MaxSizeInBytes
+        Recovery
+        ServiceObjective
+        ServiceObjectiveId
+        SQLSortOrder
+        Status
+        Updateability	
+        UserAccess
+        Version
+      Ex: DATABASEPROPERTYEX('AdventureWorks2014', 'IsAutoShrink')
+      DB_ID -returns  database identifier of specified database
+      DB_NAME - returns database name for specified database  
+      FILE_ID/FILE_IDEX - Returns file ID of the database.
+        For the given logical name for a component file of the current database, this function returns the file identification (ID) number. Example SELECT FILE_ID('AdventureWorks2012_Data')AS 'File ID'; 
+      FILEGROUP_ID - This function returns the filegroup identification (ID) number for a specified filegroup name
+        File group can be primary, created filegroup and transaction log
+      FILEGROUP_NAME - This function returns the filegroup name for the specified filegroup identification (ID) number
+      FILEGROUPPROPERTY - Returns property of file group. The properties can be IsReadOnly, IsUserDefinedFG, IsDefault
+      FILEPROPERTY- Returns the specified file name property value when a file name in the current database and a property name are specified. Returns NULL for files that are not in the current database.
+        The file property can be as below:-
+          IsReadOnly
+          IsPrimaryFile
+          IsLogFile
+          SpaceUsed
+      FULLTEXTCATALOGPROPERTY - Returns information about full-text catalog properties in SQL Server 2017.
+        FULLTEXTCATALOGPROPERTY ('catalog_name' ,'property')
+      FULLTEXTSERVICEPROPERTY - Returns information related to the properties of the Full-Text Engine.
+        FULLTEXTSERVICEPROPERTY ('property')
+      INDEX_COL - Returns the indexed column name. Returns NULL for XML indexes.
+        INDEX_COL ( '[ database_name . [ schema_name ] .| schema_name ]  
+    table_or_view_name', index_id , key_id )
+        index_id- Is the ID of the index. index_ID is int.
+        key_id - Is the index key column position. key_ID is int.
+      INDEXKEY_PROPERTY - Returns information about the index key. Returns NULL for XML indexes.
+        INDEXKEY_PROPERTY ( object_ID ,index_ID ,key_ID ,property )
+        The property can be ColumnId and IsDescending
