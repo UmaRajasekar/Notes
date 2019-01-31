@@ -1051,3 +1051,20 @@ Limitation and Restriction of creating user defined functions
   Creating inline scalar function
     CREATE FUNCTION <function_name>(parameters datatype) RETURNS datatype AS BEGIN .. END;
     SELECT OBJECT_DEFINITION (OBJECT_ID('function name'))
+Memory-Optimized Table
+  Below details shows table option available in memory-optimized table
+  <table_option> ::=  
+  {  
+      MEMORY_OPTIMIZED = ON   
+    | DURABILITY = {SCHEMA_ONLY | SCHEMA_AND_DATA}  
+    | SYSTEM_VERSIONING = ON [ ( HISTORY_TABLE = schema_name . history_table_name  
+          [, DATA_CONSISTENCY_CHECK = { ON | OFF } ] ) ]   
+
+  }  
+  FileTable cannot be memory optimized table.
+  SQL server In memory OLTP improves performance of OLTP applications through efficient, memory optimized data access, native compilation of business logic, lock and latch free algorithm.
+  The In-Memory OLTP feature includes memory-optimized tables and table types, as well as native compilation of Transact-SQL stored procedures for efficient access to these tables.
+  Memory Optimized tables are fully durable by default.
+  Unlike disk based, memory optimized tables are fully atomic, consistent, isolated, and durable(ACID)
+  Memory-optimized tables and natively compiled stored procedures support only a subset of Transact-SQL features.
+  
