@@ -1190,3 +1190,44 @@ Metadata Functions:-
       INDEXKEY_PROPERTY - Returns information about the index key. Returns NULL for XML indexes.
         INDEXKEY_PROPERTY ( object_ID ,index_ID ,key_ID ,property )
         The property can be ColumnId and IsDescending
+  INDEXPROPERTY
+    Returns the named index or statistics property value of the table identification number, index or statistics name, and property name. Returns NULL for XML index.
+    INDEXPROPERTY ( object_ID , index_or_statistics_name , property )
+    The index propety can be IndexDepth, IndexFillFactor, IndexID, IsAutoStatistics, IsClustered, IsDisabled, IsFulltextKey, IsHypothetical, IsPadIndex, IsPageLockDisallowed, IsRowLockDisallowed, IsStatistics	, IsUnique, IsColumnStore, 
+  NEXT VALUE FOR
+    Generates the next sequence number from the specified sequence object.
+    NEXT VALUE FOR [ database_name . ] [ schema_name . ]  sequence_name  
+   [ OVER (<over_order_by_clause>) ]
+    NEXT VALUE FOR can be used in SELECT, CREATE TABLE, ALTER TABLE, SELECT INTO statements
+    Advantage of using OVER clause:- User has been guranteed that the values being returned are generated in the ORDER of the OVER clause of ORDER BY subclause.
+  OBJECT_DEFINITION - Returns definition of object by taking ObjectId as input
+    OBJECT_DEFINITION ( object_id )
+  OBJECT_ID - Returns object Id of any object name
+  OBJECT_NAME - Returns object name of specified object ID. You can also have database ID as optional parameter
+    OBJECT_NAME ( object_id [, database_id ] )
+  OBJECT_SCHEMA_NAME - Returns the database schema name for schema-scoped objects. 
+    OBJECT_SCHEMA_NAME ( object_id [, database_id ] )
+  OBJECTPROPERTY - Returns property of the object. It requires object Id as input
+    There are large property list to check constraint, execution, has , is property. Few of them are listed below:
+    IsDefaultCnst, HasInsertTrigger, ExecIsUpdateTrigger, CnstIsDeleteCascade, TableDeleteTriggerCount
+  OBJECTPROPERTYEX - Returns property about schema-scoped objects in the current database. This cannot be used for object that is not schema-scoped such as DDL triggers and event notifications.
+  ORIGINAL_DB_NAME- Returns orignial database name as available in connection string. If the initial database isn't specified, the function returns an empty string.
+  PARSENAME - For any object name, it returns part of the object name as mentioned below
+    1= Object Name
+    2= Schema Name
+    3= Database Name
+    4= Server Name
+    PARSENAME ( 'object_name' , object_piece )
+    object_piece can be 1,2,3,4 as mentioned above
+    it returns parse name only if that parse name available in object name definition
+  SCHEMA_ID - Returns schema ID for the specified schema name
+  SCHEMA_NAME - Returns schema name for associated schema ID.
+  SCOPE_IDENTITY - Returns the last identity value inserted into an any identity column in the same scope.
+    This gets acts similar to @@IDENTITY whereas IDENT_CURRENT is limited to specified table.
+    The difference between SCOPE_IDENTITY and @@IDENTIY is that SCOPE_IDENTITY is limited to specified scope whereas @@IDENTITY refers global.
+  SERVERPROPERTY - Returns property information of servers. The property information can be as follows:- BuildClrVersion, Collation, CollationID, ComparisonStyle, ComputerNamePhysicalNetBIOS, Edition, EditionID, EngineEdition, InstanceName, InstanceDefaultDataPath, InstanceDefaultLogPath, MachineName, ProductName, ProductMajorVersion, ProductMinorVersion, ServerName, ProductVersion etc.
+  STATS_DATE- Returns the date of the most of recent update for statistics on the table or indexed view.
+    sys.stats - will hold information of all the system statistics.
+    STATS_DATE ( object_id , stats_id )
+  
+  
