@@ -1230,4 +1230,30 @@ Metadata Functions:-
     sys.stats - will hold information of all the system statistics.
     STATS_DATE ( object_id , stats_id )
   
-  
+  TYPE_ID - Returns ID for the specified data type.
+    This can return typeId of system data type and user defined type which can be created using CREATE TYPE statement.
+  TYPE_MAME - Returns type name for the associated typeID
+  TYPEPROPERTY - Retruns information of datatype
+    TYPEPROPERTY (typename , property)\
+    The property can be AllowsNull, OwnerID, Precision, Scale, UsesAnsiTrim
+    
+ TEXTPTR -Returns the text pointer value that corresponds to a text, ntext or image column in a varbinary format. The retrived text pointer can be used in READTEXT, WRITETEXT and UPDATETEXT statements.
+  To use TEXTPTR function, you can increase the compatibility level to 80.
+  READTEXT - Reads the data from the column with the help of text pointer
+  READTEXT { table.column text_ptr offset size } [ HOLDLOCK ]
+  UPDATETEXT - Updates an existing text, ntext, or image field
+    Use to update data available in text pointer using actual data or by using another pointer that holds text
+    UPDATETEXT [BULK] { table_name.dest_column_name dest_text_ptr }  
+      { NULL | insert_offset }  
+         { NULL | delete_length }  
+         [ WITH LOG ]  
+         [ inserted_data  
+        | { table_name.src_column_name src_text_ptr } ]
+    BULK option enables upload tools to upload binary stream data.
+    WRITETEXT-Permits minimally logged, interactive updating of an existing text, ntext, or image column. WRITETEXT overwrites any existing data in the column it affects. WRITETEXT cannot be used on text, ntext, and image columns in views.
+      WRITETEXT [BULK]  
+        { table.column text_ptr }  
+        [ WITH LOG ] { data }
+TEXTVALID - validates whether specified text pointer is valid.
+  Syntax: TEXTVALID ( 'table.column' ,text_ ptr ) 
+ 
