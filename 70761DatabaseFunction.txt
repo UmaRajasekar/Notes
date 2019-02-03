@@ -1051,22 +1051,6 @@ Limitation and Restriction of creating user defined functions
   Creating inline scalar function
     CREATE FUNCTION <function_name>(parameters datatype) RETURNS datatype AS BEGIN .. END;
     SELECT OBJECT_DEFINITION (OBJECT_ID('function name'))
-Memory-Optimized Table
-  Below details shows table option available in memory-optimized table
-  <table_option> ::=  
-  {  
-      MEMORY_OPTIMIZED = ON   
-    | DURABILITY = {SCHEMA_ONLY | SCHEMA_AND_DATA}  
-    | SYSTEM_VERSIONING = ON [ ( HISTORY_TABLE = schema_name . history_table_name  
-          [, DATA_CONSISTENCY_CHECK = { ON | OFF } ] ) ]   
-
-  }  
-  FileTable cannot be memory optimized table.
-  SQL server In memory OLTP improves performance of OLTP applications through efficient, memory optimized data access, native compilation of business logic, lock and latch free algorithm.
-  The In-Memory OLTP feature includes memory-optimized tables and table types, as well as native compilation of Transact-SQL stored procedures for efficient access to these tables.
-  Memory Optimized tables are fully durable by default.
-  Unlike disk based, memory optimized tables are fully atomic, consistent, isolated, and durable(ACID)
-  Memory-optimized tables and natively compiled stored procedures support only a subset of Transact-SQL features.
   
 Metadata Functions:-
   These are scalar functions that return information about the database and database objects
@@ -1295,3 +1279,44 @@ SYSTEM_USER - Allows a system-supplied value for the current login to be inserte
 USER- Returns user name of the current login
 USERNAME- Same as USER and returns user name.
 USER_ID- Returns user ID of the current user
+
+Memory-Optimized Table
+  Below details shows table option available in memory-optimized table
+  <table_option> ::=  
+  {  
+      MEMORY_OPTIMIZED = ON   
+    | DURABILITY = {SCHEMA_ONLY | SCHEMA_AND_DATA}  
+    | SYSTEM_VERSIONING = ON [ ( HISTORY_TABLE = schema_name . history_table_name  
+          [, DATA_CONSISTENCY_CHECK = { ON | OFF } ] ) ]   
+
+  }  
+  FileTable cannot be memory optimized table.
+  SQL server In memory OLTP improves performance of OLTP applications through efficient, memory optimized data access, native compilation of business logic, lock and latch free algorithm.
+  The In-Memory OLTP feature includes memory-optimized tables and table types, as well as native compilation of Transact-SQL stored procedures for efficient access to these tables.
+  Memory Optimized tables are fully durable by default.
+  Unlike disk based, memory optimized tables are fully atomic, consistent, isolated, and durable(ACID)
+  Memory-optimized tables and natively compiled stored procedures support only a subset of Transact-SQL features.
+  
+  The primary storage for memory optimized tables is main memory. Rows in the table are read from and written to memory. However, A second copy of the table is stored in disk for durability purpose.
+  
+  Managing Memory Optimized Table.
+    How storage for disk based table happens?
+      Mapped to a filegroup and filegroup consist of one or more files.
+      Each file is divided into extents of 8 pages.
+      An extent can be shared across one or more multiple files, but there is 1-1 mapping between allocated page and the table or index.
+      The data is moved into memory as needed and the modified or newly created pages are asnchronously wriiten to the disk generated mostly random IO.
+    How storage for memory optimzed table happens:-
+      All memory-optimized tables are mapped to a memory-optimized data-filegroup. This filegroup uses syntax and semantics similar to Filestream.
+      There are no pages and the data is persisted as a row.
+      All memory optimized tables are stored by appending to active files. Both reading and writing to files are sequencial.
+      An update is implemented as a delete followed by an insert. The deleted rows are not immediately removed from the storage. The deleted rows are removed by a background process, called MERGE
+      Unlike disk-based tables, storage for memory-optimized tables is not compressed. When migrating a compressed (ROW or PAGE) disk-based table to memory-optimized table, you will need to account for the change in size.
+    
+  For even greater performance gains, In-memory OLTP supports duarable table with delayed durability. 
+  Delayed durable transactions are saved to disk soon after the transaction has committed and control was returned to the client. In exchange for the increased performance, committed transactions that have not saved to disk are lost in a server crash or fail over
+  Besides, default durable memory optimized table, SQL server also supports non-durable memory-optimized tables, which are not logged and thier data is not persisted to disk.
+  This means that transactions on these tables do not require any disk IO, but the data will not be recovered if there is a server crash or failover.
+  In-Memory OLTP is integrated with SQL Server to provide a seamless experience in all areas such as development, deployment, manageability, and supportability. A database can contain in-memory as well as disk-based objects.
+  Rows in the memory optimized tables are versioned. This mean single row in the table potential can contain multiple versions. All rows are maintained in the same table data structure. 
+  All the rows are maintained in the same table data structure. 
+  Row versioning allows concurrent reads and writes on the same row.
